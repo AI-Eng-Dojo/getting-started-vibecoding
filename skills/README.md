@@ -1,10 +1,10 @@
-# skills/ — 前編ハンズオン②で作る「詰めて」スキル一式
+# skills/ — 前編ハンズオン②で作るスキルの完成形
 
-前編ハンズオン②（[docs/01-part1.md](../docs/01-part1.md)）で作るエージェントスキルの**完成形**です。
+前編ハンズオン②（[docs/01-part1.md](../docs/01-part1.md)）で作るエージェントスキルの**完成形**です。作るのは2つ、「詰めて」と「セキュリティレビュー」です。
 
 自分で書いてみるのが本線なので、**まずは見ないで作ってみてください。** 詰まったとき、または答え合わせのときに開きます。
 
-## 3つのスキルの関係
+## 1つ目: 「詰めて」（3枚構成）
 
 ```
 tsumete      ← 入口。「詰めて」と言ったら起動する
@@ -18,6 +18,14 @@ tsumete      ← 入口。「詰めて」と言ったら起動する
 | [tsumetsume](tsumetsume/SKILL.md) | 実装前に計画を揺さぶる。質問は一度に一つ |
 | [ddd](ddd/SKILL.md) | 用語集（[CONTEXT-FORMAT.md](ddd/CONTEXT-FORMAT.md)）と決定記録（[ADR-FORMAT.md](ddd/ADR-FORMAT.md)）の書き方 |
 
+## 2つ目: 「セキュリティレビュー」（1枚）
+
+| スキル | 役割 |
+|---|---|
+| [security-review](security-review/SKILL.md) | コードを読んで危ないところを重大度つきで報告する。**勝手には直さない** |
+
+1つ目より短く、1枚で完結しています。**2つ目は数分で作れる**——それを体感するのがハンズオン②ステップ2の目的です。
+
 ## 使い方（自分のプロジェクトに入れる）
 
 スキルは、プロジェクトの `.claude/skills/` に置くとClaude Codeが自動で読み込みます。
@@ -27,9 +35,10 @@ mkdir -p .claude/skills
 cp -r ⟨このリポジトリ⟩/skills/tsumete .claude/skills/
 cp -r ⟨このリポジトリ⟩/skills/tsumetsume .claude/skills/
 cp -r ⟨このリポジトリ⟩/skills/ddd .claude/skills/
+cp -r ⟨このリポジトリ⟩/skills/security-review .claude/skills/
 ```
 
-置いたら、Claude Codeに「詰めて」と言うだけです。スキル名を指定する必要はありません。**フロントマターの `description` を読んで、Claudeが自分で「今これを使う場面だ」と判断します。**
+置いたら、Claude Codeに「詰めて」「セキュリティレビューして」と言うだけです。スキル名を指定する必要はありません。**フロントマターの `description` を読んで、Claudeが自分で「今これを使う場面だ」と判断します。**
 
 > だから `description` は「何をするスキルか」だけでなく「**いつ使うか**」まで書きます。ここがスキル作りでいちばん効く一行です。
 
