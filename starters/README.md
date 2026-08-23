@@ -40,13 +40,14 @@ git switch -c rescue-work rescue/handson3-a
 
 ### ZIPでダウンロードした人（Gitを使っていない人）
 
-Gitコマンドは不要です。ブラウザで次のURLを開くと、その完成例だけをZIPでダウンロードできます。
+Gitコマンドは不要です。ブラウザで次のURLを開くと、完成例入りのZIPをダウンロードできます。
 
 ```
 https://github.com/AI-Eng-Dojo/getting-started-vibecoding/archive/refs/tags/rescue/handson3-a.zip
 ```
 
-末尾の `-a` を `-b` `-c` に変えれば、それぞれの課題の完成例になります。展開して、中の `starters/⟨課題フォルダ⟩/index.html` を開いてください。
+**このZIP1つに3課題ぶんの完成例が入っています。**（末尾を `-b` `-c` に変えても中身は同じです）
+展開したら、自分が選んだ課題のフォルダ `starters/⟨課題フォルダ⟩/index.html` をブラウザで開いてください。
 
 **URLが分からなくなったら、その場でメンターに聞いてください。**当日はメンターが同じものをその場で配れるようにしています。
 
