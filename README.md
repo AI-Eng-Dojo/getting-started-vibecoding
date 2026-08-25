@@ -132,6 +132,7 @@ getting-started-vibecoding/       ← 教材リポジトリ（このリポジト
 │   ├── a-pomodoro-timer/  お題A: ポモドーロタイマー
 │   ├── b-shindan-chart/   お題B: 診断チャート
 │   └── c-habit-tracker/   お題C: 習慣トラッカー
+├── skills/                前半4〜5で作るSkillの完成例（答え合わせ用。まずは見ないで作る）
 ├── templates/             コピペして使うテンプレート（持ち帰り素材）
 ├── demos/                 ライブデモのソース・参考実装置き場
 └── instructor/            講師・メンター用（参加者は読まなくてOK）
@@ -139,6 +140,7 @@ getting-started-vibecoding/       ← 教材リポジトリ（このリポジト
 
 - 参加者は **README → docs/00-prep.md → 当日は docs/01-part1.md と docs/02-part2.md** の順に読み進めます
 - 前半2でVibe Codingを行うのは**教材リポジトリではなく実践用リポジトリ側**です。`starters/` の3種は、お題に迷ったとき・自由に作ってみて手応えがなかったときの代替お題です
+- `skills/` は前半4〜5で作るSkillの**完成例**です。自分で書くのが本線なので、**まずは見ないで作ってください。** 詰まったとき・答え合わせのときに開きます
 - 詰まったとき用の「救済タグ」（各段階の参考実装スナップショット）の使い方は [starters/README.md](starters/README.md) を参照してください
 - インフラ構成の設計・リリース自動化（GitHub Actions）といった発展的な内容は、本線には含めず🚀拡張ミッションおよび [docs/columns.md](docs/columns.md) 側で扱います
 
