@@ -7,14 +7,14 @@
 ## 1つ目: 「詰めて」（前半4・3枚構成）
 
 ```
-tsumete      ← 入口。「詰めて」と言ったら起動する
+tsumete      ← 入口。自分で `/tsumete` と打ったときだけ起動する
   ├─ tsumetsume  一問ずつ問い詰める進め方
   └─ ddd         決まったことを CONTEXT.md と ADR に書き残す進め方
 ```
 
 | スキル | 役割 |
 |---|---|
-| [tsumete](tsumete/SKILL.md) | 入口。詰めながら書き残す。ドキュメント構造とチケット管理もここで面倒を見る |
+| [tsumete](tsumete/SKILL.md) | 入口。下の2つを呼び出し、最後に `README.md` と `TASKS.md` を書き出す。`disable-model-invocation: true` 付きで、**Claudeが勝手に起動することはない** |
 | [tsumetsume](tsumetsume/SKILL.md) | 実装前に計画を揺さぶる。質問は一度に一つ |
 | [ddd](ddd/SKILL.md) | 用語集（[CONTEXT-FORMAT.md](ddd/CONTEXT-FORMAT.md)）と決定記録（[ADR-FORMAT.md](ddd/ADR-FORMAT.md)）の書き方 |
 
@@ -40,9 +40,11 @@ cp -r ⟨このリポジトリ⟩/skills/ddd .claude/skills/
 cp -r ⟨このリポジトリ⟩/skills/security-review .claude/skills/
 ```
 
-置いたら、Claude Codeに「詰めて」「セキュリティレビューして」と言うだけです。スキル名を指定する必要はありません。**フロントマターの `description` を読んで、Claudeが自分で「今これを使う場面だ」と判断します。**
+置いたら、Claude Codeに「セキュリティレビューして」と言うだけです。スキル名を指定する必要はありません。**フロントマターの `description` を読んで、Claudeが自分で「今これを使う場面だ」と判断します。**
 
 > だから `description` は「何をするスキルか」だけでなく「**いつ使うか**」まで書きます。ここがスキル作りでいちばん効く一行です。
+
+**ただし `tsumete` だけは例外で、`/tsumete` と打って呼びます。** `disable-model-invocation: true` が入っていて、Claudeの判断では起動しないようにしてあるためです。問い詰めは何十往復もする長い作業なので、**始めるかどうかは人間が決める**、という設計です。中身を持つ `tsumetsume`・`ddd` のほうは、通常どおりClaudeが自分で判断して呼びます。
 
 ## フォルダの形
 

@@ -5,7 +5,7 @@
 ## 使い方
 
 1. 3つから1つ選ぶ（迷ったらA）
-2. 選んだフォルダを、実践用リポジトリ内の自分の作業フォルダにコピーしてClaude Codeで開く
+2. 選んだフォルダの中身を、`vibecoding-0908` にコピーしてClaude Codeで開く
 3. フォルダ内READMEの指示文をそのまま貼り付けて実行
 
 | お題 | フォルダ | こんな人に |
@@ -22,7 +22,7 @@
 - `rescue/b-shindan-chart` — 中身は `starters/b-shindan-chart/README.md` と `index.html`
 - `rescue/c-habit-tracker` — 中身は `starters/c-habit-tracker/README.md` と `index.html`
 
-> **これは starters/（教材リポジトリ側）のタグです。** 実際の作業は実践用リポジトリ側の自分の作業フォルダで行っているはずなので、「タグの状態に戻す」のではなく「**タグの中の `index.html` を、いま作業しているフォルダの `index.html` に上書きコピーしてくる**」という操作になります。
+> **これは starters/（教材リポジトリ側）のタグです。** 実際の作業は `vibecoding-0908` 側で行っているはずなので、「タグの状態に戻す」のではなく「**タグの中の `index.html` を、`vibecoding-0908` の `index.html` に上書きコピーしてくる**」という操作になります。
 
 ### 使うタイミング
 
@@ -49,14 +49,14 @@
 ```text
 このリポジトリのGitタグ「rescue/a-pomodoro-timer」における
 starters/a-pomodoro-timer/index.html の中身を、
-⟨実践用リポジトリの絶対パス⟩/⟨自分の作業フォルダ名⟩/index.html に上書きしてください。
-いま作業フォルダにある index.html は、念のため同じ場所に index-broken.html という名前で
+⟨vibecoding-0908の絶対パス⟩/index.html に上書きしてください。
+いま index.html にあるファイルは、念のため同じ場所に index-broken.html という名前で
 コピーしてから進めてください。
 ```
 
-> **実践用リポジトリの絶対パスが分からない場合**は、実践用リポジトリ側のClaude Codeで「今のフォルダの絶対パスを教えて」と聞けば分かります。また、教材リポジトリを開いているClaude Codeに実践用リポジトリのパスを初めて触らせるときは、「このフォルダの外を操作してよいか」の確認が出ることがあります。自分が今伝えた作業フォルダであれば許可して構いません。
+> **`vibecoding-0908` の絶対パスが分からない場合**は、`vibecoding-0908` 側のClaude Codeで「今のフォルダの絶対パスを教えて」と聞けば分かります。また、教材リポジトリを開いているClaude Codeに `vibecoding-0908` のパスを初めて触らせるときは、「このフォルダの外を操作してよいか」の確認が出ることがあります。自分が今伝えたフォルダであれば許可して構いません。
 
-コピーが終わったら、実践用リポジトリ側のClaude Codeに戻って続きを再開してください。**今の壊れた状態は `index-broken.html` として残っているので、あとで見比べることもできます。**
+コピーが終わったら、`vibecoding-0908` 側のClaude Codeに戻って続きを再開してください。**今の壊れた状態は `index-broken.html` として残っているので、あとで見比べることもできます。**
 
 ### 自分のPCでGitコマンドを直接使う場合（任意・上級者向け）
 
@@ -66,12 +66,12 @@ starters/a-pomodoro-timer/index.html の中身を、
 git tag -l 'rescue/*'
 
 # 念のため、いまの作業フォルダを丸ごとバックアップしておく
-cp -r "⟨実践用リポジトリの作業フォルダ⟩" "⟨実践用リポジトリの作業フォルダ⟩-broken"
+cp -r "⟨vibecoding-0908の絶対パス⟩" "⟨vibecoding-0908の絶対パス⟩-broken"
 
-# お題Aの完成版ファイルだけを取り出して、作業フォルダに上書きコピーする
+# お題Aの完成版ファイルだけを取り出して、vibecoding-0908 に上書きコピーする
 # （starters/a-pomodoro-timer/ 配下だけを対象にし、2階層分のパスを取り除いて展開しています）
 git archive rescue/a-pomodoro-timer -- starters/a-pomodoro-timer \
-  | tar -x -C "⟨実践用リポジトリの作業フォルダ⟩" --strip-components=2
+  | tar -x -C "⟨vibecoding-0908の絶対パス⟩" --strip-components=2
 ```
 
 `git checkout rescue/...` で教材リポジトリ自体をタグの状態に切り替えることもできますが、そのままだと教材リポジトリが「ブランチのない状態（detached HEAD）」になります。作業が終わったら `git checkout main` で元に戻しておいてください。

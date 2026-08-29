@@ -1,6 +1,6 @@
 ---
 name: tsumetsume
-description: Stress-test a plan or design before any implementation begins, one question at a time, until both sides genuinely agree. Use when the user says "詰め詰め" or "詰める", or otherwise asks to have a plan shaken out before work starts.
+description: Stress-test a plan or design before any implementation begins, one question at a time, until both sides genuinely agree. Use when the user wants a plan shaken out before work starts, says "詰め詰め", or when another skill runs an interrogation session.
 ---
 
 # 詰め詰め

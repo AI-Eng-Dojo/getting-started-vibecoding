@@ -1,6 +1,6 @@
 ---
 name: ddd
-description: Build and sharpen the project's domain model — settle ubiquitous language in CONTEXT.md and record architectural decisions as ADRs. Use when the user wants terminology nailed down, decisions recorded, or when another skill needs the domain model maintained.
+description: Build and sharpen the project's domain model — settle ubiquitous language in CONTEXT.md and record architectural decisions as ADRs. Use when the user wants terminology pinned down, a decision recorded, or when another skill needs the domain model maintained.
 ---
 
 # ドメインモデリング
