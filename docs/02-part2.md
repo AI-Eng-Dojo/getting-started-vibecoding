@@ -135,10 +135,14 @@ TASKS.md のやることを、今日やる4つと、持ち帰る分に分けて�
 前半4では「詰めるスキル」を自分で作りました。**後半で使うのは、実装の進め方そのものをスキルにしたもの**です。完成例が [skills/tdd/SKILL.md](../skills/tdd/SKILL.md) にあります。前半のGrill Me系Skillと違い、**これは自分で書かず、コピーして使って構いません。**
 
 ```text
-skills/tdd/SKILL.md の内容を、
-~/.claude/skills/tdd/SKILL.md として保存してください。
+次のURLの中身を、~/.claude/skills/tdd/SKILL.md として保存してください。
 フォルダが無ければ作ってください。
+
+https://raw.githubusercontent.com/AI-Eng-Dojo/getting-started-vibecoding/main/skills/tdd/SKILL.md
 ```
+
+> **教材リポジトリはcloneしていないので、URLで渡します。** 取得の許可を聞かれたら許可してください。
+> 取得できなかった場合は、上のURLをブラウザで開いて全文をコピーし、Claude Codeに貼って「これを `~/.claude/skills/tdd/SKILL.md` として保存して」と頼めば同じことができます。
 
 保存できたら `/clear` で会話を切ってください。**スキルは新しい会話から読み込まれます。**
 
@@ -262,8 +266,9 @@ TASKS.md の1つ目だけを、最小の形で実装してください。
 - 〔共通〕**`prototype` で迷いを潰す**: 決められない設計や「この動きで合っているか分からない」を、**捨てる前提の小さい試作**で判断します。完成例が [skills/prototype/SKILL.md](../skills/prototype/SKILL.md) にあります
 
     ```text
-    skills/prototype/SKILL.md の内容を、
-    ~/.claude/skills/prototype/SKILL.md として保存してください。
+    次のURLの中身を、~/.claude/skills/prototype/SKILL.md として保存してください。
+
+    https://raw.githubusercontent.com/AI-Eng-Dojo/getting-started-vibecoding/main/skills/prototype/SKILL.md
     ```
 
     保存して `/clear` したら、迷っているところをそのまま伝えてください（「一覧の並び順を新しい順にするか、期限が近い順にするか決められない」など）。**両方を1画面で切り替えられる試作**が出てきます。決まったら試作は捨て、決めたことだけを `CONTEXT.md` に残します。**本実装させる前に、判断材料を先に作る**——これが今日の型のもう一段上です
@@ -297,10 +302,13 @@ TASKS.md の1つ目だけを、最小の形で実装してください。
 完成例が [skills/code-review/SKILL.md](../skills/code-review/SKILL.md) と [skills/security-review/SKILL.md](../skills/security-review/SKILL.md) にあります。**どちらも自分で書かず、コピーして使って構いません。**
 
 ```text
-skills/code-review/SKILL.md と skills/security-review/SKILL.md の内容を、
-それぞれ ~/.claude/skills/code-review/SKILL.md と
+次の2つのURLの中身を、それぞれ
+~/.claude/skills/code-review/SKILL.md と
 ~/.claude/skills/security-review/SKILL.md として保存してください。
 フォルダが無ければ作ってください。
+
+https://raw.githubusercontent.com/AI-Eng-Dojo/getting-started-vibecoding/main/skills/code-review/SKILL.md
+https://raw.githubusercontent.com/AI-Eng-Dojo/getting-started-vibecoding/main/skills/security-review/SKILL.md
 ```
 
 保存できたら `/clear` で会話を切ってください。
@@ -386,9 +394,9 @@ skills/code-review/SKILL.md と skills/security-review/SKILL.md の内容を、
 - 内容: 実行されようとしているコマンドに "git push" または "wrangler deploy" が
   含まれていて、かつ .claude/security-reviewed が無い場合は、そのコマンドを止めて
   「先に『セキュリティレビューして』を実行してください」という理由を返す
-- 判定の中身は、教材リポジトリの hooks/require-security-review.sh を
-  .claude/hooks/require-security-review.sh としてコピーし、実行できるように
-  してください。settings.json からはそれを呼ぶ形にします
+- 判定の中身は、次のURLから .claude/hooks/require-security-review.sh として
+  保存し、実行できるようにしてください。settings.json からはそれを呼ぶ形にします
+  https://raw.githubusercontent.com/AI-Eng-Dojo/getting-started-vibecoding/main/hooks/require-security-review.sh
 
 あわせて .gitignore に .claude/security-reviewed を追加してください。
 settings.json や必要なフォルダが無ければ作成してください。
