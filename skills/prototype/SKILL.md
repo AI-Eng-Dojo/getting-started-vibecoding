@@ -1,6 +1,6 @@
 ---
 name: prototype
-description: Answer a design question with a small throwaway build instead of arguing about it or committing to production code. Use when the user cannot decide between options, is unsure whether a behavior or layout is right, or when the same task has failed to work twice in a row.
+description: Answer a design question with a small throwaway build instead of arguing about it or committing to production code. Use when the user cannot decide between options, is unsure whether a behavior or layout is right, says 「どっちにするか決められない」「この動きで合っているか分からない」「試作を作って」, or when the same task has failed to work twice in a row.
 ---
 
 # 使い捨ての試作で決める
