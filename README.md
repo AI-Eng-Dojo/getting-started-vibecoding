@@ -41,7 +41,7 @@ Claude Codeを使って、あなたのアイデアをソフトウェアに変換
 | 項目 | 要件 |
 |---|---|
 | PC | macOS / Windows / Linux。ブラウザとエディタが動けば十分 |
-| Claudeプラン | **Pro（$20/月）以上が必須。Max推奨** |
+| Claudeプラン | **Pro以上が必須。Max推奨**（料金は[公式の料金ページ](https://www.anthropic.com/pricing)を参照） |
 | Claude Code | ターミナルまたはVS Code拡張から利用 |
 | VS Code | Claude Code拡張の利用に必要 |
 | Claude CodeのVS Code拡張 | VS Code内でClaude Codeを使うため |
