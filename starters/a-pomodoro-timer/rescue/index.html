@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ポモドーロタイマー</title>
+<style>
+  body { font-family: sans-serif; text-align: center; margin: 40px; color: #333; }
+  #mode { font-size: 20px; color: #555; }
+  #time { font-size: 72px; font-weight: bold; margin: 20px 0; font-variant-numeric: tabular-nums; }
+  button { font-size: 14px; padding: 6px 12px; margin: 0 4px; }
+  #count { margin-top: 24px; color: #555; }
+</style>
+</head>
+<body>
+  <h1>ポモドーロタイマー</h1>
+  <div id="mode">作業</div>
+  <div id="time">25:00</div>
+  <button id="start">開始</button>
+  <button id="pause">一時停止</button>
+  <button id="reset">リセット</button>
+  <div id="count">完了ポモドーロ: 0</div>
+
+<script>
+const WORK_SECONDS = 25 * 60;
+const BREAK_SECONDS = 5 * 60;
+
+let isWork = true;
+let remaining = WORK_SECONDS;
+let timerId = null;
+let completed = 0;
+
+const timeEl = document.getElementById('time');
+const modeEl = document.getElementById('mode');
+const countEl = document.getElementById('count');
+
+function render() {
+  const m = String(Math.floor(remaining / 60)).padStart(2, '0');
+  const s = String(remaining % 60).padStart(2, '0');
+  timeEl.textContent = m + ':' + s;
+  modeEl.textContent = isWork ? '作業' : '休憩';
+  countEl.textContent = '完了ポモドーロ: ' + completed;
+}
+
+function beep() {
+  const AudioCtx = window.AudioContext || window.webkitAudioContext;
+  if (!AudioCtx) return;
+  const ctx = new AudioCtx();
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+  osc.frequency.value = 880;
+  gain.gain.setValueAtTime(0.2, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.8);
+  osc.start();
+  osc.stop(ctx.currentTime + 0.8);
+}
+
+function tick() {
+  remaining -= 1;
+  if (remaining <= 0) {
+    beep();
+    if (isWork) completed += 1;
+    isWork = !isWork;
+    remaining = isWork ? WORK_SECONDS : BREAK_SECONDS;
+  }
+  render();
+}
+
+document.getElementById('start').onclick = function () {
+  if (timerId !== null) return;
+  timerId = setInterval(tick, 1000);
+};
+
+document.getElementById('pause').onclick = function () {
+  clearInterval(timerId);
+  timerId = null;
+};
+
+document.getElementById('reset').onclick = function () {
+  clearInterval(timerId);
+  timerId = null;
+  isWork = true;
+  remaining = WORK_SECONDS;
+  completed = 0;
+  render();
+};
+
+render();
+</script>
+</body>
+</html>

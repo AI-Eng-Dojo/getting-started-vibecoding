@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>あなたに合う旅行先診断</title>
+<style>
+  body { font-family: sans-serif; margin: 40px auto; max-width: 640px; color: #333; }
+  #question { font-size: 18px; margin-bottom: 12px; }
+  button { display: block; width: 100%; text-align: left; font-size: 14px; padding: 6px 10px; margin: 4px 0; }
+  #result { margin-top: 24px; }
+  #result h2 { margin-bottom: 4px; }
+</style>
+</head>
+<body>
+  <h1>あなたに合う旅行先診断</h1>
+  <div id="quiz">
+    <div id="progress"></div>
+    <div id="question"></div>
+    <div id="choices"></div>
+  </div>
+  <div id="result" hidden></div>
+
+<script>
+const QUESTIONS = [
+  { text: '休みの日、どっちで過ごしたい?', choices: [
+    { label: 'とにかく外に出て動きたい', type: 'active' },
+    { label: '静かな場所でぼーっとしたい', type: 'calm' } ] },
+  { text: '旅先のごはんは?', choices: [
+    { label: '有名店を調べて並んででも食べたい', type: 'active' },
+    { label: '宿でゆっくり出てくるものでいい', type: 'calm' } ] },
+  { text: '予定の立て方は?', choices: [
+    { label: '分刻みで組みたい', type: 'active' },
+    { label: 'その日の気分で決めたい', type: 'calm' } ] },
+  { text: '写真は?', choices: [
+    { label: '景色より人と撮りたい', type: 'city' },
+    { label: '人より景色を撮りたい', type: 'nature' } ] },
+  { text: '帰ってきた翌日、どうなっていたい?', choices: [
+    { label: '話したいことが山ほどある', type: 'city' },
+    { label: '頭が空っぽで軽い', type: 'nature' } ] }
+];
+
+const RESULTS = {
+  'active-city': { name: '大都市食べ歩き型', body: '朝から晩まで動き回れる大都市が向いています。台北、ソウル、大阪あたりが好相性。' },
+  'active-nature': { name: 'アクティブ自然型', body: '体を動かせる自然が向いています。ニュージーランド、屋久島、スイスあたりが好相性。' },
+  'calm-city': { name: '街並みひたり型', body: '歩くだけで絵になる街が向いています。京都、リスボン、プラハあたりが好相性。' },
+  'calm-nature': { name: '静養リセット型', body: '何もしない時間が必要です。温泉地、離島、湖畔の宿あたりが好相性。' }
+};
+
+let current = 0;
+const answers = [];
+
+const progressEl = document.getElementById('progress');
+const questionEl = document.getElementById('question');
+const choicesEl = document.getElementById('choices');
+const resultEl = document.getElementById('result');
+
+function renderQuestion() {
+  const q = QUESTIONS[current];
+  progressEl.textContent = '質問 ' + (current + 1) + ' / ' + QUESTIONS.length;
+  questionEl.textContent = q.text;
+  choicesEl.innerHTML = '';
+  q.choices.forEach(function (c) {
+    const btn = document.createElement('button');
+    btn.textContent = c.label;
+    btn.onclick = function () { answer(c.type); };
+    choicesEl.appendChild(btn);
+  });
+}
+
+function answer(type) {
+  answers.push(type);
+  current += 1;
+  if (current < QUESTIONS.length) {
+    renderQuestion();
+  } else {
+    showResult();
+  }
+}
+
+function showResult() {
+  const pace = answers.filter(function (a) { return a === 'active'; }).length >= 2 ? 'active' : 'calm';
+  const place = answers.filter(function (a) { return a === 'city'; }).length >= 1 ? 'city' : 'nature';
+  const r = RESULTS[pace + '-' + place];
+  document.getElementById('quiz').hidden = true;
+  resultEl.hidden = false;
+  // HTMLを文字列で組み立てず、要素を作って textContent で入れる
+  resultEl.textContent = '';
+  const h = document.createElement('h2');
+  h.textContent = r.name;
+  const p = document.createElement('p');
+  p.textContent = r.body;
+  resultEl.appendChild(h);
+  resultEl.appendChild(p);
+}
+
+renderQuestion();
+</script>
+</body>
+</html>

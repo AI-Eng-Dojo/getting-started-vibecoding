@@ -1,0 +1,66 @@
+name: リンクと救済版の生存確認
+
+# 救済版のURLと教材内の外部リンクは、当日まで誰も踏まない。
+# 壊れていても気づけないので、定期的に叩いて404を検出する。
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "0 0 * * 1"   # 毎週月曜
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 救済版のファイルが存在するか
+        run: |
+          fail=0
+          for d in a-pomodoro-timer b-shindan-chart c-habit-tracker; do
+            f="starters/$d/rescue/index.html"
+            if [ ! -s "$f" ]; then
+              echo "::error file=$f::救済版が存在しないか空です"
+              fail=1
+            else
+              echo "OK  $f ($(wc -l < "$f") 行)"
+            fi
+          done
+          exit $fail
+
+      - name: 救済版のURLが取得できるか
+        # main を叩くので、まだマージされていないPRでは走らせない
+        # （ファイルの実在は前のステップがローカルで見ている）
+        if: github.event_name != 'pull_request'
+        run: |
+          fail=0
+          base="https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/main/starters"
+          for d in a-pomodoro-timer b-shindan-chart c-habit-tracker; do
+            url="$base/$d/rescue/index.html"
+            code=$(curl -s -o /dev/null -m 30 -w '%{http_code}' "$url")
+            if [ "$code" != "200" ]; then
+              echo "::error::$code $url"
+              fail=1
+            else
+              echo "OK  200 $url"
+            fi
+          done
+          exit $fail
+
+      - name: 教材が参照しているリポジトリ内のファイルが存在するか
+        run: python3 .github/scripts/check-links.py
+
+      - name: 教材が案内している外部URLが生きているか
+        continue-on-error: true   # 外部サービス都合の一時的な失敗で赤くしない
+        run: |
+          for url in \
+            "https://cloudflare.com/drop" \
+            "https://www.anthropic.com/pricing" \
+            "https://docs.claude.com/en/docs/claude-code/overview" \
+            "https://github.com/mattpocock/skills" ; do
+            code=$(curl -s -o /dev/null -m 30 -L -w '%{http_code}' "$url")
+            echo "$code  $url"
+            [ "$code" = "200" ] || echo "::warning::$code $url"
+          done

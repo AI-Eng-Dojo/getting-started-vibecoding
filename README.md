@@ -50,6 +50,8 @@ Claude Codeを使って、あなたのアイデアをソフトウェアに変換
 | Googleアカウント（Gmail） | 前半2でMCPのコネクタ機能を試すために使用。個人アカウントの利用に抵抗がある人は接続なしでも参加可 |
 | Cloudflareアカウント（任意） | 後半11で作ったものを公開します。**アカウント無しでも試せるルートを用意**していますが、公開したものを1時間以上残したい人は無料アカウントが必要 |
 | Notionアカウント（任意） | 後半12でMCP連携の例として使用。Backlogを使う人・接続しない人は不要 |
+| Backlogアカウント（任意） | 後半12でNotionの代わりに選ぶ場合。**選ぶならAPIキーの発行とNode.jsを前日までに**（当日15分では間に合いません） |
+| Node.js（Windowsは必須） | WindowsはClaude Code拡張の起動に必要。Mac・Linuxは任意だが、後半11の`wrangler`公開・後半12のBacklog連携を使うなら必要 |
 | 事前準備 | **前日までに** [docs/00-prep.md](docs/00-prep.md) を完了 |
 
 > 上記はカリキュラムの現時点の設計に基づく要件です。開催が近づき詳細が固まった段階で、[docs/00-prep.md](docs/00-prep.md) 側で必要要件をもう一度洗い出します。
@@ -148,7 +150,7 @@ getting-started-vibecoding/       ← 教材リポジトリ（このリポジト
 - 参加者は **README → docs/00-prep.md → 当日は docs/01-part1.md と docs/02-part2.md** の順に読み進めます
 - 前半2でVibe Codingを行うのは**教材リポジトリではなく、その場で作る `vibecoding-0908` 側**です。`starters/` の3種は、お題に迷ったとき・自由に作ってみて手応えがなかったときの代替お題です
 - `skills/` にはSkillの**完成例**が7枚あります。**前半4で作る3枚（`tsumete`・`tsumetsume`・`ddd`）は自分で書くのが本線**なので、まずは見ないで作ってください。**後半で使う4枚（`tdd`・`code-review`・`security-review`・`prototype`）は、自分で書かずコピーして使う運用**です（→ [skills/README.md](skills/README.md)）
-- 詰まったとき用の「救済タグ」（starters/の各お題の完成状態）の使い方は [starters/README.md](starters/README.md) を参照してください
+- 詰まったとき用の「救済版」（starters/の各お題の完成状態。`starters/⟨題⟩/rescue/index.html`）の使い方は [starters/README.md](starters/README.md) を参照してください
 - 独自ドメイン・リリース自動化（GitHub Actions）といった発展的な内容は、本線には含めず🚀拡張ミッションおよび [docs/columns.md](docs/columns.md) 側で扱います
 
 ## 本ワークショップの元になった書籍

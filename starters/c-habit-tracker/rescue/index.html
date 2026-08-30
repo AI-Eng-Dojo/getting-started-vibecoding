@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>習慣トラッカー</title>
+<style>
+  body { font-family: sans-serif; margin: 40px auto; max-width: 720px; color: #333; }
+  input { font-size: 14px; padding: 4px 6px; }
+  button { font-size: 14px; padding: 5px 10px; }
+  table { border-collapse: collapse; margin-top: 20px; width: 100%; }
+  th, td { border: 1px solid #ccc; padding: 6px; text-align: center; font-size: 14px; }
+  th.habit, td.habit { text-align: left; }
+  .done { color: #2a7; font-weight: bold; }
+  .del { color: #999; cursor: pointer; border: none; background: none; }
+  #storage-warning { color: #a60; font-size: 14px; }
+</style>
+</head>
+<body>
+  <h1>習慣トラッカー</h1>
+
+  <form id="add-form">
+    <input id="habit-name" placeholder="習慣を入力（例: 30分歩く）" required>
+    <button type="submit">追加</button>
+  </form>
+
+  <p id="storage-warning" hidden>
+    このブラウザではデータの保存が無効になっているため、閉じると記録が消えます。
+  </p>
+
+  <table>
+    <thead><tr id="head-row"></tr></thead>
+    <tbody id="body-rows"></tbody>
+  </table>
+
+<script>
+const STORAGE_KEY = 'habit-tracker';
+
+// ブラウザの設定や開き方によっては localStorage が使えないことがある。
+// その場合でもアプリ自体は動かし、保存できないことだけ画面で知らせる。
+const storageAvailable = (function () {
+  try {
+    localStorage.setItem('__probe__', '1');
+    localStorage.removeItem('__probe__');
+    return true;
+  } catch (e) {
+    return false;
+  }
+})();
+
+function loadHabits() {
+  if (!storageAvailable) return [];
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveHabits(habits) {
+  if (!storageAvailable) return;
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(habits));
+  } catch (e) {
+    // 容量超過などで保存できなくても、操作は続けられるようにする
+  }
+}
+
+function dateKey(d) {
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+}
+
+function lastSevenDays() {
+  const days = [];
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    days.push(d);
+  }
+  return days;
+}
+
+let habits = loadHabits();
+
+function render() {
+  const days = lastSevenDays();
+  const todayKey = dateKey(new Date());
+
+  const headRow = document.getElementById('head-row');
+  headRow.innerHTML = '<th class="habit">習慣</th>';
+  days.forEach(function (d) {
+    const th = document.createElement('th');
+    th.textContent = (d.getMonth() + 1) + '/' + d.getDate();
+    headRow.appendChild(th);
+  });
+  headRow.insertAdjacentHTML('beforeend', '<th></th>');
+
+  const body = document.getElementById('body-rows');
+  body.innerHTML = '';
+  habits.forEach(function (habit, index) {
+    const tr = document.createElement('tr');
+    const nameTd = document.createElement('td');
+    nameTd.className = 'habit';
+    nameTd.textContent = habit.name;
+    tr.appendChild(nameTd);
+
+    days.forEach(function (d) {
+      const key = dateKey(d);
+      const td = document.createElement('td');
+      const done = habit.records.indexOf(key) !== -1;
+      if (key === todayKey) {
+        const cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.checked = done;
+        cb.onchange = function () { toggle(index, key); };
+        td.appendChild(cb);
+      } else {
+        td.textContent = done ? '✓' : '';
+        if (done) td.className = 'done';
+      }
+      tr.appendChild(td);
+    });
+
+    const delTd = document.createElement('td');
+    const delBtn = document.createElement('button');
+    delBtn.className = 'del';
+    delBtn.textContent = '削除';
+    delBtn.onclick = function () { removeHabit(index); };
+    delTd.appendChild(delBtn);
+    tr.appendChild(delTd);
+
+    body.appendChild(tr);
+  });
+}
+
+function toggle(index, key) {
+  const records = habits[index].records;
+  const at = records.indexOf(key);
+  if (at === -1) {
+    records.push(key);
+  } else {
+    records.splice(at, 1);
+  }
+  saveHabits(habits);
+  render();
+}
+
+function removeHabit(index) {
+  habits.splice(index, 1);
+  saveHabits(habits);
+  render();
+}
+
+document.getElementById('add-form').onsubmit = function (e) {
+  e.preventDefault();
+  const input = document.getElementById('habit-name');
+  const name = input.value.trim();
+  if (!name) return;
+  habits.push({ name: name, records: [] });
+  saveHabits(habits);
+  input.value = '';
+  render();
+};
+
+if (!storageAvailable) {
+  document.getElementById('storage-warning').hidden = false;
+}
+
+render();
+</script>
+</body>
+</html>
