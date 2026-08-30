@@ -386,14 +386,19 @@ skills/code-review/SKILL.md と skills/security-review/SKILL.md の内容を、
 - 内容: 実行されようとしているコマンドに "git push" または "wrangler deploy" が
   含まれていて、かつ .claude/security-reviewed が無い場合は、そのコマンドを止めて
   「先に『セキュリティレビューして』を実行してください」という理由を返す
-- 判定の中身は .claude/hooks/require-security-review.sh というシェルスクリプトに書き、
-  settings.json からはそれを呼ぶ形にしてください（あとで自分で読めるようにするため）
+- 判定の中身は、教材リポジトリの hooks/require-security-review.sh を
+  .claude/hooks/require-security-review.sh としてコピーし、実行できるように
+  してください。settings.json からはそれを呼ぶ形にします
 
 あわせて .gitignore に .claude/security-reviewed を追加してください。
 settings.json や必要なフォルダが無ければ作成してください。
 ```
 
-> **スクリプトの中身を一度は自分の目で見てください。** Hooksは権限プロンプトを経由せず自動実行されます（前半5）。**中身を理解できるものだけを登録する**、が原則です。20行程度のはずなので、読めなければ「このスクリプトを1行ずつ日本語で説明して」と頼んでください。
+> **判定スクリプトは、自分で書かずコピーして使います。** `tdd` や `security-review` と同じ扱いです（→ [hooks/README.md](../hooks/README.md)）。
+>
+> **Hooksは権限プロンプトを経由せず自動実行されます**（前半5）。だから原則は「**中身を理解できるものだけを登録する**」です。**その場でAIに書かせたスクリプトを、書いた本人の説明だけを頼りに登録するのは、この原則を満たしていません。** 検証済みのものを配るのはそのためです。
+>
+> 40行ほどで日本語のコメントが付いています。**読める人は読んでください。読めなくても、動きはこのあと自分の目で確認します。**
 
 #### 止まることを自分の目で確認する
 
@@ -704,7 +709,7 @@ Vibe Coding → Intentの明確化 → Skillによる拡張 → 仕様化 → �
     | `tsumete`・`tsumetsume`・`ddd` | `tdd`・`code-review`・`security-review`（＋`prototype`） |
 
     **これで「仕様を詰める → 実装する → レビューする」の一周ぶんが、全部スキルとして手元にあります。** 次に何か作るときは、前半4からやり直す必要はありません
-- **Hook A・Bは `myapp` のプロジェクト内**（`.claude/settings.json`）にあります。次のプロジェクトでも使いたければ、同じものを頼んで作らせてください
+- **Hook A・Bは `myapp` のプロジェクト内**（`.claude/settings.json` と `.claude/hooks/`）にあります。次のプロジェクトでも使いたければ、**`myapp` から丸ごとコピーしてください。** 今日中身を確認したものだからです。**新しく頼んで作らせる場合は、必ず中身を読んでから登録してください**——Hooksは権限プロンプトを経由せず自動実行されます
 - `TASKS.md` の「今回やらないこと」——そしてNotion／Backlogに流し込んだそれが、次の一歩です
 - 公開URLは、そのまま人に見せられるあなたの作品です。**Claimしていない人は消えているので、続けるなら作り直しからです**
 - もっと深く: 書籍対応表（columns.md末尾）から『実践Claude Code入門』へ

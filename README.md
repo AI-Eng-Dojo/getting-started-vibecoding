@@ -144,6 +144,7 @@ getting-started-vibecoding/       ← 教材リポジトリ（このリポジト
 │   ├── b-shindan-chart/   お題B: 診断チャート
 │   └── c-habit-tracker/   お題C: 習慣トラッカー
 ├── skills/                Skillの完成例（前半3枚は自分で作る／後半4枚はコピーして使う）
+├── hooks/                 後半10④でコピーして使うHookスクリプト（検証済み）
 ├── templates/             コピペして使うテンプレート（持ち帰り素材）
 ├── demos/                 ライブデモのソース・参考実装置き場
 └── instructor/            講師・メンター用（参加者は読まなくてOK）
