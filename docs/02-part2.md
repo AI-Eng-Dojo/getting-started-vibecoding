@@ -464,8 +464,12 @@ Claude Codeにそのまま頼めます。
 このアプリを Cloudflare Workers の静的アセットとして公開したいです。
 1. wrangler.jsonc を作り、assets の directory を ./public/ に向けてください（Worker のスクリプトは不要です）
 2. npx wrangler login でログインしてください（ブラウザが開くので私が許可します）
-3. npx wrangler deploy で公開し、発行されたURLを教えてください
+3. npx wrangler whoami を実行して、ログインできているか確認してください。
+   「You are not authenticated」と出たら、そのまま先に進まずに教えてください
+4. 確認できたら npx wrangler deploy で公開し、発行されたURLを教えてください
 ```
+
+> **3を飛ばさないでください。** `npx wrangler login` は、**ブラウザの許可画面まで進みきらずに終わってもターミナル側にエラーを出しません。** 「ブラウザが開いた」はログインできた印ではありません。`npx wrangler whoami` でアカウント名が表示されて初めて、ログインできています。ここを飛ばすと、失敗するのは4のデプロイなので、**「デプロイが失敗した」ように見えて原因が分かりません。**
 
 **ここでHook Bに止められるはずです。** 1つ目で `wrangler.jsonc` を作った時点で**ファイルの書き込みが起きるので、Hook Aがレビュー済みの印を消します。** その状態で3つ目のデプロイに進むため、Hook Bが「印が無い」と判定して止める——という流れです。
 
