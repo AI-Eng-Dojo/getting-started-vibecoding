@@ -173,7 +173,7 @@ Claude Codeの3本柱を、順番に一通り触ります。**Vibe Coding**(頼�
 
    **`gh`が使えない場合（事前準備4でうまくいかなかった人）**
 
-   ブラウザでGitHubを開き、右上の「+」→「New repository」から `vibecoding-0908` という名前でリポジトリを作成してください（Public/Privateどちらでも構いません）。作成できたら表示されるURLをコピーし、Claude Codeに次のように貼り付けます。
+   ブラウザでGitHubを開き、右上の「+」→「New repository」から `vibecoding-0908` という名前でリポジトリを作成してください（Public/Privateどちらでも構いません）。**このとき「Add a README file」にチェックを入れてください。** 作成できたら表示されるURLをコピーし、Claude Codeに次のように貼り付けます。
 
    ```text
    ~/github フォルダ（無ければ作成）の中に、次のリポジトリをcloneしてください。
@@ -420,7 +420,7 @@ disable-model-invocation: true
 
    **`gh`が使えない場合**
 
-   ブラウザのGitHubで `myapp` という名前のリポジトリを作成し（**Private を選んでください**）、表示されたURLをコピーして、Claude Codeに次のように貼り付けます。
+   ブラウザのGitHubで `myapp` という名前のリポジトリを作成します。**Visibility は Private を選び、「Add a README file」にチェックを入れてから**作成してください。表示されたURLをコピーして、Claude Codeに次のように貼り付けます。
 
    ```text
    ~/github フォルダ（無ければ作成）の中に、次のリポジトリをcloneしてください。
