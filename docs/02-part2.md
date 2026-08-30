@@ -294,16 +294,11 @@ skills/code-review/SKILL.md と skills/security-review/SKILL.md の内容を、
 それぞれ ~/.claude/skills/code-review/SKILL.md と
 ~/.claude/skills/security-review/SKILL.md として保存してください。
 フォルダが無ければ作ってください。
-
-保存したら、security-review のほうの最後に次の2つを足してください。
-1. 観点として「公開するフォルダの中に、公開してよいものだけが入っているか」を追加する
-   （メモ書き・実在の個人名・設定ファイル・鍵などが混ざっていないか）
-2. 「レビューが終わったら .claude/security-reviewed というファイルを作成（touch）すること」
 ```
 
-2つ目の一行が、このあと④のHookの土台になります。**「レビューが済んだ」という事実を、Claudeの記憶ではなくファイルとして残す**ための印です。
-
 保存できたら `/clear` で会話を切ってください。
+
+`security-review` の末尾には、**「レビューが終わったら `.claude/security-reviewed` という空ファイルを作る」**という一行が入っています。**「レビューが済んだ」という事実を、Claudeの記憶ではなくファイルとして残す**ための印で、これが④のHookの土台になります。**一度自分の目で見ておいてください。**
 
 > **印を作るのは `security-review` だけです。** `code-review` はこの印に触りません。**外に出してよい条件は「危なくないこと」であって、「作法が綺麗なこと」ではない**——この線引きを、スキルの分担そのもので表しています。
 
