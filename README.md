@@ -48,12 +48,12 @@ Claude Codeを使って、あなたのアイデアをソフトウェアに変換
 | VS Code | Claude Code拡張の利用に必要 |
 | Claude CodeのVS Code拡張 | VS Code内でClaude Codeを使うため |
 | GitHubアカウント | 当日その場でリポジトリを作成するために必要（無料アカウントで可） |
-| GitHub CLI（`gh`） | 当日Claude Codeがリポジトリを作成・cloneするために使用。`gh auth login` まで済ませておく |
+| GitHub CLI（`gh` コマンド） | 当日Claude Codeがリポジトリを作成・cloneするために使用。`gh auth login` まで済ませておく |
 | Googleアカウント（Gmail） | 前半2でMCPのコネクタ機能を試すために使用。個人アカウントの利用に抵抗がある人は接続なしでも参加可 |
 | Cloudflareアカウント（任意） | 後半11で作ったものを公開します。**アカウント無しでも試せるルートを用意**していますが、公開したものを1時間以上残したい人は無料アカウントが必要 |
 | Notionアカウント（任意） | 後半12でMCP連携の例として使用。Backlogを使う人・接続しない人は不要 |
-| Backlogアカウント（任意） | 後半12でNotionの代わりに選ぶ場合。**選ぶならAPIキーの発行とNode.jsを前日までに**（当日15分では間に合いません） |
-| Node.js（Windowsは必須） | WindowsはClaude Code拡張の起動に必要。Mac・Linuxは任意だが、後半11の`wrangler`公開・後半12のBacklog連携を使うなら必要 |
+| Backlogアカウント（任意） | 後半12でNotionの代わりに選ぶ場合。**選ぶならAPIキーの発行を前日までに**（当日15分では間に合いません） |
+| Node.js | **全OS共通で必須。** WindowsはClaude Code拡張の起動に必要。Mac・Linuxでも後半11の`wrangler`公開・後半12のBacklog連携で使用 |
 | 事前準備 | **前日までに** [docs/00-prep.md](docs/00-prep.md) を完了 |
 
 > 上記はカリキュラムの現時点の設計に基づく要件です。開催が近づき詳細が固まった段階で、[docs/00-prep.md](docs/00-prep.md) 側で必要要件をもう一度洗い出します。
@@ -78,7 +78,7 @@ Claude Codeを使って、あなたのアイデアをソフトウェアに変換
 
 ### 事前準備（前日まで・セルフペース）→ [docs/00-prep.md](docs/00-prep.md)
 
-Claude Code／GitHub／VS Code／GitHub CLI（`gh`）のセットアップと、動作確認ミッションです。リポジトリ自体は当日その場で作るため、事前準備では作成しません。
+Claude Code／GitHub／VS Code／GitHub CLI（`gh` コマンド）のセットアップと、動作確認ミッションです。リポジトリ自体は当日その場で作るため、事前準備では作成しません。
 
 ### 前半（3時間）Claude Codeの基礎を身につけ、作りたいものをAIと一緒に具体化する → [docs/01-part1.md](docs/01-part1.md)
 
