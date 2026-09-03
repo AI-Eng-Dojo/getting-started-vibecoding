@@ -171,7 +171,3 @@ uv run --with-requirements requirements-site.txt python .github/scripts/build-si
 ```
 
 `instructor/` は「参加者には配布しない」ものなのでサイトには載せていません（リポジトリ上には残っています）。
-
-## 本ワークショップの元になった書籍
-
-書籍『実践Claude Code入門』（改訂版）の第2章・第4章を土台に、第3章（スキル）・第5章（スペック駆動開発）のエッセンスを前借りした構成です。今日の先を学びたくなったら、[docs/columns.md](docs/columns.md) 末尾の書籍対応表からどうぞ。
