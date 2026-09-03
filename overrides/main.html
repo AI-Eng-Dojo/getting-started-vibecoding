@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{#
+  フォントの読み込みを差し替える。
+
+  Anthropic本体は AnthropicSans / AnthropicSerif / AnthropicMono という
+  自社の専用フォントを使っている。これらは配布されていないので、
+  Google Fonts で手に入るもっとも近い代替に置き換えている。
+
+  - Inter          … AnthropicSans の代替（本文・UI）
+  - Source Serif 4 … AnthropicSerif の代替（見出し＝Anthropicが "voice" と呼ぶ役割）
+  - JetBrains Mono … AnthropicMono の代替（コード）
+  - Noto Sans JP / Noto Serif JP … 上記の欧文フォントに対応する和文
+
+  欧文と和文を1つの font-family に並べると、グリフ単位で使い分けられる。
+  読み込みに失敗しても system-ui / 游ゴシック等にフォールバックする
+  （anthropic.css のスタックを参照）。
+#}
+{% block font %}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@600&display=swap">
+{% endblock %}

@@ -25,7 +25,10 @@ use_directory_urls: true
 theme:
   name: material
   language: ja
-  font: false          # Google Fonts を読みに行かない（オフライン会場・プライバシー配慮）
+  custom_dir: overrides
+  # フォントの読み込みは overrides/main.html の {% block font %} で行う。
+  # Anthropicの専用フォントは配布されていないため、Google Fontsの近縁で代替する。
+  font: false
   icon:
     repo: fontawesome/brands/github
   features:
@@ -37,21 +40,22 @@ theme:
     - content.code.copy      # 79個ある ```text はコピペして使うプロンプト
     - search.suggest
     - search.highlight
+  # 配色は site-theme/anthropic.css で定義した独自スキーム。
+  # academy.claude.com の Claude Design System のトークン実値に合わせてある。
   palette:
     - media: "(prefers-color-scheme: light)"
-      scheme: default
-      primary: deep orange
-      accent: deep orange
+      scheme: anthropic
       toggle:
         icon: material/weather-night
         name: ダークモードに切り替え
     - media: "(prefers-color-scheme: dark)"
-      scheme: slate
-      primary: deep orange
-      accent: deep orange
+      scheme: anthropic-dark
       toggle:
         icon: material/weather-sunny
         name: ライトモードに切り替え
+
+extra_css:
+  - assets/anthropic.css
 
 plugins:
   - search:

@@ -1,0 +1,684 @@
+/* =========================================================================
+   Anthropic トンマナ for MkDocs Material
+   -------------------------------------------------------------------------
+   academy.claude.com が使っている Claude Design System (CDS) の実際の
+   デザイントークンを読み取り、Material の変数に対応づけたもの。
+
+   出典（academy.claude.com の配信CSSから抽出した実値）:
+     --cds-clay:            #d97757   ブランドのクレイ（アクセント）
+     --cds-clay-emphasized: #c6613f
+     --cds-radius:          6px
+     グレーは中性グレーではなく「わずかに緑みを帯びた温かいグレー」:
+       gray-0  #ffffff   gray-10 #fcfcfb   gray-20 #f9f9f7   gray-40 #f3f3f0
+       gray-50 #f0efec   gray-100 #e1e0d9  gray-200 #c3c2b7  gray-400 #898781
+       gray-600 #52514e  gray-800 #20201f  gray-830 #1a1a19  gray-900 #0b0b0b
+     ライト:  page-bg = gray-20 / text = neutral-900 / border = 黒10%
+     ダーク:  page-bg = gray-800台 / text = gray-50 / border = 白12%
+
+   フォントは Anthropic の専用フォント（AnthropicSans/Serif/Mono）が
+   配布されていないため、Google Fonts の近縁で代替している。
+   読み込みは overrides/main.html 側。
+
+   ロゴ・ワードマークは使っていない。これは第三者のワークショップ教材であり、
+   Anthropic公式サイトではないため。合わせているのは配色と組版だけ。
+   ========================================================================= */
+
+/* -------------------------------------------------------------------------
+   1. パレット
+   ------------------------------------------------------------------------- */
+
+:root {
+  /* CDS のグレーランプ（そのままの実値） */
+  --ant-gray-0: #ffffff;
+  --ant-gray-10: #fcfcfb;
+  --ant-gray-20: #f9f9f7;
+  --ant-gray-30: #f6f6f4;
+  --ant-gray-40: #f3f3f0;
+  --ant-gray-50: #f0efec;
+  --ant-gray-60: #edece8;
+  --ant-gray-70: #eae9e4;
+  --ant-gray-100: #e1e0d9;
+  --ant-gray-150: #d2d1c7;
+  --ant-gray-200: #c3c2b7;
+  --ant-gray-300: #a5a49a;
+  --ant-gray-400: #898781;
+  --ant-gray-500: #6d6b67;
+  --ant-gray-600: #52514e;
+  --ant-gray-700: #383835;
+  --ant-gray-750: #2c2c2a;
+  --ant-gray-800: #20201f;
+  --ant-gray-830: #1a1a19;
+  --ant-gray-850: #151515;
+  --ant-gray-900: #0b0b0b;
+
+  /* アクセント */
+  --ant-clay: #d97757;          /* --cds-clay */
+  --ant-clay-strong: #c6613f;   /* --cds-clay-emphasized */
+  --ant-clay-deep: #b1512f;     /* 本文リンク用。#c6613f は明るい地色でAA(4.5:1)に届かない */
+  --ant-cactus: #bcd1ca;        /* --cds-cactus */
+  --ant-mineral: #629987;
+  --ant-heather: #cbcadb;
+
+  --ant-radius: 6px;            /* --cds-radius */
+  --ant-radius-lg: 10px;
+}
+
+/* -------------------------------------------------------------------------
+   2. タイポグラフィのスタック
+   欧文と和文を1つのスタックに並べ、グリフ単位で使い分けさせる。
+   ------------------------------------------------------------------------- */
+
+:root {
+  --md-text-font-family:
+    "Inter", "Noto Sans JP",
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans",
+    "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
+
+  --md-code-font-family:
+    "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+    "Noto Sans JP", "Hiragino Sans", "Yu Gothic", monospace;
+
+  /* Anthropic が "voice" と呼ぶ役割。見出しに使う */
+  --ant-font-voice:
+    "Source Serif 4", "Noto Serif JP",
+    "Hiragino Mincho ProN", "Yu Mincho", Georgia, "Times New Roman", serif;
+}
+
+/* -------------------------------------------------------------------------
+   3. ライトテーマ
+   ------------------------------------------------------------------------- */
+
+[data-md-color-scheme="anthropic"] {
+  --ant-bg: var(--ant-gray-20);
+  --ant-surface: var(--ant-gray-10);
+  --ant-surface-sunken: var(--ant-gray-40);
+  --ant-ink: var(--ant-gray-900);
+  --ant-ink-body: var(--ant-gray-800);
+  --ant-ink-secondary: var(--ant-gray-600);
+  --ant-ink-muted: var(--ant-gray-400);
+  --ant-line: rgba(11, 11, 11, 0.10);        /* --cds-alpha-2 */
+  --ant-line-strong: rgba(11, 11, 11, 0.20); /* --cds-alpha-3 */
+  --ant-link: var(--ant-clay-deep);
+  --ant-link-hover: var(--ant-clay-strong);
+
+  --md-default-fg-color: var(--ant-ink-body);
+  --md-default-fg-color--light: var(--ant-ink-secondary);
+  --md-default-fg-color--lighter: var(--ant-ink-muted);
+  --md-default-fg-color--lightest: var(--ant-line);
+  --md-default-bg-color: var(--ant-bg);
+  --md-default-bg-color--light: rgba(249, 249, 247, 0.7);
+  --md-default-bg-color--lighter: rgba(249, 249, 247, 0.45);
+  --md-default-bg-color--lightest: rgba(249, 249, 247, 0.12);
+
+  /* ヘッダーは色帯にしない。地色＋ヘアラインというAnthropicの構え */
+  --md-primary-fg-color: var(--ant-bg);
+  --md-primary-fg-color--light: var(--ant-gray-30);
+  --md-primary-fg-color--dark: var(--ant-gray-60);
+  --md-primary-bg-color: var(--ant-ink);
+  --md-primary-bg-color--light: var(--ant-ink-secondary);
+
+  --md-accent-fg-color: var(--ant-clay-strong);
+  --md-accent-fg-color--transparent: rgba(217, 119, 87, 0.10);
+  --md-accent-bg-color: var(--ant-gray-0);
+  --md-accent-bg-color--light: var(--ant-gray-20);
+
+  --md-typeset-color: var(--ant-ink-body);
+  --md-typeset-a-color: var(--ant-link);
+  --md-typeset-mark-color: rgba(217, 119, 87, 0.22);
+  --md-typeset-table-color: var(--ant-line-strong);
+  --md-typeset-del-color: rgba(198, 97, 63, 0.15);
+  --md-typeset-ins-color: rgba(98, 153, 135, 0.18);
+
+  --md-code-fg-color: var(--ant-gray-800);
+  --md-code-bg-color: var(--ant-surface-sunken);
+
+  --md-footer-fg-color: var(--ant-ink-body);
+  --md-footer-fg-color--light: var(--ant-ink-secondary);
+  --md-footer-fg-color--lighter: var(--ant-ink-muted);
+  --md-footer-bg-color: var(--ant-bg);
+  --md-footer-bg-color--dark: var(--ant-bg);
+
+  /* 影はほぼ使わない。境界はヘアラインで表す */
+  --md-shadow-z1: 0 1px 2px rgba(11, 11, 11, 0.04);
+  --md-shadow-z2: 0 2px 8px rgba(11, 11, 11, 0.06);
+  --md-shadow-z3: 0 8px 24px rgba(11, 11, 11, 0.10);
+
+  color-scheme: light;
+}
+
+/* -------------------------------------------------------------------------
+   4. ダークテーマ
+   ------------------------------------------------------------------------- */
+
+[data-md-color-scheme="anthropic-dark"] {
+  --ant-bg: var(--ant-gray-830);
+  --ant-surface: var(--ant-gray-800);
+  --ant-surface-sunken: var(--ant-gray-850);
+  --ant-ink: var(--ant-gray-50);
+  --ant-ink-body: #e6e5e0;
+  --ant-ink-secondary: var(--ant-gray-200);
+  --ant-ink-muted: var(--ant-gray-400);
+  --ant-line: rgba(240, 239, 236, 0.12);
+  --ant-line-strong: rgba(240, 239, 236, 0.22);
+  --ant-link: var(--ant-clay);
+  --ant-link-hover: #e79274;
+
+  --md-default-fg-color: var(--ant-ink-body);
+  --md-default-fg-color--light: var(--ant-ink-secondary);
+  --md-default-fg-color--lighter: var(--ant-ink-muted);
+  --md-default-fg-color--lightest: var(--ant-line);
+  --md-default-bg-color: var(--ant-bg);
+  --md-default-bg-color--light: rgba(26, 26, 25, 0.7);
+  --md-default-bg-color--lighter: rgba(26, 26, 25, 0.45);
+  --md-default-bg-color--lightest: rgba(26, 26, 25, 0.12);
+
+  --md-primary-fg-color: var(--ant-bg);
+  --md-primary-fg-color--light: var(--ant-gray-800);
+  --md-primary-fg-color--dark: var(--ant-gray-850);
+  --md-primary-bg-color: var(--ant-ink);
+  --md-primary-bg-color--light: var(--ant-ink-secondary);
+
+  --md-accent-fg-color: var(--ant-clay);
+  --md-accent-fg-color--transparent: rgba(217, 119, 87, 0.16);
+  --md-accent-bg-color: var(--ant-gray-900);
+  --md-accent-bg-color--light: var(--ant-gray-830);
+
+  --md-typeset-color: var(--ant-ink-body);
+  --md-typeset-a-color: var(--ant-link);
+  --md-typeset-mark-color: rgba(217, 119, 87, 0.28);
+  --md-typeset-table-color: var(--ant-line-strong);
+  --md-typeset-del-color: rgba(217, 119, 87, 0.20);
+  --md-typeset-ins-color: rgba(188, 209, 202, 0.18);
+
+  --md-code-fg-color: var(--ant-ink-body);
+  --md-code-bg-color: var(--ant-gray-850);
+
+  --md-footer-fg-color: var(--ant-ink-body);
+  --md-footer-fg-color--light: var(--ant-ink-secondary);
+  --md-footer-fg-color--lighter: var(--ant-ink-muted);
+  --md-footer-bg-color: var(--ant-bg);
+  --md-footer-bg-color--dark: var(--ant-bg);
+
+  --md-shadow-z1: 0 1px 2px rgba(0, 0, 0, 0.30);
+  --md-shadow-z2: 0 2px 8px rgba(0, 0, 0, 0.36);
+  --md-shadow-z3: 0 8px 24px rgba(0, 0, 0, 0.44);
+
+  color-scheme: dark;
+}
+
+/* -------------------------------------------------------------------------
+   5. シンタックスハイライト
+   彩度を落とし、クレイとミネラル（緑）を軸にした落ち着いた配色にする。
+   ------------------------------------------------------------------------- */
+
+[data-md-color-scheme="anthropic"] {
+  --md-code-hl-color: rgba(217, 119, 87, 0.20);
+  --md-code-hl-number-color: #a35a3a;
+  --md-code-hl-special-color: #b1512f;
+  --md-code-hl-function-color: #6b5aa6;
+  --md-code-hl-constant-color: #7a5fa8;
+  --md-code-hl-keyword-color: #4c7f6d;
+  --md-code-hl-string-color: #3f7a63;
+  --md-code-hl-name-color: var(--ant-gray-800);
+  --md-code-hl-operator-color: var(--ant-gray-500);
+  --md-code-hl-punctuation-color: var(--ant-gray-500);
+  --md-code-hl-comment-color: var(--ant-gray-400);
+  --md-code-hl-generic-color: var(--ant-gray-500);
+  --md-code-hl-variable-color: var(--ant-gray-700);
+}
+
+[data-md-color-scheme="anthropic-dark"] {
+  --md-code-hl-color: rgba(217, 119, 87, 0.24);
+  --md-code-hl-number-color: #e0946f;
+  --md-code-hl-special-color: #e08a68;
+  --md-code-hl-function-color: #b0a6e0;
+  --md-code-hl-constant-color: #bda9e8;
+  --md-code-hl-keyword-color: #8fc4ad;
+  --md-code-hl-string-color: #9ccbb4;
+  --md-code-hl-name-color: var(--ant-ink-body);
+  --md-code-hl-operator-color: var(--ant-gray-300);
+  --md-code-hl-punctuation-color: var(--ant-gray-300);
+  --md-code-hl-comment-color: var(--ant-gray-400);
+  --md-code-hl-generic-color: var(--ant-gray-300);
+  --md-code-hl-variable-color: var(--ant-gray-200);
+}
+
+/* -------------------------------------------------------------------------
+   6. 組版
+   ------------------------------------------------------------------------- */
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.md-typeset {
+  font-size: 0.82rem;
+  line-height: 1.9;               /* 和文の長文は行間を広めに取る */
+  letter-spacing: 0.005em;
+}
+
+/* 見出しは "voice"（セリフ）。h1・h2 だけに使い、h3以下はサンセリフに戻す。
+   全部セリフにすると教材の細かい手順が読みにくくなる */
+.md-typeset h1,
+.md-typeset h2 {
+  font-family: var(--ant-font-voice);
+  font-weight: 600;
+  color: var(--ant-ink);
+  letter-spacing: -0.005em;
+  line-height: 1.45;
+}
+
+.md-typeset h1 {
+  font-size: 1.85rem;
+  margin: 0 0 1.2rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--ant-line);
+}
+
+.md-typeset h2 {
+  font-size: 1.32rem;
+  margin: 2.4rem 0 0.9rem;
+}
+
+.md-typeset h3,
+.md-typeset h4,
+.md-typeset h5,
+.md-typeset h6 {
+  font-family: var(--md-text-font-family);
+  font-weight: 600;
+  color: var(--ant-ink);
+  letter-spacing: 0;
+}
+
+.md-typeset h3 { font-size: 1.05rem; margin: 1.9rem 0 0.7rem; }
+.md-typeset h4 { font-size: 0.92rem; margin: 1.5rem 0 0.6rem; }
+
+.md-typeset p,
+.md-typeset li {
+  color: var(--ant-ink-body);
+}
+
+/* 教材は太字での強調が非常に多い。強すぎず、しかし確実に目に入る重さにする */
+.md-typeset strong {
+  font-weight: 700;
+  color: var(--ant-ink);
+}
+
+/* -------------------------------------------------------------------------
+   7. リンク
+   クレイ単色だと明るい地色でコントラストが足りないので、
+   本文リンクは濃いクレイ＋下線。色だけに意味を持たせない。
+   ------------------------------------------------------------------------- */
+
+.md-typeset a {
+  color: var(--ant-link);
+  text-decoration: underline;
+  text-decoration-color: rgba(217, 119, 87, 0.45);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  transition: color 120ms, text-decoration-color 120ms;
+}
+
+.md-typeset a:hover,
+.md-typeset a:focus {
+  color: var(--ant-link-hover);
+  text-decoration-color: currentColor;
+}
+
+/* 見出しの permalink（¶）は普段は消しておく */
+.md-typeset .headerlink {
+  color: var(--ant-line-strong);
+  text-decoration: none;
+}
+
+.md-typeset a.headerlink:hover {
+  color: var(--ant-clay);
+}
+
+/* -------------------------------------------------------------------------
+   8. ヘッダー・サイドバー・フッター
+   ------------------------------------------------------------------------- */
+
+.md-header {
+  background-color: var(--ant-bg);
+  color: var(--ant-ink);
+  box-shadow: none;
+  border-bottom: 1px solid var(--ant-line);
+}
+
+.md-header--shadow {
+  box-shadow: none;
+}
+
+.md-header__title {
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}
+
+.md-search__form {
+  background-color: var(--ant-surface);
+  border: 1px solid var(--ant-line);
+  border-radius: var(--ant-radius);
+  box-shadow: none;
+}
+
+.md-search__form:hover {
+  background-color: var(--ant-surface);
+  border-color: var(--ant-line-strong);
+}
+
+[data-md-toggle="search"]:checked ~ .md-header .md-search__form {
+  background-color: var(--ant-surface);
+  border-color: var(--ant-line-strong);
+}
+
+.md-search__input::placeholder {
+  color: var(--ant-ink-muted);
+}
+
+.md-search__output {
+  border-radius: var(--ant-radius);
+}
+
+.md-search-result__meta {
+  color: var(--ant-ink-muted);
+  background-color: transparent;
+  border-bottom: 1px solid var(--ant-line);
+}
+
+/* サイドバー: 現在地はクレイで示す */
+.md-nav {
+  font-size: 0.7rem;
+}
+
+.md-nav__title {
+  color: var(--ant-ink-muted);
+  font-weight: 600;
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  box-shadow: none;
+}
+
+.md-nav__link {
+  color: var(--ant-ink-secondary);
+  transition: color 120ms;
+}
+
+.md-nav__link:hover,
+.md-nav__link:focus {
+  color: var(--ant-clay-strong);
+}
+
+.md-nav__link--active,
+.md-nav__link--active:focus,
+.md-nav__link--active:hover,
+.md-nav__item .md-nav__link--active {
+  color: var(--ant-clay-strong);
+  font-weight: 600;
+}
+
+[data-md-color-scheme="anthropic-dark"] .md-nav__link:hover,
+[data-md-color-scheme="anthropic-dark"] .md-nav__link--active {
+  color: var(--ant-clay);
+}
+
+/* 目次（右） */
+.md-nav--secondary .md-nav__title {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.md-footer {
+  border-top: 1px solid var(--ant-line);
+}
+
+.md-footer-meta {
+  background-color: transparent;
+  border-top: 1px solid var(--ant-line);
+}
+
+.md-footer__link {
+  opacity: 1;
+}
+
+.md-footer__title {
+  font-weight: 600;
+}
+
+.md-copyright,
+.md-footer-meta .md-footer-meta__inner {
+  color: var(--ant-ink-muted);
+}
+
+/* -------------------------------------------------------------------------
+   9. コード
+   79個ある ```text はコピペして使うプロンプト。読み間違いが事故になるので、
+   面ではなく「沈んだ紙」として一段落とし、ヘアラインで輪郭を与える。
+   ------------------------------------------------------------------------- */
+
+.md-typeset code {
+  background-color: var(--md-code-bg-color);
+  border-radius: 4px;
+  padding: 0.1em 0.36em;
+  font-size: 0.86em;
+  letter-spacing: 0;
+}
+
+.md-typeset pre > code {
+  padding: 0.9rem 1rem;
+  border-radius: var(--ant-radius);
+}
+
+.md-typeset .highlight,
+.md-typeset .highlighttable {
+  border: 1px solid var(--ant-line);
+  border-radius: var(--ant-radius);
+  overflow: hidden;
+  background-color: var(--md-code-bg-color);
+}
+
+.md-typeset .highlight code,
+.md-typeset .highlighttable code {
+  border-radius: 0;
+  line-height: 1.75;
+}
+
+.md-typeset .highlight > pre,
+.md-typeset pre {
+  margin: 1.1em 0;
+}
+
+.md-typeset .highlight .filename {
+  background-color: transparent;
+  border-bottom: 1px solid var(--ant-line);
+  color: var(--ant-ink-muted);
+  font-weight: 500;
+}
+
+/* コピーボタン */
+.md-clipboard {
+  color: var(--ant-ink-muted);
+}
+
+.md-clipboard:hover {
+  color: var(--ant-clay-strong);
+}
+
+.md-typeset kbd {
+  background-color: var(--ant-surface);
+  border: 1px solid var(--ant-line-strong);
+  border-radius: 4px;
+  box-shadow: none;
+  color: var(--ant-ink-body);
+}
+
+/* -------------------------------------------------------------------------
+   10. 表
+   教材はタイムテーブル・要件表など表が多い。罫線は最小限に。
+   ------------------------------------------------------------------------- */
+
+.md-typeset table:not([class]) {
+  border: 1px solid var(--ant-line);
+  border-radius: var(--ant-radius);
+  box-shadow: none;
+  font-size: 0.72rem;
+  line-height: 1.75;
+}
+
+.md-typeset table:not([class]) th {
+  background-color: var(--ant-surface-sunken);
+  color: var(--ant-ink);
+  font-weight: 600;
+  border-bottom: 1px solid var(--ant-line-strong);
+  white-space: nowrap;
+}
+
+.md-typeset table:not([class]) td {
+  border-top: 1px solid var(--ant-line);
+  vertical-align: top;
+}
+
+.md-typeset table:not([class]) tr:hover {
+  background-color: rgba(217, 119, 87, 0.04);
+}
+
+/* -------------------------------------------------------------------------
+   11. 引用・注意書き
+   教材は「> **重要:**」形式の注意書きを多用する。
+   クレイの縦罫で、本文と地続きのまま少しだけ持ち上げる。
+   ------------------------------------------------------------------------- */
+
+.md-typeset blockquote {
+  border-left: 2px solid rgba(217, 119, 87, 0.55);
+  color: var(--ant-ink-secondary);
+  margin-left: 0;
+  padding-left: 1rem;
+}
+
+.md-typeset blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+/* -------------------------------------------------------------------------
+   12. アドモニション
+   SKILL.md のフロントマター表示に使っている。Material既定の彩色は強すぎるので、
+   面をヘアライン＋淡いクレイに落とす。
+   ------------------------------------------------------------------------- */
+
+.md-typeset .admonition,
+.md-typeset details {
+  background-color: var(--ant-surface);
+  border: 1px solid var(--ant-line);
+  border-left: 2px solid var(--ant-clay);
+  border-radius: var(--ant-radius);
+  box-shadow: none;
+  font-size: 0.76rem;
+}
+
+.md-typeset .admonition-title,
+.md-typeset summary {
+  background-color: rgba(217, 119, 87, 0.07);
+  color: var(--ant-ink);
+  font-weight: 600;
+}
+
+.md-typeset .admonition-title::before,
+.md-typeset summary::before {
+  background-color: var(--ant-clay-strong);
+}
+
+.md-typeset .note > .admonition-title,
+.md-typeset .note > summary {
+  background-color: rgba(217, 119, 87, 0.07);
+}
+
+.md-typeset .note {
+  border-left-color: var(--ant-clay);
+}
+
+/* -------------------------------------------------------------------------
+   13. その他の細部
+   ------------------------------------------------------------------------- */
+
+.md-typeset hr {
+  border-bottom: 1px solid var(--ant-line);
+  margin: 2.2rem 0;
+}
+
+.md-typeset .md-button {
+  border-radius: var(--ant-radius);
+  border: 1px solid var(--ant-line-strong);
+  color: var(--ant-ink);
+  font-weight: 600;
+}
+
+.md-typeset .md-button--primary {
+  background-color: var(--ant-clay);
+  border-color: var(--ant-clay);
+  color: #ffffff;
+}
+
+.md-typeset .md-button--primary:hover {
+  background-color: var(--ant-clay-strong);
+  border-color: var(--ant-clay-strong);
+  color: #ffffff;
+}
+
+/* リストの行間も和文向けに少し開ける */
+.md-typeset ul li,
+.md-typeset ol li {
+  margin-bottom: 0.35em;
+}
+
+.md-typeset li > ul,
+.md-typeset li > ol {
+  margin-top: 0.35em;
+}
+
+/* 画像は紙に貼った感じに */
+.md-typeset img {
+  border-radius: var(--ant-radius);
+  border: 1px solid var(--ant-line);
+}
+
+/* テーマ切り替えボタン・GitHubアイコンをヘッダー地色になじませる */
+.md-header__button {
+  color: var(--ant-ink-secondary);
+}
+
+.md-header__button:hover {
+  color: var(--ant-clay-strong);
+  opacity: 1;
+}
+
+/* 選択範囲もブランド色で */
+::selection {
+  background-color: rgba(217, 119, 87, 0.25);
+}
+
+/* スクロールバー（WebKit） */
+* {
+  scrollbar-color: var(--ant-line-strong) transparent;
+}
+
+/* 目次の現在地 */
+.md-nav--secondary .md-nav__link--active {
+  color: var(--ant-clay-strong);
+}
+
+/* 「トップへ戻る」ボタン */
+.md-top {
+  background-color: var(--ant-surface);
+  border: 1px solid var(--ant-line);
+  border-radius: var(--ant-radius);
+  box-shadow: var(--md-shadow-z2);
+  color: var(--ant-ink-body);
+}
+
+.md-top:hover {
+  background-color: var(--ant-clay);
+  border-color: var(--ant-clay);
+  color: #ffffff;
+}
