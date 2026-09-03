@@ -5,6 +5,9 @@ Claude Codeを使って、あなたのアイデアをソフトウェアに変換
 
 これは「プログラミングを教える講座」ではありません。**AIと一緒にアイデアをソフトウェアへ変換する体験**そのものが目的です。
 
+> 📖 **教材はWebサイトでも読めます → <https://ai-eng-dojo.github.io/getting-started-vibecoding/>**
+> 当日はこちらを開いてください。検索・目次つきで、スマホからでも読めます。
+
 ## 対象者
 
 20名程度を想定しています。
@@ -147,7 +150,9 @@ getting-started-vibecoding/       ← 教材リポジトリ（このリポジト
 ├── hooks/                 後半10④でコピーして使うHookスクリプト（検証済み）
 ├── templates/             コピペして使うテンプレート（持ち帰り素材）
 ├── demos/                 ライブデモのソース・参考実装置き場
-└── instructor/            講師・メンター用（参加者は読まなくてOK）
+├── instructor/            講師・メンター用（参加者は読まなくてOK）
+├── mkdocs.yml             公開サイトの設定
+└── .github/workflows/     GitHub Pagesへの公開・リンク切れ検査（自動）
 ```
 
 - 参加者は **README → docs/00-prep.md → 当日は docs/01-part1.md と docs/02-part2.md** の順に読み進めます
@@ -155,6 +160,18 @@ getting-started-vibecoding/       ← 教材リポジトリ（このリポジト
 - `skills/` にはSkillの**完成例**が7枚あります。**前半4で作る3枚（`tsumete`・`tsumetsume`・`ddd`）は自分で書くのが本線**なので、まずは見ないで作ってください。**後半で使う4枚（`tdd`・`code-review`・`security-review`・`prototype`）は、自分で書かずコピーして使う運用**です（→ [skills/README.md](skills/README.md)）
 - 詰まったとき用の「救済版」（starters/の各お題の完成状態。`starters/⟨題⟩/rescue/index.html`）の使い方は [starters/README.md](starters/README.md) を参照してください
 - 独自ドメイン・リリース自動化（GitHub Actions）といった発展的な内容は、本線には含めず🚀拡張ミッションおよび [docs/columns.md](docs/columns.md) 側で扱います
+
+### 公開サイトについて
+
+この教材は、`main` に入るたびGitHub Actionsが [MkDocs](https://www.mkdocs.org/) でHTML化し、<https://ai-eng-dojo.github.io/getting-started-vibecoding/> に自動で公開されます。Markdown側のリンクは書き換えていないので、**GitHub上の表示とサイト上の表示のどちらからでも同じようにたどれます。**
+
+手元で見た目を確認したいときは、次の1コマンドで `http://127.0.0.1:8000` にプレビューが立ちます。
+
+```bash
+uv run --with-requirements requirements-site.txt python .github/scripts/build-site.py --serve
+```
+
+`instructor/` は「参加者には配布しない」ものなのでサイトには載せていません（リポジトリ上には残っています）。
 
 ## 本ワークショップの元になった書籍
 

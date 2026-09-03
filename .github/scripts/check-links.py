@@ -20,7 +20,11 @@ RAW_SELF = re.compile(
 
 def targets(root="."):
     for dirpath, dirnames, filenames in os.walk(root):
-        dirnames[:] = [d for d in dirnames if d not in {".git", "node_modules", ".github"}]
+        dirnames[:] = [
+            d for d in dirnames
+            # .site-src/ と site/ は Pages ビルドの中間物（元ファイルの複製）
+            if d not in {".git", "node_modules", ".github", ".site-src", "site", ".omc"}
+        ]
         for name in filenames:
             if name.endswith(".md"):
                 yield os.path.join(dirpath, name)

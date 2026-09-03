@@ -1,0 +1,129 @@
+# 教材リポジトリをそのままHTMLサイトにするための設定。
+#
+# 方針: docs/ 以下だけでなく、教材が相互リンクしている
+# README.md / docs / skills / starters / templates / hooks / demos を
+# ディレクトリ構造ごと .site-src/ にコピーしてからビルドする
+# （コピーは .github/scripts/build-site.py が行う）。
+# こうすると Markdown 側の相対リンクを一切書き換えずに、
+# GitHub上の表示とPages上の表示の両方でリンクが機能する。
+
+site_name: バイブコーディング実践入門
+site_description: Claude Codeで作りたいものが確実にできあがる バイブコーディング実践入門 — ハンズオンワークショップ教材
+site_url: https://ai-eng-dojo.github.io/getting-started-vibecoding/
+site_author: AI-Eng-Dojo
+
+repo_url: https://github.com/AI-Eng-Dojo/getting-started-vibecoding
+repo_name: AI-Eng-Dojo/getting-started-vibecoding
+edit_uri: edit/main/
+
+# build-site.py が組み立てるステージングディレクトリ
+docs_dir: .site-src
+site_dir: site
+
+use_directory_urls: true
+
+theme:
+  name: material
+  language: ja
+  font: false          # Google Fonts を読みに行かない（オフライン会場・プライバシー配慮）
+  icon:
+    repo: fontawesome/brands/github
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.top
+    - navigation.indexes
+    - toc.follow
+    - content.code.copy      # 79個ある ```text はコピペして使うプロンプト
+    - search.suggest
+    - search.highlight
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep orange
+      accent: deep orange
+      toggle:
+        icon: material/weather-night
+        name: ダークモードに切り替え
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep orange
+      accent: deep orange
+      toggle:
+        icon: material/weather-sunny
+        name: ライトモードに切り替え
+
+plugins:
+  - search:
+      lang:
+        - ja
+        - en
+
+markdown_extensions:
+  # 見出しのアンカーをGitHubと同じ日本語スラッグにする。
+  # 既存の [〜](02-part2.md#今日つないだものの外し方) を壊さないために必須。
+  - toc:
+      permalink: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify {kwds: {case: lower}}
+  - tables
+  - admonition
+  - attr_list
+  - md_in_html
+  - footnotes
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+# mkdocs は既定で /templates/ をサイトから除外する（テーマのテンプレート置き場と
+# みなすため）。この教材の templates/ は参加者に配る素材なので、除外を打ち消す。
+exclude_docs: |
+  !/templates/
+
+validation:
+  omitted_files: warn
+  absolute_links: warn
+  unrecognized_links: warn
+  links:
+    not_found: warn
+    anchors: warn
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/AI-Eng-Dojo/getting-started-vibecoding
+
+nav:
+  - ホーム: README.md
+  - 事前準備（前日まで）: docs/00-prep.md
+  - 前半（3時間）: docs/01-part1.md
+  - 後半（2時間55分）: docs/02-part2.md
+  - 後読みコラム集: docs/columns.md
+  - 代替お題 starters:
+      - starters/README.md
+      - お題A ポモドーロタイマー: starters/a-pomodoro-timer/README.md
+      - お題B 診断チャート: starters/b-shindan-chart/README.md
+      - お題C 習慣トラッカー: starters/c-habit-tracker/README.md
+  - スキル完成例:
+      - skills/README.md
+      - 前半で自分で作る tsumete: skills/tsumete/SKILL.md
+      - 前半で自分で作る tsumetsume: skills/tsumetsume/SKILL.md
+      - 前半で自分で作る ddd: skills/ddd/SKILL.md
+      - ddd の書式 CONTEXT-FORMAT: skills/ddd/CONTEXT-FORMAT.md
+      - ddd の書式 ADR-FORMAT: skills/ddd/ADR-FORMAT.md
+      - 後半で使う tdd: skills/tdd/SKILL.md
+      - 後半で使う code-review: skills/code-review/SKILL.md
+      - 後半で使う security-review: skills/security-review/SKILL.md
+      - 後半で使う prototype: skills/prototype/SKILL.md
+  - Hooks: hooks/README.md
+  - テンプレート:
+      - 最初の指示: templates/first-instruction.md
+      - Grill Me Skill 雛形: templates/grill-me-skill-template.md
+      - アイデアREADME: templates/idea-readme.md
+      - 仕様README: templates/spec-readme.md
+      - TASKS.md: templates/tasks.md
+      - レビュー・プロンプト: templates/verify-prompt.md
+  - デモ置き場: demos/README.md
