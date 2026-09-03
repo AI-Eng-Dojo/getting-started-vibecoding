@@ -151,6 +151,8 @@ getting-started-vibecoding/       ← 教材リポジトリ（このリポジト
 ├── demos/                 ライブデモのソース・参考実装置き場
 ├── instructor/            講師・メンター用（参加者は読まなくてOK）
 ├── mkdocs.yml             公開サイトの設定
+├── site-theme/            公開サイトの見た目（Anthropicトンマナ）・Orgアイコン
+├── overrides/             公開サイトのテンプレート差分（フォント読み込み）
 └── .github/workflows/     GitHub Pagesへの公開・リンク切れ検査（自動）
 ```
 
@@ -170,4 +172,6 @@ getting-started-vibecoding/       ← 教材リポジトリ（このリポジト
 uv run --with-requirements requirements-site.txt python .github/scripts/build-site.py --serve
 ```
 
-`instructor/` は「参加者には配布しない」ものなのでサイトには載せていません（リポジトリ上には残っています）。
+`instructor/` と各お題の `rescue/`（救済版）は、サイトには載せていません（リポジトリ上には残っています）。救済版は「開いてコードをコピーする」手順なので、HTMLとして動いてしまうサイト側に置くと手順が成立しないためです。配布は `raw.githubusercontent.com` のURLが担当しています。
+
+見た目は [academy.claude.com](https://academy.claude.com/) の配色・組版に合わせてあります（`site-theme/anthropic.css`）。Anthropicの専用フォントは配布されていないため、Google Fontsの近縁で代替しています。ロゴ・ワードマークは使っていません。
