@@ -411,16 +411,18 @@ body {
   transition: color 120ms;
 }
 
+/* ナビは 0.7rem と小さい。ライトでは #c6613f だと 3.84:1 でAAに届かないので、
+   より濃い #b1512f（4.87:1）を使う。ダークは #d97757 で 5.2:1 なので足りている */
 .md-nav__link:hover,
 .md-nav__link:focus {
-  color: var(--ant-clay-strong);
+  color: var(--ant-clay-deep);
 }
 
 .md-nav__link--active,
 .md-nav__link--active:focus,
 .md-nav__link--active:hover,
 .md-nav__item .md-nav__link--active {
-  color: var(--ant-clay-strong);
+  color: var(--ant-clay-deep);
   font-weight: 600;
 }
 
@@ -695,7 +697,7 @@ body {
 }
 
 .md-header__button:hover {
-  color: var(--ant-clay-strong);
+  color: var(--ant-clay-deep);
   opacity: 1;
 }
 
@@ -711,7 +713,7 @@ body {
 
 /* 目次の現在地 */
 .md-nav--secondary .md-nav__link--active {
-  color: var(--ant-clay-strong);
+  color: var(--ant-clay-deep);
 }
 
 /* 「トップへ戻る」ボタン */
