@@ -68,7 +68,10 @@
    欧文と和文を1つのスタックに並べ、グリフ単位で使い分けさせる。
    ------------------------------------------------------------------------- */
 
-:root {
+/* Material は --md-text-font-family / --md-code-font-family を :root ではなく
+   body 側で宣言している。同じ body に対して後から上書きする必要がある
+   （:root に書くと body の宣言に負けて効かない）。 */
+body {
   --md-text-font-family:
     "Inter", "Noto Sans JP",
     -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans",
@@ -77,8 +80,10 @@
   --md-code-font-family:
     "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
     "Noto Sans JP", "Hiragino Sans", "Yu Gothic", monospace;
+}
 
-  /* Anthropic が "voice" と呼ぶ役割。見出しに使う */
+/* Anthropic が "voice" と呼ぶ役割。見出しに使う */
+:root {
   --ant-font-voice:
     "Source Serif 4", "Noto Serif JP",
     "Hiragino Mincho ProN", "Yu Mincho", Georgia, "Times New Roman", serif;
@@ -567,8 +572,14 @@ body {
    面をヘアライン＋淡いクレイに落とす。
    ------------------------------------------------------------------------- */
 
-.md-typeset .admonition,
-.md-typeset details {
+/* Material は種類ごとに #448aff などの色を .md-typeset .admonition.note
+   （詳細度 0,3,0）で焼き込んでいる。素の .md-typeset .admonition（0,2,0）では
+   勝てないので、[class] を足して詳細度を揃えてから上書きする。
+   Anthropicは基本的に「モノクロ＋クレイ1色」なので、種類で色を散らさず
+   クレイに寄せる。止めたい種類（warning/danger）だけ深いラストにする。 */
+
+.md-typeset .admonition[class],
+.md-typeset details[class] {
   background-color: var(--ant-surface);
   border: 1px solid var(--ant-line);
   border-left: 2px solid var(--ant-clay);
@@ -577,25 +588,60 @@ body {
   font-size: 0.76rem;
 }
 
-.md-typeset .admonition-title,
-.md-typeset summary {
+.md-typeset .admonition[class]:focus-within,
+.md-typeset details[class]:focus-within {
+  box-shadow: 0 0 0 3px rgba(217, 119, 87, 0.15);
+}
+
+.md-typeset .admonition[class] > .admonition-title,
+.md-typeset .admonition[class] > summary,
+.md-typeset details[class] > .admonition-title,
+.md-typeset details[class] > summary {
   background-color: rgba(217, 119, 87, 0.07);
   color: var(--ant-ink);
   font-weight: 600;
 }
 
-.md-typeset .admonition-title::before,
-.md-typeset summary::before {
+.md-typeset .admonition[class] > .admonition-title::before,
+.md-typeset .admonition[class] > summary::before,
+.md-typeset details[class] > .admonition-title::before,
+.md-typeset details[class] > summary::before {
   background-color: var(--ant-clay-strong);
 }
 
-.md-typeset .note > .admonition-title,
-.md-typeset .note > summary {
-  background-color: rgba(217, 119, 87, 0.07);
+.md-typeset .admonition[class] > .admonition-title::after,
+.md-typeset .admonition[class] > summary::after,
+.md-typeset details[class] > .admonition-title::after,
+.md-typeset details[class] > summary::after {
+  color: var(--ant-clay-strong);
 }
 
-.md-typeset .note {
-  border-left-color: var(--ant-clay);
+/* 「止まってほしい」種類だけ、同じ色相の深いラストで一段強くする */
+.md-typeset .admonition[class].warning,
+.md-typeset .admonition[class].caution,
+.md-typeset .admonition[class].attention,
+.md-typeset .admonition[class].danger,
+.md-typeset .admonition[class].failure,
+.md-typeset details[class].warning,
+.md-typeset details[class].danger,
+.md-typeset details[class].failure {
+  border-left-color: #a33b2a;
+}
+
+.md-typeset .admonition[class].warning > .admonition-title::before,
+.md-typeset .admonition[class].caution > .admonition-title::before,
+.md-typeset .admonition[class].attention > .admonition-title::before,
+.md-typeset .admonition[class].danger > .admonition-title::before,
+.md-typeset .admonition[class].failure > .admonition-title::before {
+  background-color: #a33b2a;
+}
+
+/* フロントマターの description は1行が長い。ここだけは横スクロールより
+   折り返したほうが読める（「descriptionに何を書くか」が教材の核心なので） */
+.md-typeset .admonition .highlight code,
+.md-typeset .admonition pre > code {
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
 /* -------------------------------------------------------------------------
@@ -681,4 +727,28 @@ body {
   background-color: var(--ant-clay);
   border-color: var(--ant-clay);
   color: #ffffff;
+}
+
+/* -------------------------------------------------------------------------
+   14. ロゴ
+   AI-Eng-Dojo のOrgアイコン。Material既定の 1.2rem では絵柄がつぶれるので
+   少し大きくし、角丸を当ててマークとして置く。
+   ------------------------------------------------------------------------- */
+
+.md-header__button.md-logo {
+  padding: 0.2rem;
+  margin: 0.1rem;
+}
+
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+  height: 1.6rem;
+  width: 1.6rem;
+  border-radius: 5px;
+}
+
+.md-nav__title .md-nav__button.md-logo img {
+  height: 1.8rem;
+  width: 1.8rem;
+  border-radius: 6px;
 }

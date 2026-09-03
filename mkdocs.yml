@@ -29,6 +29,9 @@ theme:
   # フォントの読み込みは overrides/main.html の {% block font %} で行う。
   # Anthropicの専用フォントは配布されていないため、Google Fontsの近縁で代替する。
   font: false
+  # AI-Eng-Dojo のOrgアイコンをそのまま使う（site-theme/logo.png）
+  logo: assets/logo.png
+  favicon: assets/logo.png
   icon:
     repo: fontawesome/brands/github
   features:
