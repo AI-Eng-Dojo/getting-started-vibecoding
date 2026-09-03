@@ -1,2 +1,6 @@
 .DS_Store
 .omc/
+
+# GitHub Pages ビルドの中間物（.github/scripts/build-site.py が作る）
+.site-src/
+site/
