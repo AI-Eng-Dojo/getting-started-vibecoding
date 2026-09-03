@@ -42,7 +42,7 @@ description: Review the code on two separate axes — Spec (does it do what READ
 次の順で探し、見つかった最初のものを仕様として扱います。
 
 1. `README.md` の「できること」「完成判定」「今回やらないこと」
-2. `TASKS.md` の各項目と「終わったと分かる目印」
+2. `TASKS.md` の各項目と「完了定義」
 3. 上のどちらも無ければ、**「仕様が見つからないため、この軸はレビューできません」と報告**してください。推測で仕様を作らないこと
 
 ### 報告する3種類
