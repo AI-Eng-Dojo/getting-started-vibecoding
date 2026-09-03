@@ -20,7 +20,7 @@
 | ファイル | 中身 |
 |---|---|
 | [homework/README.md](homework/README.md) | 仕様。誰が使うか・できること・今回やらないこと・完成判定まで埋まっている |
-| [homework/TASKS.md](homework/TASKS.md) | やること8件。すべて「未」で、今日やる分の線はまだ引いていない |
+| [homework/TASKS.md](homework/TASKS.md) | やること8件。すべて「未」で、今日やる分はまだ決めていない |
 
 **後半7で `README.md` と `TASKS.md` がどちらも無かった人**が、この2枚を `myapp` にコピーして8へ進むためのものです。手順は [後半テキストの7](../../docs/02-part2.md) にあります。
 
