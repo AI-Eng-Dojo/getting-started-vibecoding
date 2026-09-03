@@ -107,6 +107,8 @@ nav:
       - お題A ポモドーロタイマー: starters/a-pomodoro-timer/README.md
       - お題B 診断チャート: starters/b-shindan-chart/README.md
       - お題C 習慣トラッカー: starters/c-habit-tracker/README.md
+      - 宿題の見本 仕様README: starters/c-habit-tracker/homework/README.md
+      - 宿題の見本 TASKS.md: starters/c-habit-tracker/homework/TASKS.md
   - スキル完成例:
       - skills/README.md
       - 前半で自分で作る tsumete: skills/tsumete/SKILL.md

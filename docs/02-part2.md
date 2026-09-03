@@ -39,7 +39,7 @@
 |---|---|
 | **`README.md` と `TASKS.md` の両方が揃っている** | このまま8へ |
 | **`README.md` はあるが `TASKS.md` が無い** | 8の冒頭で `TASKS.md` を作るところから始める（下のプロンプト） |
-| **どちらも無い（宿題に着手できなかった）** | `vibecoding-0908` を使ってハンズオンを進めてください |
+| **どちらも無い（宿題に着手できなかった）** | 詰め終わった状態の見本を1組借りて8へ（下の「宿題に着手できなかった人へ」）。前半で作った `vibecoding-0908` のアプリを題材に進めても構いません |
 
 `TASKS.md` がまだ無い人は、8の冒頭でこれを貼ってください。
 
@@ -48,6 +48,22 @@ README.md を読んで、実装する順に「やること」の一覧を TASKS.
 1つは15分以内で終わる大きさにし、それぞれ「画面のどこを見れば終わったと分かるか」を書いてください。
 上から順にやれば、途中で止まっても動くものが残る順番にしてください。
 ```
+
+### 宿題に着手できなかった人へ（見本を借りる）
+
+`README.md` と `TASKS.md` がどちらも無い人は、**詰め終わった状態の見本を1組そのまま借りてください。** 題材は「習慣トラッカー」です。**実装（`index.html`）は入っていません。** 作るのは9のあなたです。
+
+```text
+次の2つのURLの中身を、このフォルダの README.md と TASKS.md として保存してください。
+https://raw.githubusercontent.com/AI-Eng-Dojo/getting-started-vibecoding/main/starters/c-habit-tracker/homework/README.md
+https://raw.githubusercontent.com/AI-Eng-Dojo/getting-started-vibecoding/main/starters/c-habit-tracker/homework/TASKS.md
+
+いまある README.md は上書きせず、同じ場所に README-myidea.md という名前で残してください。
+```
+
+**前半3で書いた自分のREADMEは `README-myidea.md` として残ります。** 今日は使わなくても、持ち帰ればいつでもそこから再開できます。
+
+借りたあとは、**他の人とまったく同じ手順で8へ進みます。** この `TASKS.md` にも今日やる分の線を引きますし、**中身を自分のものとして書き換えて構いません。**
 
 ### 今日のうちに済ませておく1つ（11の準備）
 
