@@ -40,6 +40,15 @@ INCLUDE = [
 # コピーしないもの（どのディレクトリでも）
 EXCLUDE_NAMES = {".DS_Store", "__pycache__", ".git"}
 
+# サイトに載せないディレクトリ名。
+#
+# rescue/: 救済版（完成状態のHTML）。Pages上に置くとHTMLとして「動いてしまう」ため、
+#   starters/README.md が案内している「開いてコードを全部コピーする」手順が成立しない
+#   （見えるのは動いているアプリで、ソースではない）。救済版の配布は
+#   raw.githubusercontent.com のURLが担当していて、そちらはPagesとは無関係に動く。
+#   あわせて、完成形を先に見せないという前半2の設計（「2の狙いは完成度ではありません」）も守る。
+EXCLUDE_DIRS = {"rescue"}
+
 FRONT_MATTER = re.compile(r"\A---\r?\n(.*?)\r?\n---\r?\n", re.DOTALL)
 
 # [starters/](../starters/) のような「ディレクトリ宛」のリンク
@@ -125,7 +134,10 @@ def stage():
             count += 1
             continue
         for dirpath, dirnames, filenames in os.walk(src):
-            dirnames[:] = [d for d in dirnames if d not in EXCLUDE_NAMES]
+            dirnames[:] = [
+                d for d in dirnames
+                if d not in EXCLUDE_NAMES and d not in EXCLUDE_DIRS
+            ]
             for name in filenames:
                 if name in EXCLUDE_NAMES:
                     continue
