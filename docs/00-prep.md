@@ -111,7 +111,7 @@
 
 応答が返ってくれば、ここまでは完了です。
 
-![vscode-claudecode-welcome](./vscode-claudecode-welcome.png)
+![vscode-claudecode-welcome](images/vscode-claudecode-welcome.png)
 
 > **パネルが見当たらなくなったら**、VS Code左端の縦アイコン列（アクティビティバー）にあるClaudeのアイコンをクリックすると開き直せます。見つからない場合は `Cmd/Ctrl+Shift+P` でコマンドパレットを開き、「Claude Code」と入力して探してください。
 
@@ -198,7 +198,7 @@ git config --global user.email "(控えたnoreplyアドレス)"
    - メニューに出てこない場合は、右クリック →「Finderで表示」（Windowsは「エクスプローラーで表示」）→ 出てきたファイルをダブルクリックでもOKです
    - 開き方が分からなければ、Claude Codeにそのまま聞いてください。「作ったファイルをブラウザで開く方法を教えて」で答えてくれます
 
-![vibe-janken](./vibe-janken.png)
+![vibe-janken](images/vibe-janken.png)
 
 > ここで確認したいのは環境が動くことだけです。当日の題材は別に用意してあるので、ここで完成度を気にする必要はありません。
 
