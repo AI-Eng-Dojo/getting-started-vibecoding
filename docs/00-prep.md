@@ -3,7 +3,7 @@
 事前準備のゴールは4点です。最後の「まとめ ✅ チェックポイント0」で、この4点をそのまま確認します。
 
 - [ ] **ClaudeとGitHubのアカウントがそろっていること**（Gmail連携またはCloudflareアカウント作成を行う場合はGoogleも用意 → 0.1）
-- [ ] **VS Code上でClaude Code拡張が動き、頼んだものが実際に作れること**（→ 0.2・0.3）
+- [ ] **CLIの導入を確認し、Claude Codeに頼んだものが実際に作れること**（通常はVS Code拡張を使用 → 0.2・0.3）
 - [ ] **`git` に、公開されて困らない名前とメールアドレスが設定されていること**（→ 0.4②）
 - [ ] **`gh` コマンドでGitHubにログイン済みであること**（→ 0.4③）
 
@@ -21,6 +21,7 @@
 |---|---|
 | VS Code | 起動する（→ 0.2） |
 | Claude Code拡張 | 一言送って応答が返る（→ 0.2） |
+| Claude Code（CLI） | `claude --version` でバージョンが出る（→ 0.2の5） |
 | git | Claude Codeに聞く（→ 0.4①） |
 | `gh` コマンド（GitHub CLI） | `gh auth status` が通る（→ 0.4③） |
 | Node.js | `node -v` で22以上のバージョンが出る（→ 0.2の4） |
@@ -115,7 +116,8 @@ cloneは不要です。
 
 ## 0.2 開発環境のセットアップ
 
-この講座ではVS Code上でClaude Codeを使います。
+この講座では、通常の操作にVS Code拡張を使います。
+あわせて、ターミナルでの操作やMCP追加コマンドに使うClaude CodeのCLIも導入します。
 次の順にインストールしてください。
 gitの準備は、動作確認の後に0.4でまとめて行います。
 
@@ -124,12 +126,56 @@ gitの準備は、動作確認の後に0.4でまとめて行います。
 3. VS Codeの拡張機能から「Claude Code」を検索してインストール
 4. 全OS共通で、[nodejs.org](https://nodejs.org/) からLTS版（22以上）をダウンロードしてインストールし、**インストール後にPCを再起動**してください
    - LTS版はダウンロードページで最初に大きく表示されているボタンでOKです。インストーラーの選択肢はすべて既定値のままで進めて構いません
-   - 後半11の `npx wrangler` による公開と、後半12のBacklog連携で使います。Claude Code拡張にはCLIが同梱されています（[公式の拡張要件](https://code.claude.com/docs/en/vs-code#prerequisites)）
+   - 後半11の `npx wrangler` による公開と、後半12のBacklog連携で使います
    - ターミナルで `node -v` を実行し、22以上のバージョン番号（`v22.x.x` など）が出れば確認できます。すでに22以上が入っている人はそのままで構いません。古い場合はLTS版へ更新してください
-5. VS Code内でClaude Code拡張を開き、案内に従ってClaudeアカウントでログイン
-6. ログイン後、拡張内のターミナル（またはチャットパネル）で何か一言送り、応答が返ってくることを確認
+5. **ターミナル用のClaude Code（CLI）をインストールし、起動を確認します。**
 
-```
+    拡張に同梱されるCLIはチャットパネル用です。
+    ターミナルで `claude` を使うには、別途インストールが必要です（[公式の拡張要件](https://code.claude.com/docs/en/vs-code#prerequisites)）。
+
+    VS Codeのメニュー「表示」→「ターミナル」で、画面下部にターミナルを開きます。
+    Windowsでは、ターミナル右上の「＋」横の下向き矢印から「PowerShell」を選んでください。
+    以下のコマンドは、このターミナルに貼り付けて実行します。
+    すでに `claude --version` でバージョンが出る人は、再インストールせず下の起動確認へ進んで構いません。
+
+    [公式クイックスタート](https://code.claude.com/docs/ja/quickstart#step-1-install-claude-code)で推奨されているネイティブインストールを使います。
+    自分のOSに合うコマンドを1つ実行してください。
+
+    **macOS / Linux / WSL**
+
+    ```bash
+    curl -fsSL https://claude.ai/install.sh | bash
+    ```
+
+    **Windows（PowerShell）**
+
+    ```powershell
+    irm https://claude.ai/install.ps1 | iex
+    ```
+
+    インストールが終わったら、ターミナルを閉じて新しく開き直し、次を実行します。
+
+    ```bash
+    claude --version
+    ```
+
+    `claude` が見つからないと表示された場合は、インストーラーに表示されたPATHの案内、または[公式のPATH確認手順](https://code.claude.com/docs/en/troubleshoot-install#verify-your-path)に沿って設定してください。
+    設定後はVS Codeを再起動し、ターミナルで `claude --version` をもう一度実行します。
+
+    バージョン番号が表示されれば、導入を確認できました。
+    続けて、次のコマンドでCLIを起動します。
+
+    ```bash
+    claude
+    ```
+
+    ログインを求められたら、案内に従ってブラウザでClaudeアカウントにログインしてください。
+    起動を確認したら `/exit` でCLIを終了し、次の拡張の確認へ進みます。
+
+6. VS Code内でClaude Code拡張を開き、案内に従ってClaudeアカウントでログイン
+7. ログイン後、拡張のチャットパネルから次の一言を送り、応答が返ってくることを確認
+
+```text
 こんにちは。動作確認です。
 ```
 
@@ -144,14 +190,12 @@ gitの準備は、動作確認の後に0.4でまとめて行います。
 > 次に拡張機能画面でClaude Codeを更新し、VS Codeを再起動してください（[公式のトラブル対処](https://code.claude.com/docs/en/vs-code#fix-common-issues)）。
 >
 > それでも動かない場合は、エラー文と画面を残し、CLI版への切り替えを試してください。
-> VS Codeのメニュー「表示」→「ターミナル」を開き、`node -v` でNode.jsが22以上か確認します（古い場合や見つからない場合は4へ）。
-> 続けて `npm install -g @anthropic-ai/claude-code` を実行し、`claude` と入力してCLI版を起動します。
-> このnpmでのインストールにはNode.js 22以上が必要です（[公式のnpmインストール手順](https://code.claude.com/docs/en/setup#install-with-npm)）。
+> VS Codeのメニュー「表示」→「ターミナル」を開き、`claude` と入力して起動します。
+> ログインを求められたら、案内に従ってください。
+> `claude` が見つからない場合は、5の導入手順とPATHの確認へ進んでください。
 > **CLI版でも、この講座の作業を進められます。**
 
-> ターミナルの操作に慣れている方は、Node.jsが22以上か確認したうえで `npm install -g @anthropic-ai/claude-code` でCLI版を直接使うこともできますが、当日はVS Code拡張を使う前提で進行します。まずはVS Code拡張での起動を優先してください。
->
-> インストール方法は変わることがあります。うまくいかない場合は[公式のインストール手順](https://code.claude.com/docs/en/setup#install-with-npm)を確認してください。
+> インストール方法は変わることがあります。うまくいかない場合は[公式クイックスタート](https://code.claude.com/docs/ja/quickstart#step-1-install-claude-code)を確認してください。
 
 ## 0.3 動作確認
 
@@ -290,8 +334,9 @@ Claude Codeのパネルを開き、次を貼り付けて送信してください
 |---|---|
 | Claude Codeのログインでブラウザが開かない | 表示されたURLを手動でブラウザに貼り付ける |
 | VS Code拡張が認証を通らない | 一度VS Codeを再起動してから再試行。それでもだめなら公式ドキュメントの手順を確認 |
-| Claude Code拡張が起動しない・反応しない | VS Codeが1.94.0以上か確認→Claude Code拡張を更新→VS Codeを再起動。直らなければエラー文と画面を残し、0.2のCLI版への切り替えを試す |
+| Claude Code拡張が起動しない・反応しない | VS Codeが1.94.0以上か確認→Claude Code拡張を更新→VS Codeを再起動。直らなければエラー文と画面を残し、ターミナルで `claude` を起動する（未導入なら0.2の5へ） |
 | 拡張がエラー（TypeErrorなど）を出してクラッシュする | エラー文と画面を残し、上の行と同じ順に確認する。直らなければ0.2の「ログインしても反応がない・起動しない場合」のCLI手順へ |
+| ターミナルで `claude` が見つからない | 0.2の5でCLIの導入とPATH設定を確認する。設定後はVS Codeを再起動し、`claude --version` を再確認する |
 | 権限プロンプトで固まった | 内容を読んで「許可」。判断に迷うものは前日ならスキップし当日質問でOK |
 | 「上限に達しました」と出た | 前日なら5時間待てば回復するので問題ありません。**当日出た場合は待てません。** 挙手したうえで、プランを上げてください |
 | GitHubの「New repository」画面が開かない・作成が禁止されている | 組織アカウントのポリシー制限の可能性。**個人アカウントを別途作成**してください（無料）。当日 `gh repo create` も同じ理由で失敗します |
@@ -307,7 +352,7 @@ Claude Codeのパネルを開き、次を貼り付けて送信してください
 次が終わっていることを確認してください。冒頭のゴール4点と同じ並びです。
 
 - [ ] **0.1** ClaudeとGitHubのアカウントができている（Gmail連携またはCloudflareアカウント作成を行う場合はGoogleも用意。Cloudflare・Notion／Backlogは任意）
-- [ ] **0.2・0.3** VS CodeでClaude Codeにログインでき、頼んだじゃんけんゲームが動いた
+- [ ] **0.2・0.3** `claude --version` でバージョンを確認でき、Claude Codeにログインして頼んだじゃんけんゲームが動いた（通常はVS Code拡張を使用）
 - [ ] **0.4②** `git config --get user.email` が、公開されて困らないアドレスになっている
 - [ ] **0.4③** `gh auth status` が成功し、自分のユーザー名が表示された
 
