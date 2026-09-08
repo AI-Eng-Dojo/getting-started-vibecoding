@@ -43,9 +43,11 @@ Claude Codeは、対話とツールの実行を繰り返して作業を進めま
 
 ## 1. 最初に試すコマンド
 
+**前半・後半共通の推奨は Sonnet × medium です。**
+
 - `/help` で使えるコマンドを、`/status` で現在の状態を確認する
-- `/model` でモデルを選ぶ。前半はSonnetかHaikuを目安にする
-- `/effort` は考える深さ。前半は `medium` が目安
+- `/model sonnet` でSonnetを選ぶ
+- `/effort medium` で考える深さを `medium` にする
 - `/usage` で利用枠を確認する
 - `/permissions` で許可した操作を確認する
 
@@ -131,7 +133,7 @@ gh repo create vibecoding-0908 --public --clone --add-readme
 - **貼る**：エラー文やスクリーンショットをそのまま渡す
 - **戻す**：「直前の動いていた状態に戻してください」と頼む
 - **小さくする**：「まず1個だけ」と指示を分ける
-- 的外れな修正が続くときは、`/model` でモデルを変えて試す
+- 的外れな修正が続くときは、`/model` でモデルを変えて試す。解決したら Sonnet × medium に戻す
 
 教材の[代替お題と救済版](../starters/README.md)も使えます。
 開き方や操作が分からないときも、Claude Codeにそのまま聞いてください。
@@ -311,7 +313,8 @@ vibecoding-0908 の .claude/skills/tsumete/SKILL.md と同じ内容を、
 ```
 
 - 5時間ごとの枠が半分を切っていたら、メンターに声をかける
-- まず `/model` でHaikuかSonnetにする
+- まず Sonnet × medium に戻す
+- それでも残量が心配なら、`/model` でHaikuへの切り替えを検討する
 - 話題が変わったら `/clear` する
 - 必要ならプランの変更を検討する
 
