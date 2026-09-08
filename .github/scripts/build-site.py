@@ -88,7 +88,7 @@ def surface_front_matter(text):
 
     mkdocs はフロントマターをメタデータとして食べてしまうため、そのままだと
     サイト上から `name` と `description` が消える。この教材は
-    「description がスキルの起動条件になる」ことを教えるものなので、
+    「description がエージェントスキルの起動条件になる」ことを教えるものなので、
     完成例からそこが消えるのは教材として成立しない。
     フロントマター自体は残したまま、最初のH1の直後に表示用のブロックを挿す。
     """
@@ -97,9 +97,9 @@ def surface_front_matter(text):
         return text
     block = (
         "\n"
-        "!!! note \"このスキルのフロントマター（`SKILL.md` の冒頭）\"\n"
+        "!!! note \"フロントマター（`SKILL.md` の冒頭）\"\n"
         "\n"
-        "    Claudeは `description` を読んで、このスキルを自分で呼ぶかどうかを判断します。\n"
+        "    Claudeは `description` を読んで、このエージェントスキルを自分で呼ぶかどうかを判断します。\n"
         "\n"
         "    ```yaml\n"
         + "".join("    " + line + "\n" for line in m.group(1).splitlines())

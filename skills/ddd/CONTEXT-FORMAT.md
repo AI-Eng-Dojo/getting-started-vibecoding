@@ -51,7 +51,7 @@ _避ける_: Client、buyer、account
 - **Ordering ↔ Billing**: `CustomerId` と `Money` の型を共有する
 ```
 
-どちらの構造かは、このスキルが次のように推定します。
+どちらの構造かは、このエージェントスキルが次のように推定します。
 
 - `CONTEXT-MAP.md` があれば、それを読んでコンテキストを見つける
 - ルートに `CONTEXT.md` だけがあれば、単一コンテキスト
