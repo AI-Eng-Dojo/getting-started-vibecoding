@@ -15,7 +15,7 @@
 ## 0.0 用意するソフトウェア
 
 - VS CodeとClaude Code拡張を使う
-- Node.jsのLTS版を全OSで入れる
+- Node.jsのLTS版を全OSで入れる（`wrangler`・Backlog用）
 - **Git**で変更を保存し、**GitHub CLI（gh）**でGitHubを操作する
 - 作ったHTMLを確認するブラウザを用意する
 
@@ -60,7 +60,7 @@ Backlogを選ぶ人は、前日までにログイン、APIキー発行、`node -
 
 1. VS Codeを入れ、1.94.0以上であることを確認する
 2. Claude Code拡張を入れる
-3. Node.jsのLTS版を入れ、PCを再起動する
+3. Node.jsのLTS版（22以上）を入れ、PCを再起動する
 4. 拡張からClaudeにログインし、一言送る
 
 ```text
@@ -144,15 +144,17 @@ git config --get user.name と git config --get user.email を実行して、
 ## 0.6 起動や認証で止まったら
 
 - 認証画面が開かなければ、表示されたURLをブラウザに貼る
-- 拡張が動かなければ、VS CodeのバージョンとNode.jsを確認して再起動する
-- Windowsで拡張のエラーが続く場合は、CLI版へ切り替えられる
+- 拡張が動かなければ、VS Codeが1.94.0以上か確認する
+- Claude Code拡張を更新し、VS Codeを再起動する
+
+解消しなければ、エラー文と画面を残してCLI版を試します。
+まず `node -v` でNode.jsが22以上か確認してください。
 
 ```bash
 npm install -g @anthropic-ai/claude-code
 claude
 ```
 
-エラー文と画面はそのまま残してください。
 未解決でも、その状態を添えて提出できます。
 
 [教材で手順を見る](../docs/00-prep.md#06-つまずき早見表)

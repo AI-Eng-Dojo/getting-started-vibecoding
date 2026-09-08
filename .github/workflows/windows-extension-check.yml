@@ -1,0 +1,36 @@
+name: Windows の Claude Code 拡張起動を確認
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/windows-extension-check.yml
+      - .github/scripts/check-windows-extension.ps1
+      - .github/scripts/windows-extension-test.cjs
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  extension-startup:
+    runs-on: windows-2025
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: 外部 Node.js を PATH から除いて拡張を起動
+        shell: pwsh
+        run: >-
+          ./.github/scripts/check-windows-extension.ps1
+          -WorkDirectory "${{ runner.temp }}/claude-extension-no-node"
+
+      - name: バージョン・起動結果・プロセス記録・画面を保存
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-extension-startup-${{ github.run_id }}
+          path: ${{ runner.temp }}/claude-extension-no-node/evidence
+          if-no-files-found: warn
+          retention-days: 30
