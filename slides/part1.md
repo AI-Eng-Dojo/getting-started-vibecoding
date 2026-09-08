@@ -438,7 +438,7 @@ Hooksは権限確認を経ずに動きます。
 
 ## 5. 編集ログを残すHook
 
-`myapp` に、編集後の記録を設定します。
+`myapp` をVS Codeで開いていることを確認し、編集後の記録を設定します。
 
 ```text
 このプロジェクトの .claude/settings.json に、次のHookを設定してください。
@@ -456,7 +456,7 @@ settings.json や必要なフォルダが無ければ作成してください。
 ## 5. Hookの実行結果を確認する
 
 1. `/clear` で会話を切る
-2. `myapp` のファイルを1つ、Claude Codeに編集させる
+2. `myapp` の `README.md` に一行書き足すよう、Claude Codeに頼む
 3. `.claude/edit-log.txt` を開き、日時とファイル名が増えたか確認する
 4. `/hooks` で登録内容を見る
 
