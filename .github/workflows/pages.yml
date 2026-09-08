@@ -1,6 +1,6 @@
 name: GitHub Pagesに教材を公開
 
-# 教材をHTMLサイトとしてビルドし、GitHub Pagesへ公開する。
+# 教材と説明用スライドをHTMLとしてビルドし、GitHub Pagesへまとめて公開する。
 # 参加者はリポジトリをcloneしない前提なので、ここが唯一の導線になる。
 
 on:
@@ -34,7 +34,10 @@ jobs:
       - name: 依存をインストール
         run: pip install -r requirements-site.txt
 
-      - name: サイトをビルド
+      - name: スライドのビルド処理を検証
+        run: python -m unittest discover -s .github/scripts -p 'test_*.py'
+
+      - name: 教材と説明用スライドをビルド
         # build-site.py が .site-src/ を組み立てて mkdocs build --strict を呼ぶ。
         # --strict なので、リンク切れ・アンカー切れの警告があれば落ちる
         run: python .github/scripts/build-site.py
