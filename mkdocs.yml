@@ -116,7 +116,7 @@ nav:
       - お題C 習慣トラッカー: starters/c-habit-tracker/README.md
       - 宿題の見本 仕様README: starters/c-habit-tracker/homework/README.md
       - 宿題の見本 TASKS.md: starters/c-habit-tracker/homework/TASKS.md
-  - スキル完成例:
+  - エージェントスキル完成例:
       - skills/README.md
       - 前半で自分で作る tsumete: skills/tsumete/SKILL.md
       - 前半で自分で作る tsumetsume: skills/tsumetsume/SKILL.md
@@ -130,7 +130,7 @@ nav:
   - Hooks: hooks/README.md
   - テンプレート:
       - 最初の指示: templates/first-instruction.md
-      - Grill Me Skill 雛形: templates/grill-me-skill-template.md
+      - Grill Me系エージェントスキルの雛形: templates/grill-me-skill-template.md
       - アイデアREADME: templates/idea-readme.md
       - 仕様README: templates/spec-readme.md
       - TASKS.md: templates/tasks.md
