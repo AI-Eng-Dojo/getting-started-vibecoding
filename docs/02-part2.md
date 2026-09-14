@@ -144,16 +144,16 @@ TASKS.md にも同じ見出しで写してください。理由が書いてあ�
 前半4では、アイデアを詰めるエージェントスキルを自分で作りました。
 後半で使う `tdd` には、実装の進め方を定義してあります。
 完成例が [skills/tdd/SKILL.md](../skills/tdd/SKILL.md) にあります。
-自分で書かず、コピーして使って構いません。
+自分で書かず、コピーして使って構いません。**前半2で見た、もう一方の置き場所です。** 今回はプロジェクトレベルに置きます。
 
 ```text
-次のURLの中身を、~/.claude/skills/tdd/SKILL.md として保存してください。
+次のURLの中身を、このプロジェクト（myapp）の .claude/skills/tdd/SKILL.md として保存してください。
 フォルダが無ければ作ってください。
 
 https://raw.githubusercontent.com/AI-Eng-Dojo/getting-started-vibecoding/main/skills/tdd/SKILL.md
 ```
 
-> 教材リポジトリはcloneしていないので、URLで渡します。取得の許可を聞かれたら許可してください。取得できなかった場合は、上のURLをブラウザで開いて全文をコピーし、Claude Codeに貼って「これを `~/.claude/skills/tdd/SKILL.md` として保存して」と頼めば同じことができます。
+> 教材リポジトリはcloneしていないので、URLで渡します。取得の許可を聞かれたら許可してください。取得できなかった場合は、上のURLをブラウザで開いて全文をコピーし、Claude Codeに貼って「これを `.claude/skills/tdd/SKILL.md` として保存して」と頼めば同じことができます。
 
 保存できたら `/clear` で会話を切ってください。
 
@@ -245,7 +245,7 @@ TASKS.md の1つ目だけを、最小の形で実装してください。
 - 〔共通〕**`prototype` で迷いを潰す**: 決められない設計や「この動きで合っているか分からない」を、捨てる前提の小さい試作で判断します。完成例が [skills/prototype/SKILL.md](../skills/prototype/SKILL.md) にあります
 
     ```text
-    次のURLの中身を、~/.claude/skills/prototype/SKILL.md として保存してください。
+    次のURLの中身を、このプロジェクト（myapp）の .claude/skills/prototype/SKILL.md として保存してください。
 
     https://raw.githubusercontent.com/AI-Eng-Dojo/getting-started-vibecoding/main/skills/prototype/SKILL.md
     ```
@@ -274,9 +274,9 @@ TASKS.md の1つ目だけを、最小の形で実装してください。
 完成例が [skills/code-review/SKILL.md](../skills/code-review/SKILL.md) と [skills/security-review/SKILL.md](../skills/security-review/SKILL.md) にあります。どちらも自分で書かず、コピーして使って構いません。
 
 ```text
-次の2つのURLの中身を、それぞれ
-~/.claude/skills/code-review/SKILL.md と
-~/.claude/skills/security-review/SKILL.md として保存してください。
+次の2つのURLの中身を、このプロジェクト（myapp）のそれぞれ
+.claude/skills/code-review/SKILL.md と
+.claude/skills/security-review/SKILL.md として保存してください。
 フォルダが無ければ作ってください。
 
 https://raw.githubusercontent.com/AI-Eng-Dojo/getting-started-vibecoding/main/skills/code-review/SKILL.md
@@ -723,18 +723,18 @@ TASKS.md から、次の4つを集めて、Backlogの⟨プロジェクト名⟩
 ### 継続のために
 
 - 帰りに [columns.md](columns.md) の★コラムを読む
-- 今日手元に揃ったエージェントスキルは、ユーザーレベル（`~/.claude/skills/`）に置いておけば次のプロジェクトでもそのまま使えます
+- 今日手元に揃ったエージェントスキルは、置き場所によって次のプロジェクトでの効きかたが変わります
 
     | 前半で自分で作った | 後半でコピーした |
     |---|---|
     | `tsumete`・`tsumetsume`・`ddd` | `tdd`・`code-review`・`security-review`（＋`prototype`） |
 
-    これで「仕様を詰める → 実装する → レビューする」の一周ぶんが、全部エージェントスキルとして手元にあります。次に何か作るときは、前半4からやり直す必要はありません
+    左はユーザーレベル（`~/.claude/skills/`）に置いたので、次のプロジェクトでもそのまま使えます。右は `myapp` のプロジェクトレベル（`.claude/skills/`）に置いたので、`myapp` の中だけで効きます。「仕様を詰める → 実装する → レビューする」の一周ぶんは、この2段構えで全部エージェントスキルとして手元にあります。
 
-    > **ユーザーレベルに置いたエージェントスキルは、どのプロジェクトでも自動で呼ばれます。** `tdd` は「実装して」に、`ddd` は「用語集を整理して」に反応します。**これは明日、仕事のリポジトリで作業しているときにも起きます。** 「実装して」と言っただけで `TASKS.md` を探しにいったり、`CONTEXT.md` や `docs/adr/` を勝手に作ったりします。今日作った3枚は35分で書いた簡易版なので、既存のチームの進め方と噛み合わないことがあります。
+    > **ユーザーレベルに置いたエージェントスキルは、どのプロジェクトでも自動で呼ばれます。** `tsumetsume` は「詰め詰め」に、`ddd` は「用語集を整理して」に反応します。**これは明日、仕事のリポジトリで作業しているときにも起きます。** 「詰め詰め」と言っただけで一問一答の問い詰めが始まったり、`CONTEXT.md` や `docs/adr/` を勝手に作ったりします。今日作った3枚は35分で書いた簡易版なので、既存のチームの進め方と噛み合わないことがあります。
     >
     > **合わないと感じたら、`~/.claude/skills/` から該当するフォルダを消してください。** 消しても、今日 `myapp` に作ったものは何も消えません。「いつでも消せる」と分かっていることが大事で、これは今日つないだコネクタの話（上の「今日つないだものの外し方」）とまったく同じです。
-- Hook A・Bは `myapp` のプロジェクト内（`.claude/settings.json` と `.claude/hooks/`）にあります。次のプロジェクトでも使いたければ、`myapp` から丸ごとコピーしてください。今日中身を確認したものだからです。新しく頼んで作らせる場合は、必ず中身を読んでから登録してください
+- 右側の4枚と、Hook A・B（`.claude/settings.json` と `.claude/hooks/`）は、全部 `myapp` の `.claude/` の中にまとまっています。次のプロジェクトでも使いたければ、`myapp` からその `.claude/` を丸ごとコピーしてください。今日中身を確認したものだからです。新しく頼んで作らせる場合は、必ず中身を読んでから登録してください
 - `TASKS.md` に残った3つの見出し、そしてNotion／Backlogに流し込んだそれが、次の一歩です
 - 公開URLは、そのまま人に見せられるあなたの作品です。Claimしていない人は消えているので、続けるなら作り直しからです
 - 利用プラン: 今日Proで枠が心もとなかった人は、Maxへのアップグレードを検討するタイミングです
