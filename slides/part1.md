@@ -21,6 +21,10 @@
 3. 違うところを具体的に伝えて直す
 
 コードを書いた経験がなくても、画面の表示と動作で判断できます。
+コードが読める人も、自分の手では直しません。作るのはAI、品質を確かめるのは自分です。
+
+欲しいものがまだはっきりしないときに向いたやり方です。
+はっきりしたら、仕様に書いてから作らせます。
 
 [教材で手順を見る](../docs/01-part1.md#バイブコーディングとは)
 
@@ -46,7 +50,7 @@ Claude Codeは、対話とツールの実行を繰り返して作業を進めま
 **前半・後半共通の推奨は Sonnet × medium です。**
 
 - `/help` で使えるコマンドを、`/status` で現在の状態を確認する
-- `/model sonnet` でSonnetを選ぶ
+- `/model sonnet` でSonnetを選ぶ。既定はProがSonnet、MaxがOpus
 - `/effort medium` で考える深さを `medium` にする
 - `/usage` で利用枠を確認する
 - `/permissions` で許可した操作を確認する
@@ -66,7 +70,7 @@ Claude Codeは、対話とツールの実行を繰り返して作業を進めま
 | Auto Mode | AIがリスクを判定する。今日はこれを使う |
 | Plan Mode | 変更する前に計画を確認する |
 
-`/config` またはShift+Tabで切り替えます。
+Pro・MaxではAuto Modeが既定です。違う人は `/config` またはShift+Tabで切り替えます。
 Auto Modeでも確認が出たときは、操作内容を読んで判断してください。
 
 [教材で手順を見る](../docs/01-part1.md#権限)
@@ -84,7 +88,9 @@ Auto Modeでも確認が出たときは、操作内容を読んで判断して�
 gh repo create vibecoding-0908 --public --clone --add-readme
 ```
 
+- Windowsは `~/github` を `C:\Users\⟨自分の名前⟩\github` に書き換える
 - 作成後、VS Codeで `~/github/vibecoding-0908` を開き直す
+- Claude Codeのパネルを開き直す。フォルダの信頼を聞かれたら「Yes, I trust this folder」
 - ファイル一覧に `README.md` が1枚あれば開始できる
 - `gh` が使えない人は、教材のブラウザ作成手順を使う
 
@@ -132,7 +138,7 @@ gh repo create vibecoding-0908 --public --clone --add-readme
 ## 2. 動かなくなったときの3手
 
 - **貼る**：エラー文やスクリーンショットをそのまま渡す
-- **戻す**：「直前の動いていた状態に戻してください」と頼む
+- **戻す**：3回直させても直らなければ、「直前の動いていた状態に戻してください」と頼む。メッセージの巻き戻しでも戻せる
 - **小さくする**：「まず1個だけ」と指示を分ける
 - 的外れな修正が続くときは、`/model` でモデルを変えて試す。解決したら Sonnet × medium に戻す
 
@@ -149,8 +155,8 @@ gh repo create vibecoding-0908 --public --clone --add-readme
 
 1. ブラウザでclaude.aiを開く
 2. 「カスタマイズ」→「コネクタ」からGmailを選ぶ
-3. Googleアカウントでログインし、許可内容を確認する
-4. Claude Codeを終了して開き直す
+3. Googleアカウントでログインし、許可内容を読んでから許可する
+4. Claude Codeを開き直す。VS Code拡張はコマンドパレットから `Developer: Reload Window`
 
 Gmailはネイティブ統合を使います。
 個人のGmailを接続したくない人は、見学で構いません。
@@ -211,7 +217,6 @@ disable-model-invocation: true
 
 | コマンド | 見るもの |
 |---|---|
-| `/permissions` | 許可した操作。不要な許可は取り消せる |
 | `/config` | モデル、権限、配色などの設定 |
 | `/context` | 今の会話に溜まった情報の量 |
 | `/clear` | 会話を終え、新しい話題を始める |
@@ -229,6 +234,7 @@ disable-model-invocation: true
 
 - 別のお題を1つ作り、頼む、見る、直すをもう一周する
 - 参考画像を貼り、見た目の希望を伝える
+- Gmailを接続した人は、返信し忘れのメールを探して下書きを作らせる（送信はさせない）
 - コードに慣れた人は、`git diff` やVS Codeのソース管理で変更を見る
 
 前半2の成果は、動くアプリ、Gmail下書き、最初の `tsumete` です。
@@ -249,7 +255,8 @@ gh repo create myapp --private --clone --add-readme
 ```
 
 - 自分のアイデアや仕様が入るので、非公開で作る
-- 作成後、VS Codeで `~/github/myapp` を開き直す
+- Windowsは `~/github` を `C:\Users\⟨自分の名前⟩\github` に書き換える
+- 作成後、VS Codeで `~/github/myapp` を開き直し、Claude Codeのパネルも開き直す
 - `gh` が使えない場合も、Privateと「Add a README file」を選ぶ
 
 [教材で手順を見る](../docs/01-part1.md#3-ハンズオン②-自分が作りたいアプリを考える45分)
@@ -265,6 +272,9 @@ gh repo create myapp --private --clone --add-readme
 実装はまだせず、私のアイデアについて一問ずつ質問してください。
 質問には、おすすめの答えも添えてください。
 ```
+
+4点がそれぞれ1〜2行で言えれば十分です。
+細部の穴は、ハンズオン③の `tsumete` と宿題で埋めます。
 
 [教材で手順を見る](../docs/01-part1.md#壁打ちのやり方)
 
@@ -583,8 +593,10 @@ TASKS.md: 実装する順に並べ、1件を15分以内で終わる大きさに�
 
 ## 6. 後半前日までの宿題提出
 
+- 問い詰めを区切るたびに、増えたファイルのコミットとプッシュをClaude Codeに頼む（`main` のままでよい）
 - 案内された提出フォームへ `README.md` と `TASKS.md` を送る
 - `CONTEXT.md` とADRは提出不要。手元の `myapp` に残す
+- 相談の場が案内されたら、1人で詰まったときに使う
 - 後半は同じ `myapp` を開き、今日やる分を選ぶところから再開する
 - 宿題が揃わなくても、後半7に習慣トラッカーの見本がある
 
