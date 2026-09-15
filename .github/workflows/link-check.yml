@@ -56,7 +56,6 @@ jobs:
         continue-on-error: true   # 外部サービス都合の一時的な失敗で赤くしない
         run: |
           for url in \
-            "https://cloudflare.com/drop" \
             "https://www.anthropic.com/pricing" \
             "https://docs.claude.com/en/docs/claude-code/overview" \
             "https://github.com/mattpocock/skills" ; do
