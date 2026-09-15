@@ -32,8 +32,8 @@
 |---|---|
 | Claude | Pro以上で参加。Max推奨 |
 | GitHub | 自分のリポジトリを当日作る |
-| Google（Gmail） | Gmail連携・Cloudflareアカウント作成に使用。見学＋アカウントなし公開なら不要 |
-| Cloudflare | 公開したアプリを残す場合に使う。任意 |
+| Google（Gmail） | Gmail連携・Cloudflareアカウント作成に使用。見学＋Cloudflareアカウント作成済みなら不要 |
+| Cloudflare | 後半11でアプリを公開する。当日作成も可 |
 | NotionまたはBacklog | 後半のタスク引き渡し。任意 |
 
 Backlogを選ぶ人は、前日までにログイン、APIキー発行、`node -v` の確認を済ませます。
