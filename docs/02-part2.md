@@ -618,7 +618,12 @@ Backlogはclaude.aiのコネクタ一覧にはありません。自分でMCPサ�
 
 #### どちらの場合も: Claude Codeを開き直す
 
-設定できたらClaude Codeを一度終了して開き直してください（Backlogで上の手順4を実行したターミナルタブなら、そのまま `claude` と入力するだけで構いません）。MCPの接続はClaude Codeの起動時に確立されるため、`/clear` だけでは反映されません。開き直したら `/mcp` で接続状態（Connected）を確認します。
+設定できたら、Claude Codeを開き直してください。MCPの接続はClaude Codeの起動時に確立されるため、`/clear` だけでは反映されません。
+
+- **Notionを選んだ人**: VS Code拡張なら、前半2と同じくコマンドパレット（macOSは Cmd+Shift+P、Windowsは Ctrl+Shift+P）で `Developer: Reload Window` を実行し、Claude Codeのパネルを開きます
+- **Backlogを選んだ人**: 上の手順4を実行したターミナルタブで、そのまま `claude` と入力して起動します。`.env` から読み込んだ値はそのタブにしか入っていないので、VS Code拡張やほかのタブで開くと接続できません
+
+開き直したら `/mcp` で接続状態（Connected）を確認します。
 
 ### 引き渡す（7分）
 
