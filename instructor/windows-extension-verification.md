@@ -26,7 +26,7 @@ VS Codeに埋め込まれたNode.jsランタイム（24.18.1）は使用して�
 
 [Claude Code公式のVS Code版要件](https://code.claude.com/docs/en/vs-code#prerequisites) は、VS Code 1.94.0以上と利用可能なアカウントを挙げ、拡張がチャットパネル用のCLIを同梱すると明記している（2026-09-08確認）。
 この公式記述と今回の実行結果から、検証したWindows版拡張の起動に外部Node.jsが必須とは言えない。
-講座では、後半の `npx wrangler` とBacklog連携に使うため、全OSでNode.jsを導入する案内を続ける。
+講座では、後半のテスト（Playwright）、`npx wrangler`、Backlog連携に使うため、全OSでNode.jsを導入する案内を続ける。
 
 実行証跡はrunの成果物 `windows-extension-startup-34193270746` に保存した。
 `summary.json`、`extension-result.json`、`process-starts.json`、`sources.json`、`claude-code-panel.png` と拡張ログを含む。

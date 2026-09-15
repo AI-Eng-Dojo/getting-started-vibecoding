@@ -734,7 +734,10 @@ Backlogはclaude.aiのコネクタ一覧にはありません。自分でMCPサ�
 
     ```bash
     echo ".env" >> .gitignore
+    git check-ignore .env
     ```
+
+    2行目の結果に `.env` と表示されれば入っています。何も表示されないときは、`.gitignore` の最後の行に改行が無く、`.env` がその行にくっついています。エディタで `.gitignore` を開き、`.env` を1行に分けて保存してから、もう一度 `git check-ignore .env` を実行してください（9でClaude Codeが作った `.gitignore` だと起きることがあります）
 
 2. Backlogの「個人設定」→「API」からAPIキーを発行します
 3. エディタで `myapp` 直下に `.env` を新規作成し、次の2行を書いて保存します。⟨⟩の中だけ自分の値に置き換えてください
