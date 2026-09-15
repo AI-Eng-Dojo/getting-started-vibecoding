@@ -5,3 +5,7 @@ __pycache__/
 # GitHub Pages ビルドの中間物（.github/scripts/build-site.py が作る）
 .site-src/
 site/
+
+# ローカルの作業物（Claude Code の作業用コピー、wrangler のキャッシュ）
+.claude/worktrees/
+.wrangler/
