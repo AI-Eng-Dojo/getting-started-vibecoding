@@ -300,21 +300,21 @@ gh repo create myapp --private --clone --add-readme
 
 ---
 
-## 3. `tsumete` を別のプロジェクトでも使う
+## 3. `tsumete` を `myapp` でも使う
 
 `myapp` では、先ほどの `/tsumete` が候補に出ません。
 プロジェクトの中に保存したエージェントスキルは、その場所だけで有効です。
 
 ```text
 vibecoding-0908 の .claude/skills/tsumete/SKILL.md と同じ内容を、
-~/.claude/skills/tsumete/SKILL.md として保存してください。
+このリポジトリ（myapp）の .claude/skills/tsumete/SKILL.md として保存してください。
 フォルダが無ければ作ってください。
 ```
 
-- `~/.claude/skills/` は、どのプロジェクトでも使う自分用の置き場所
+- この講座では、エージェントスキルはすべて使うリポジトリの中に置く
 - 保存したら `/clear` し、もう一度 `/tsumete` を試す
 
-[教材で手順を見る](../docs/01-part1.md#ユーザーレベルに置き直す)
+[教材で手順を見る](../docs/01-part1.md#myapp-にもコピーする)
 
 ---
 
@@ -348,7 +348,7 @@ vibecoding-0908 の .claude/skills/tsumete/SKILL.md と同じ内容を、
 | `ddd` | 用語と決定を記録する |
 | `tsumete` | 上の2つを組み合わせる入口 |
 
-3つとも `~/.claude/skills/` に保存します。
+3つとも `myapp` の `.claude/skills/` に保存します。
 自分の言葉で書き、完成例と見比べます。
 
 [教材で手順を見る](../docs/01-part1.md#tsumete-を3つの役割に分ける)
@@ -404,7 +404,7 @@ tsumetsume のセッションを、ddd を併用しながら実行してくだ�
 
 ## 4. 3つを保存して動かす
 
-- Claude Codeに `~/.claude/skills/〈名前〉/SKILL.md` への保存を頼む
+- Claude Codeに `myapp` の `.claude/skills/⟨名前⟩/SKILL.md` への保存を頼む
 - `tsumete` を更新し、`tsumetsume` と `ddd` を新規作成する
 - `/clear` 後、`myapp` のREADMEに `/tsumete` を数往復試す
 - 質問の合間に `CONTEXT.md` や `docs/adr/` が更新されるか確認する
@@ -482,7 +482,7 @@ settings.json や必要なフォルダが無ければ作成してください。
 - `vibecoding-0908`：動く練習アプリ
 - Gmail：自分宛ての下書き（接続した人）
 - `myapp/README.md`：自分のアプリのアイデア
-- `~/.claude/skills/`：自作した3つのエージェントスキル
+- `myapp/.claude/skills/`：自作した3つのエージェントスキル
 - `myapp/.claude/`：編集ログを残すHook
 
 5分で確認し、宿題は `myapp` を開いて始めます。

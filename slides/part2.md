@@ -172,7 +172,7 @@ TASKS.md の次のやることを実装してください。
 | コードの作法（Standards） | code-review |
 | 公開に向けた危険な箇所 | security-review |
 
-保存先は `myapp` の `.claude/skills/〈名前〉/SKILL.md`（プロジェクトレベル）です。
+保存先は `myapp` の `.claude/skills/⟨名前⟩/SKILL.md`（プロジェクトレベル）です。
 保存したら `/clear` します。
 
 [教材で手順を見る](../docs/02-part2.md#①-コードレビュースキルとセキュリティレビュースキルを用意する6分)
@@ -474,13 +474,12 @@ Claude Codeを閉じても、接続は解除されません。
 
 ## 14. エージェントスキルとHookの置き場所
 
-- 前半自作の3枚（`tsumete`・`tsumetsume`・`ddd`）は `~/.claude/skills/` にあり、次のプロジェクトでも使える
-- `tsumetsume` や `ddd` は、別の仕事でも指示に反応して呼ばれることがある
+- 前半自作の3枚（`tsumete`・`tsumetsume`・`ddd`）と後半コピーの4枚（`tdd`・`code-review`・`security-review`・`prototype`）、Hook AとBは、すべて `myapp` の `.claude/` の中にあり、そこだけで効く
+- 次のプロジェクトでも使う場合は、`myapp` の `.claude/` を丸ごとコピーする
+- どのプロジェクトでも使うならユーザーレベル（`~/.claude/skills/`）に置けるが、別の仕事でも指示に反応して呼ばれるようになる
 - 合わなければ、該当するフォルダを削除して外せる
-- 後半コピーの4枚（`tdd`・`code-review`・`security-review`・`prototype`）とHook AとBは、`myapp` の `.claude/` の中にあり、そこだけで効く
 
 エージェントスキルを外しても、`myapp` の成果物は消えません。
-右側の4枚とHookを次のプロジェクトでも使う場合は、`myapp` の `.claude/` を丸ごとコピーします。
 
 [教材で手順を見る](../docs/02-part2.md#継続のために)
 
