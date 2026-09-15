@@ -44,7 +44,7 @@ Claude Codeを使って、あなたのアイデアをソフトウェアとして
 |---|---|
 | PC | macOS / Windows / Linux。ブラウザとエディタが動けば十分 |
 | Claudeプラン | **Pro以上が必須。Max推奨**（料金は[公式の料金ページ](https://www.anthropic.com/pricing)を参照） |
-| Claude Code | ターミナルまたはVS Code拡張から利用 |
+| Claude Code（CLI） | 事前に導入し、ターミナルで `claude --version` を確認。通常の操作はVS Code拡張を使う（[事前準備0.2](docs/00-prep.md#02-開発環境のセットアップ)） |
 | VS Code | Claude Code拡張の利用に必要 |
 | Claude CodeのVS Code拡張 | VS Code内でClaude Codeを使うため |
 | GitHubアカウント | 当日その場でリポジトリを作成するために必要（無料アカウントで可） |

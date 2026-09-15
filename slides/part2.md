@@ -102,7 +102,7 @@ READMEだけにある「今回やらないこと」も、同じ見出しでTASKS
 ハンズオン⑥は70分です。
 最初の5分で [tddの完成例](../skills/tdd/SKILL.md)をコピーして使える状態にします。
 
-- 保存先は `~/.claude/skills/tdd/SKILL.md`
+- 保存先は `myapp` の `.claude/skills/tdd/SKILL.md`（プロジェクトレベル）
 - 教材の取得用URLをClaude Codeに渡す。教材のcloneは不要
 - 保存したら `/clear` し、次の指示を送る
 
@@ -172,7 +172,7 @@ TASKS.md の次のやることを実装してください。
 | コードの作法（Standards） | code-review |
 | 公開に向けた危険な箇所 | security-review |
 
-保存先は `~/.claude/skills/〈名前〉/SKILL.md` です。
+保存先は `myapp` の `.claude/skills/〈名前〉/SKILL.md`（プロジェクトレベル）です。
 保存したら `/clear` します。
 
 [教材で手順を見る](../docs/02-part2.md#①-コードレビュースキルとセキュリティレビュースキルを用意する6分)
@@ -473,13 +473,13 @@ Claude Codeを閉じても、接続は解除されません。
 
 ## 14. エージェントスキルとHookの置き場所
 
-- 今日使ったエージェントスキルは `~/.claude/skills/` にあり、次のプロジェクトでも使える
-- `tdd` や `ddd` は、別の仕事でも指示に反応して呼ばれることがある
+- 前半自作の3枚（`tsumete`・`tsumetsume`・`ddd`）は `~/.claude/skills/` にあり、次のプロジェクトでも使える
+- `tsumetsume` や `ddd` は、別の仕事でも指示に反応して呼ばれることがある
 - 合わなければ、該当するフォルダを削除して外せる
-- Hook AとBは、`myapp` の `.claude/settings.json` と `.claude/hooks/` にある
+- 後半コピーの4枚（`tdd`・`code-review`・`security-review`・`prototype`）とHook AとBは、`myapp` の `.claude/` の中にあり、そこだけで効く
 
 エージェントスキルを外しても、`myapp` の成果物は消えません。
-Hookを再利用する場合は、確認済みの設定とスクリプトを一緒にコピーします。
+右側の4枚とHookを次のプロジェクトでも使う場合は、`myapp` の `.claude/` を丸ごとコピーします。
 
 [教材で手順を見る](../docs/02-part2.md#継続のために)
 

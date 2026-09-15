@@ -14,7 +14,7 @@
 
 ## 0.0 用意するソフトウェア
 
-- VS CodeとClaude Code拡張を使う
+- VS CodeとClaude Code拡張、ターミナル用のCLIを入れる
 - Node.jsのLTS版を全OSで入れる（`wrangler`・Backlog用）
 - **Git**で変更を保存し、**GitHub CLI（gh）**でGitHubを操作する
 - 作ったHTMLを確認するブラウザを用意する
@@ -61,13 +61,15 @@ Backlogを選ぶ人は、前日までにログイン、APIキー発行、`node -
 1. VS Codeを入れ、1.94.0以上であることを確認する
 2. Claude Code拡張を入れる
 3. Node.jsのLTS版（22以上）を入れ、PCを再起動する
-4. 拡張からClaudeにログインし、一言送る
+4. CLIを導入し、ターミナルを開き直して `claude --version` を確認する
+5. 拡張からClaudeにログインし、一言送る
 
 ```text
 こんにちは。動作確認です。
 ```
 
 返答が来たら、次のじゃんけんゲームで動作を確認します。
+CLIのOS別インストールコマンドと起動確認は、教材0.2の5にあります。
 
 [教材で手順を見る](../docs/00-prep.md#02-開発環境のセットアップ)
 
@@ -148,13 +150,13 @@ git config --get user.name と git config --get user.email を実行して、
 - Claude Code拡張を更新し、VS Codeを再起動する
 
 解消しなければ、エラー文と画面を残してCLI版を試します。
-まず `node -v` でNode.jsが22以上か確認してください。
+VS Codeのターミナルで、導入済みのCLIを起動します。
 
 ```bash
-npm install -g @anthropic-ai/claude-code
 claude
 ```
 
+`claude` が見つからない場合は、教材0.2の5の導入手順を確認してください。
 未解決でも、その状態を添えて提出できます。
 
 [教材で手順を見る](../docs/00-prep.md#06-つまずき早見表)
@@ -164,7 +166,7 @@ claude
 ## チェックポイント0
 
 - [ ] 必要なアカウントがそろっている
-- [ ] Claude Codeに頼んだじゃんけんゲームが動いた
+- [ ] `claude --version` で確認でき、Claude Codeに頼んだじゃんけんゲームが動いた
 - [ ] Gitの名前とメールアドレスが公開されても困らない値になっている
 - [ ] `gh auth status` が成功し、自分のユーザー名が表示された
 
