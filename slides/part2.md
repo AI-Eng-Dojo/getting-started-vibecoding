@@ -211,11 +211,11 @@ TASKS.md の次のやることを実装してください。
 
 | Hook | 動くタイミング | 処理 |
 |---|---|---|
-| A | EditかWriteで編集した直後 | `.claude/security-reviewed` を消す |
+| A | EditかWriteで編集した直後 | `.claude/security-reviewed` を消す（`.claude/` の中を書いたときは除く） |
 | B | Bashでpushやdeployをする直前 | 完了チェックがなければ止める |
 
 - 設定は `.claude/settings.json` に保存する
-- Bの判定には、教材の検証済みスクリプトをコピーして使う
+- AもBも、教材の検証済みスクリプトをコピーして使う
 - 完了チェックは `.gitignore` に追加する
 
 [教材で手順を見る](../docs/02-part2.md#④-hookで必ず実行されるようにする)
@@ -243,6 +243,7 @@ Hookは、登録したツールとコマンドを通る操作だけを確認し�
 - 自分の手で直接編集すると、Hook Aは気づかない
 - ブラウザから公開すると、Hook Bは動かない
 - `npm run deploy` など、別の書き方のコマンドも捕捉できない
+- Pythonが入っていないPCでは、Hook Bは止めずに通す
 
 今日のBが判定する文字列は、`git push` と `wrangler deploy` です。
 仕組みが見ていない操作は、自分で確認します。
