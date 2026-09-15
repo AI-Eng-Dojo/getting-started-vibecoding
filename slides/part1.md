@@ -88,7 +88,7 @@ Auto Modeでも確認が出たときは、操作内容を読んで判断して�
 gh repo create vibecoding-0908 --public --clone --add-readme
 ```
 
-- Windowsは `~/github` を `C:\Users\⟨自分の名前⟩\github` に書き換える
+- Windowsは `~/github` を `C:\Users\⟨Windowsのユーザー名⟩\github` に書き換える
 - 作成後、VS Codeで `~/github/vibecoding-0908` を開き直す
 - Claude Codeのパネルを開き直す。フォルダの信頼を聞かれたら「Yes, I trust this folder」
 - ファイル一覧に `README.md` が1枚あれば開始できる
@@ -255,7 +255,7 @@ gh repo create myapp --private --clone --add-readme
 ```
 
 - 自分のアイデアや仕様が入るので、非公開で作る
-- Windowsは `~/github` を `C:\Users\⟨自分の名前⟩\github` に書き換える
+- Windowsは `~/github` を `C:\Users\⟨Windowsのユーザー名⟩\github` に書き換える
 - 作成後、VS Codeで `~/github/myapp` を開き直し、Claude Codeのパネルも開き直す
 - `gh` が使えない場合も、Privateと「Add a README file」を選ぶ
 
