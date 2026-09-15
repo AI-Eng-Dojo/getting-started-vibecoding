@@ -47,13 +47,13 @@ tsumete      ← 入口。自分で `/tsumete` と打ったときだけ起動す
 
 ## 使い方（自分のプロジェクトに入れる）
 
-エージェントスキルは `.claude/skills/` に置くとClaude Codeが自動で読み込みます。**自分の作法はユーザーレベル（`~/.claude/skills/`）、チームの決まりごとはプロジェクトレベル（`<プロジェクト>/.claude/skills/`）**が原則です。前半で自分で作る3枚は宿題・後半でも使い続ける自分の作法なので、ユーザーレベルに置きます。後半でコピーする4枚は「仕様を詰める → 実装する → レビューする」という開発工程の決まりごとなので、プロジェクトレベルに置きます。
+エージェントスキルは `.claude/skills/` に置くとClaude Codeが自動で読み込みます。この講座では、**7枚ともプロジェクトレベル（`<プロジェクト>/.claude/skills/`）に置きます。** 前半で自分で作る3枚も、後半でコピーする4枚も、宿題・後半で作業する `myapp` の中にまとめます。リポジトリと一緒にGitHubへ保存されるので、PCを替えても取り戻せます。どのプロジェクトからでも呼べるユーザーレベル（`~/.claude/skills/`）という置き場所もありますが、そこに置いたエージェントスキルは別の仕事のリポジトリでも反応するので、手に馴染んでから移してください。
 
 ```bash
-mkdir -p ~/.claude/skills
-cp -r ⟨このリポジトリ⟩/skills/tsumete ~/.claude/skills/
-cp -r ⟨このリポジトリ⟩/skills/tsumetsume ~/.claude/skills/
-cp -r ⟨このリポジトリ⟩/skills/ddd ~/.claude/skills/
+mkdir -p <プロジェクト>/.claude/skills
+cp -r ⟨このリポジトリ⟩/skills/tsumete <プロジェクト>/.claude/skills/
+cp -r ⟨このリポジトリ⟩/skills/tsumetsume <プロジェクト>/.claude/skills/
+cp -r ⟨このリポジトリ⟩/skills/ddd <プロジェクト>/.claude/skills/
 ```
 
 ```bash
