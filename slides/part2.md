@@ -358,7 +358,7 @@ NotionとBacklogのどちらかを選びます。接続は任意です。
 
 - Notionは、claude.aiの「カスタマイズ」→「コネクタ」から接続する
 - ログインし、許可内容を確認する
-- Claude Codeを終了して開き直し、`/mcp` でConnectedを確認する
+- Claude Codeを開き直し（VS Code拡張はコマンドパレットの `Developer: Reload Window`）、`/mcp` でConnectedを確認する
 - 接続しない人は、TASKSを手元に残して進める
 
 どちらを選んでも、開発の計画は引き続き `TASKS.md` に残します。
@@ -369,15 +369,16 @@ NotionとBacklogのどちらかを選びます。接続は任意です。
 
 ## 12. Backlogを選ぶ場合
 
-前日までに用意したAPIキーを使い、教材のプロンプトで設定します。
+前日までに用意したAPIキーを使い、教材の手順で設定します。
 
+- APIキーはチャットには書かず、`.env` ファイルに保存する(`.gitignore` に先に追加)
+- 登録コマンドは `${BACKLOG_DOMAIN}` `${BACKLOG_API_KEY}` という参照のまま実行する
 - パッケージは `backlog-mcp-server@0.18.0` に固定する
-- 環境変数は `BACKLOG_DOMAIN` と `BACKLOG_API_KEY`
 - スコープは、このPCの自分だけに保存する `user` を指定する
-- Claude Codeを開き直し、`/mcp` でConnectedを確認する
+- `.env` を読み込んだターミナルタブで `claude` を起動し、`/mcp` でConnectedを確認する
 
-APIキーをリポジトリに保存しません。
-`project` スコープでは `.mcp.json` に入り、プッシュに含まれるためです。
+APIキーは、リポジトリにもチャット履歴にも残しません。
+`.env` は `.gitignore` 済み、設定ファイルには `${...}` という参照だけが書き込まれるためです。
 
 [教材で手順を見る](../docs/02-part2.md#backlog--ネイティブ統合なし自分でmcpサーバーを設定する)
 
