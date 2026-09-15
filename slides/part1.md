@@ -404,7 +404,7 @@ tsumetsume のセッションを、ddd を併用しながら実行してくだ�
 
 ## 4. 3つを保存して動かす
 
-- Claude Codeに `myapp` の `.claude/skills/〈名前〉/SKILL.md` への保存を頼む
+- Claude Codeに `myapp` の `.claude/skills/⟨名前⟩/SKILL.md` への保存を頼む
 - `tsumete` を更新し、`tsumetsume` と `ddd` を新規作成する
 - `/clear` 後、`myapp` のREADMEに `/tsumete` を数往復試す
 - 質問の合間に `CONTEXT.md` や `docs/adr/` が更新されるか確認する

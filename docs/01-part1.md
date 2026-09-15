@@ -659,7 +659,7 @@ disable-model-invocation: true
 `tsumete` はハンズオン②で `myapp` の `.claude/skills/tsumete/SKILL.md` に置きました。`tsumetsume`・`ddd` も同じ場所に揃えます。自分でフォルダを掘る必要はありません。まとめてClaude Codeに保存させてください（ハンズオン①で覚えた「まとめて1回で頼む」作法です）。
 
 ```text
-次を、それぞれこのリポジトリ（myapp）の .claude/skills/⟨skillの名前⟩/SKILL.md として保存してください。
+次を、それぞれこのリポジトリ（myapp）の .claude/skills/⟨エージェントスキルの名前⟩/SKILL.md として保存してください。
 フォルダが無ければ作ってください。tsumeteはすでにあるので、中身を置き換えてください。
 
 ⟨ここに、自分で書いた3つのSKILL.mdの中身をそれぞれ貼る⟩
@@ -914,7 +914,7 @@ TASKS.md:  やることを実装する順に一覧化。1つは15分以内で終
 
 ```text
 今開いている myapp リポジトリで、宿題で増えたり変わったりしたファイル
-（README.md・TASKS.md・CONTEXT.md・docs/adr/・.claude/skills/）をコミットし、GitHubにプッシュしてください。
+（README.md・TASKS.md・CONTEXT.md・docs/adr/・CLAUDE.md・.claude/skills/・.claude/settings.json）をコミットし、GitHubにプッシュしてください。
 ```
 
 ブランチを分ける必要はありません。1人で作っているうちは、`main` にそのまま保存して構いません。保存したら、ブラウザでGitHubの `myapp` を開き、ファイルが並んでいることを確かめてください。

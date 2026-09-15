@@ -172,7 +172,7 @@ TASKS.md の次のやることを実装してください。
 | コードの作法（Standards） | code-review |
 | 公開に向けた危険な箇所 | security-review |
 
-保存先は `myapp` の `.claude/skills/〈名前〉/SKILL.md`（プロジェクトレベル）です。
+保存先は `myapp` の `.claude/skills/⟨名前⟩/SKILL.md`（プロジェクトレベル）です。
 保存したら `/clear` します。
 
 [教材で手順を見る](../docs/02-part2.md#①-コードレビュースキルとセキュリティレビュースキルを用意する6分)
