@@ -1,13 +1,13 @@
 ---
 name: tdd
-description: Implement one task at a time by fixing its observable check first, then writing the smallest code that satisfies it, and letting the user — not the model — declare it done. Use when working through TASKS.md, when the user says 「実装して」「次のやることを進めて」, or whenever a change needs to be verified on screen before moving on.
+description: Implement one TASKS.md item at a time, test-first — turn its on-screen completion check (完了定義) into a Playwright browser test, show it failing (red), write the smallest code that makes every test pass (green), then stop and let the user — not the model — confirm it on screen. Use when working through TASKS.md, when the user says 「実装して」「次のやることを進めて」, or whenever a change needs to be verified before moving on.
 ---
 
-# 完了定義を先に、実装を後に
+# 完了定義をテストにしてから、実装する
 
-`TASKS.md` を上から消化するための進め方です。**「完了定義」を先に確定させ、そこへ向かって最小限の実装をします。**
+`TASKS.md` を上から消化するための進め方です。**1件ごとに、完了定義を自動テストに書き、落ちる（red）のを確かめてから最小限の実装をし、通る（green）のを確かめます。** 完了したかどうかを最後に決めるのはユーザーです。
 
-順番が逆になった瞬間、この進め方は壊れます。先に実装すると、完了定義は「いま動いているもの」に合わせて書かれてしまい、何も検証しなくなります。
+順番が逆になった瞬間、この進め方は壊れます。先に実装すると、テストは「いま動いているもの」に合わせて書かれてしまい、何も検証しなくなります。
 
 ## このエージェントスキルの範囲
 
@@ -39,15 +39,89 @@ description: Implement one task at a time by fixing its observable check first, 
 
 内部がどう書かれているかは完了定義になりません。**中身が全部書き換わっても、完了定義は変わらないはずです。** そうなっていない完了定義は、実装の写しになっています。書き直してください。
 
+## テストの準備が無いとき
+
+次の3つが揃っていなければ、**実装に入る前に**そのことを伝え、準備してよいか確認してから進めてください。
+
+- `package.json` の `devDependencies` に `@playwright/test` がある
+- `playwright.config.js` がある
+- `tests/app-url.js` がある
+
+準備の中身は次のとおりです。**`@playwright/test` のバージョンは `1.63.0` に固定し、変えないでください。**
+
+1. `.gitignore` に `node_modules/`・`test-results/`・`playwright-report/` を追加する（無ければ作る）。**`npm install` より先に**やる
+2. `package.json` が無ければ `npm init -y` で作る
+3. `npm install --save-dev --save-exact @playwright/test@1.63.0`
+4. `npx playwright install chromium`。ブラウザの取得に数分かかることがあるので、コマンドのタイムアウトを10分にして実行する
+5. 次の2ファイルを作る。`tests/app-url.js` は、アプリの入口のHTMLを指す（1ファイル構成なら `index.html`）
+
+```js
+// playwright.config.js
+// テストの設定。tests/ の中のテストを、裏で開いたブラウザで実行する
+const { defineConfig } = require('@playwright/test');
+
+module.exports = defineConfig({
+  testDir: './tests',
+  reporter: 'line',
+  // 探しているボタンなどが無いとき、5秒で見切って落とす（既定のままだと30秒待つ）
+  use: { actionTimeout: 5000 },
+});
+```
+
+```js
+// tests/app-url.js
+// テストで開くアプリのHTML。公開用に public/ へ移したら、ここを '../public/index.html' に直す
+const path = require('node:path');
+const { pathToFileURL } = require('node:url');
+
+module.exports = pathToFileURL(path.join(__dirname, '../index.html')).href;
+```
+
+6. `npx playwright --version` で `Version 1.63.0` と出ることを確かめる
+
+## テストの書き方
+
+- 1件につき1ファイル。`tests/task-⟨TASKS.md の番号を2桁で⟩.spec.js` に置く（例: `tests/task-02.spec.js`）
+- テストの名前は、**完了定義の文言をそのまま**使う
+- アプリは `tests/app-url.js` のURLで開く。サーバーは立てない
+- **ユーザーと同じ手がかりで操作し、確かめる。** 見えている文字やボタンの名前（`getByRole`・`getByText`・`getByLabel`）を使い、関数や変数を直接呼ばない
+- 「開き直しても残っている」は `page.reload()` で確かめる
+
+```js
+const { test, expect } = require('@playwright/test');
+const APP_URL = require('./app-url');
+
+test('「30分歩く」と入れて追加を押すと、一覧に「30分歩く」の行が増える', async ({ page }) => {
+  await page.goto(APP_URL);
+  await page.getByRole('textbox').fill('30分歩く');
+  await page.getByRole('button', { name: '追加' }).click();
+  await expect(page.getByRole('listitem').filter({ hasText: '30分歩く' })).toBeVisible();
+});
+```
+
+### テストにできない完了定義
+
+「見出し・一覧・ボタンの区別が一目でつく」のような**見た目の読みやすさ**や、「プライベートウィンドウで開くと」のような**ブラウザの環境に依存するもの**は、テストにしません。**テストにしないことと、その理由を1行で伝え**、手順2を飛ばして手順3へ進んでください。手順4は飛ばしません。新しいテストは増えませんが、**それまでに書いたテストが全部通ったまま**かを必ず確かめます（見た目を整えただけで、前の1件が壊れることがあるためです）。
+
+形だけのテスト（何を書いても通るもの）で埋めてはいけません。テストが無いことより悪い状態です。
+
 ## 手順
 
-### 1. 完了定義を読み上げて確認する
+### 1. 完了定義を読み上げる
 
-これから着手する1件の「完了定義」を、**そのまま読み上げてユーザーに確認**してください。
+これから着手する1件の「完了定義」を、そのまま読み上げてください。
 
-`TASKS.md` に完了定義が書かれていない、または上の表の右側になっている場合は、**実装に入る前に**完了定義の案を出して合意を取ってください。ここで合意しないまま進めてはいけません。
+`TASKS.md` に完了定義が書かれていない、または上の表の右側になっている場合は、**ここで止まり**、完了定義の案を出して合意を取ってください。問題なく書かれていれば、止まらずに手順2へ進みます。
 
-### 2. 最小の形で実装する
+### 2. テストを書いて、落ちることを見せる（red）
+
+完了定義をテストに書き、`npx playwright test` を実行して、**新しいテストが落ちること**をユーザーに短く見せてください。
+
+- 落ちる理由が「アプリがまだ完了定義を満たしていない」ことなら、それが red です（最初の1件で、アプリのHTMLがまだ無くて開けない場合も含みます）
+- テスト自体の書き間違い（構文エラー、`require` のパス違いなど）で落ちているなら、それは red ではありません。テストを直してもう一度実行します
+- **実装する前なのに通ってしまったら、そのテストは何も確かめていません。** 書き直してください
+
+### 3. 最小の形で実装する
 
 **その完了定義を満たすためだけ**のコードを書きます。
 
@@ -55,37 +129,38 @@ description: Implement one task at a time by fixing its observable check first, 
 - 頼まれていない機能を足さない
 - 見た目の仕上げは、それ自体が完了定義になっていない限りやらない
 
-### 3. 確認の仕方を伝える
+### 4. テストを全部通す（green）
 
-ユーザーが自分で確認できるよう、**どのファイルを開き、何を操作し、どこを見るか**を短く伝えてください。
+`npx playwright test` を実行し、**新しいテストと、それまでに書いたテストがすべて通る**ことを見せてください。落ちたら実装を直します。
 
-### 4. ユーザーの確認を待つ
+**テストや完了定義を緩めて通してはいけません。** 期待する文字を変える、確かめる行を消す、`test.skip` にする、はどれも禁止です。通らないなら実装を直すか、ユーザーに相談します。
 
-**「できました」で終わらせないでください。** 動いたかどうかを決めるのはユーザーです。
+### 5. 確認の仕方を伝えて、止まる
 
-自分が実行した結果をもって「完了定義を満たしました」と宣言してはいけません。それは、実装したのと同じ理屈で実装を検算しているだけで、何も確かめたことになりません。**確認を求めて、そこで一度止まります。**
+**green は「テストが通った」であって「完了」ではありません。** テストを書いたのも実装したのも同じあなたなので、それだけでは確かめたことになりません。
 
-### 5. 確認できたら記録する
+ユーザーが自分で確認できるよう、**どのファイルをブラウザで開き、何を操作し、どこを見るか**を短く伝えてください。**「完了しました」とは言わず、確認を求めて、そこで一度止まります。**
 
-ユーザーが完了定義を満たしたと確認したら、`TASKS.md` の状態を更新します。
+### 6. 確認できたら記録して、保存する
 
-そのうえで、**コミットとプッシュを提案**してください。確認できた状態だけが保存されます。
+ユーザーが完了定義を満たしたと確認したら、`TASKS.md` の状態を「済」に更新してください。
 
-### 6. 次の1件へ
+ユーザーがコミットとプッシュを頼んでいればそれも行います。頼まれていなければ、**コミットとプッシュを提案**してください。確認できた状態だけが保存されます。
 
-ここでいったん区切ります。次の1件は、**あらためて指示を受けてから**始めてください。
+「次へ」と言われたら、次の1件の手順1から始めます。言われていなければ、ここで区切ります。
 
 ## やってはいけないこと
 
 - **先回り**: 完了定義に含まれていないものを実装する
 - **まとめ実装**: 2件以上を一度に進める
-- **自己申告**: ユーザーの確認なしに「終わりました」と宣言する
-- **完了定義の書き換え**: 実装が通らないときに、通るように完了定義のほうを緩める（実装を直すか、ユーザーに相談する）
+- **red の省略**: テストが落ちるのを見ずに実装を始める
+- **テストを緩める**: 通らないテストや完了定義を、通るように書き換える・消す・飛ばす
+- **自己申告**: テストが通ったことをもって、ユーザーの確認なしに「終わりました」と宣言する
 - **リファクタリング**: このループの中では整理をしません。読みにくさ・重複は `code-review` の担当です。**ここでは完了定義を満たすことだけに集中してください**
 
 ## 詰まったとき
 
-同じ1件で2回続けて完了定義を満たせなかったら、**実装を続けずに報告**してください。そのうえで次のどれかを提案します。
+同じ1件で2回続けて green にできなかったら、**実装を続けずに報告**してください。そのうえで次のどれかを提案します。
 
 - その1件をさらに小さく割る
 - `prototype` に切り替えて、判断材料を先に作る
