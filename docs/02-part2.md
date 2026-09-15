@@ -15,7 +15,7 @@
 | 2:42–2:49 | **13. 成果共有** — 何を作ったか／どう相談したか／どこでAIが失敗したか | — |
 | 2:49–2:55 | **14. クロージング** — つないだものの外し方・持ち帰るもの | — |
 
-> **今日のメインは `TASKS.md` からMVPを実装する部分です。** くわえて11でCloudflare、12でNotionやBacklogといった外部ツールを利用しますが、開発の計画は最初から最後まで `TASKS.md` でコントロールします。最低でもMVPの実装完了、できればCloudflareにデプロイするところまで進めましょう。
+> **今日のメインは `TASKS.md` からMVPを実装する作業です。** くわえて11でCloudflare、12でNotionやBacklogといった外部ツールを利用しますが、開発の計画は最初から最後まで `TASKS.md` でコントロールします。最低でもMVPの実装完了、できればCloudflareにデプロイするところまで進めましょう。
 
 ---
 
@@ -246,7 +246,7 @@ TASKS.md の1つ目だけを、最小の形で実装してください。
 
     ```text
     次のURLの中身を、このプロジェクト（myapp）の .claude/skills/prototype/SKILL.md として保存してください。
-
+    
     https://raw.githubusercontent.com/AI-Eng-Dojo/getting-started-vibecoding/main/skills/prototype/SKILL.md
     ```
 
@@ -578,22 +578,47 @@ Backlogはclaude.aiのコネクタ一覧にはありません。自分でMCPサ�
 
 > このルートはNode.jsを使います（MCPサーバーを `npx` で起動するため）。事前準備0.2で全員入れているので、そのまま進めて構いません。ターミナルで `node -v` を実行してバージョンが出ない場合だけ、Notion側を選んでください。
 
-Backlogの「個人設定」→「API」からAPIキーを発行したうえで、Claude Codeに次を頼んでください。
+**APIキーは、Claude Codeとの会話には一度も書きません。** チャット欄に貼った文字は会話履歴としてそのまま手元に残るので、秘密情報をそこに通さないのが原則です（→10でレビューした「秘密情報がコードに書かれていないか」と同じ観点です）。ここだけは自分の手でターミナルを操作します。
 
-```text
-Backlog用のMCPサーバーを追加してください。
-- パッケージ: backlog-mcp-server@0.18.0（npxで実行。バージョンは変えないでください）
-- 環境変数: BACKLOG_DOMAIN=⟨自分のスペース⟩.backlog.com、BACKLOG_API_KEY=⟨発行したAPIキー⟩
-- スコープはuser（このPCの自分だけ・このリポジトリにはコミットされない）にしてください
-```
+1. `myapp` の `.gitignore` に `.env` を追加します（`.gitignore` が無ければ作成）
+
+    ```bash
+    echo ".env" >> .gitignore
+    ```
+
+2. Backlogの「個人設定」→「API」からAPIキーを発行します
+3. エディタで `myapp` 直下に `.env` を新規作成し、次の2行を書いて保存します。⟨⟩の中だけ自分の値に置き換えてください
+
+    ```
+    BACKLOG_DOMAIN=⟨自分のスペース⟩.backlog.com
+    BACKLOG_API_KEY=⟨発行したAPIキー⟩
+    ```
+
+4. Claude Codeを起動しているのと同じターミナルタブで、`.env` を読み込んでからMCPサーバーを登録します。**`${...}` の部分はシングルクォートのまま**書き換えずに実行してください（展開させてしまうと、キーの値そのものが設定ファイルに書き込まれます）
+
+    **macOS / Linux / WSL**
+
+    ```bash
+    set -a && source .env && set +a
+    claude mcp add --env BACKLOG_DOMAIN='${BACKLOG_DOMAIN}' --env BACKLOG_API_KEY='${BACKLOG_API_KEY}' --scope user backlog -- npx -y backlog-mcp-server@0.18.0
+    ```
+
+    **Windows（PowerShell）**
+
+    ```powershell
+    Get-Content .env | ForEach-Object { if ($_ -match '^(.*?)=(.*)$') { [Environment]::SetEnvironmentVariable($Matches[1], $Matches[2]) } }
+    claude mcp add --env BACKLOG_DOMAIN='${BACKLOG_DOMAIN}' --env BACKLOG_API_KEY='${BACKLOG_API_KEY}' --scope user backlog -- npx -y backlog-mcp-server@0.18.0
+    ```
+
+> **`${...}` のまま登録するのが重要です。** ここで実際のAPIキーの値を渡すと、値がそのまま設定ファイル（`~/.claude.json`）に平文で書き込まれます。`${BACKLOG_API_KEY}` という参照だけを渡せば、設定ファイルにはこの参照文字列しか残りません。実際の値はClaude Code起動時に、いま読み込んだ環境変数から解決されます。設定ファイルを覗かれても、Claude Codeとの会話履歴を覗かれても、実際のAPIキーは出てきません。
 
 > **バージョンを固定しているのは意図的です。** `npx backlog-mcp-server` のようにバージョンを書かないと、そのとき最新のものが取ってきて実行されます。何が動くかが日によって変わるということなので、中身を確認したものだけを動かすために番号まで書きます。前半5でHooksについて言ったこと（「中身を理解できるものだけを登録する」）と同じ考え方です。
 
-> **APIキーは絶対にリポジトリにコミットしないでください。** `myapp` は15分ごとにpushしている、しかも11で公開までしたリポジトリです。スコープを `project` にすると設定がリポジトリ内の `.mcp.json` に書き込まれ、**pushした瞬間にAPIキーが漏れます。** 上のように `user` スコープを指定すれば、設定は自分のPCの中だけに保存され、リポジトリには一切含まれません。これは10でレビューした「秘密情報がコードに書かれていないか」と、まったく同じ観点です。
+> **`.env` はコミットしないでください。** `myapp` は15分ごとにpushしている、しかも11で公開までしたリポジトリです。手順1で `.gitignore` を先に整えているのはそのためです。念のため `git status` で `.env` が追跡対象になっていないか確認してから次に進んでください。スコープを `project` にすると設定自体が `.mcp.json` としてリポジトリに書き込まれてしまうため、スコープは必ず `user` にしてください。
 
 #### どちらの場合も: Claude Codeを開き直す
 
-設定できたらClaude Codeを一度終了して開き直してください。MCPの接続はClaude Codeの起動時に確立されるため、`/clear` だけでは反映されません。開き直したら `/mcp` で接続状態（Connected）を確認します。
+設定できたらClaude Codeを一度終了して開き直してください（Backlogで上の手順4を実行したターミナルタブなら、そのまま `claude` と入力するだけで構いません）。MCPの接続はClaude Codeの起動時に確立されるため、`/clear` だけでは反映されません。開き直したら `/mcp` で接続状態（Connected）を確認します。
 
 ### 引き渡す（7分）
 
