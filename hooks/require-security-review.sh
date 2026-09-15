@@ -9,8 +9,10 @@ set -u
 
 INPUT=$(cat)
 
-# 実行されようとしているコマンド文字列を取り出す（jq が無い環境でも動くよう python3 を使う）
-COMMAND=$(printf '%s' "$INPUT" | python3 -c '
+# 実行されようとしているコマンド文字列を取り出す（jq が無い環境でも動くよう Python を使う）
+# Windows では python3 が無く python だけのことがあるので、両方を探す
+PY=$(command -v python3 || command -v python)
+COMMAND=$(printf '%s' "$INPUT" | "$PY" -c '
 import sys, json
 try:
     print(json.load(sys.stdin).get("tool_input", {}).get("command", ""))

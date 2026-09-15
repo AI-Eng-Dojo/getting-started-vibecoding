@@ -418,7 +418,7 @@ https://raw.githubusercontent.com/AI-Eng-Dojo/getting-started-vibecoding/main/sk
 
 | Hook | タイミング | やること | 意味 |
 |---|---|---|---|
-| **A** | コードを編集した直後（PostToolUse / Edit・Write） | レビュー済みの完了チェックを消す | 変更したらレビューはやり直し |
+| **A** | コードを編集した直後（PostToolUse / Edit・Write） | レビュー済みの完了チェックを消す（`.claude/` の中を書いたときは消さない） | 変更したらレビューはやり直し |
 | **B** | 外に出す直前（PreToolUse / Bash で `git push` や `wrangler deploy`） | 完了チェックが無ければ止める | 未レビューのものは外に出せない |
 
 > **ただし、これはトリガタイミングに記載のとおり「保証」ではありません。** 捕捉できるのは、Claude Codeが Edit・Write でファイルを変えたときと、`git push`・`wrangler deploy` というコマンドを実行しようとしたときだけです。
@@ -437,7 +437,11 @@ https://raw.githubusercontent.com/AI-Eng-Dojo/getting-started-vibecoding/main/sk
 
 【Hook A】
 - タイミング: ファイルを編集・作成した直後（PostToolUse、対象はEditとWrite）
-- 内容: .claude/security-reviewed というファイルがあれば削除する
+- 内容: .claude/security-reviewed というファイルがあれば削除する。
+  ただし、書き込んだファイルが .claude/ の中なら何もしない
+- 処理の中身は、次のURLから .claude/hooks/clear-security-reviewed.sh として
+  保存し、実行できるようにしてください。settings.json からはそれを呼ぶ形にします
+  https://raw.githubusercontent.com/AI-Eng-Dojo/getting-started-vibecoding/main/hooks/clear-security-reviewed.sh
 
 【Hook B】
 - タイミング: Bashコマンドの実行直前（PreToolUse、対象はBash）
@@ -452,7 +456,9 @@ https://raw.githubusercontent.com/AI-Eng-Dojo/getting-started-vibecoding/main/sk
 settings.json や必要なフォルダが無ければ作成してください。
 ```
 
-> **判定スクリプトは、自分で書かずコピーして使います。** `tdd` や `security-review` と同じ扱いです（→ [hooks/README.md](../hooks/README.md)）。
+> **HookのスクリプトはAもBも、自分で書かずコピーして使います。** `tdd` や `security-review` と同じ扱いです（→ [hooks/README.md](../hooks/README.md)）。
+>
+> **Hook Aが `.claude/` の中を見逃すのは意図的です。** `security-review` はレビューの最後に `.claude/security-reviewed` を作ります。これも「ファイルの作成」なので、除外しないとHook Aが作った直後の印を消してしまい、何度レビューしてもプッシュできなくなります。`.claude/` はアプリのコードではなく作業用の設定なので、レビューのやり直しは要りません。
 >
 > Hooksは権限プロンプトを経由せず自動実行されます（前半5）。だから原則は「中身を理解できるものだけを登録する」です。**その場でAIに書かせたスクリプトを、書いた本人の説明だけを頼りに登録するのは、この原則を満たしていません。** 検証済みのものを配るのはそのためです。
 

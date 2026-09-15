@@ -211,11 +211,11 @@ TASKS.md の次のやることを実装してください。
 
 | Hook | 動くタイミング | 処理 |
 |---|---|---|
-| A | EditかWriteで編集した直後 | `.claude/security-reviewed` を消す |
+| A | EditかWriteで編集した直後 | `.claude/security-reviewed` を消す（`.claude/` の中を書いたときは除く） |
 | B | Bashでpushやdeployをする直前 | 完了チェックがなければ止める |
 
 - 設定は `.claude/settings.json` に保存する
-- Bの判定には、教材の検証済みスクリプトをコピーして使う
+- AもBも、教材の検証済みスクリプトをコピーして使う
 - 完了チェックは `.gitignore` に追加する
 
 [教材で手順を見る](../docs/02-part2.md#④-hookで必ず実行されるようにする)
