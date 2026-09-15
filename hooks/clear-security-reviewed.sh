@@ -14,8 +14,12 @@ set -u
 INPUT=$(cat)
 
 # 書き込まれたファイルのパスを取り出す（jq が無い環境でも動くよう Python を使う）
-# Windows では python3 が無く python だけのことがあるので、両方を探す
-PY=$(command -v python3 || command -v python)
+# 名前が見つかっても動かないことがある（Windows の python3 は、ストアへ案内するだけの偽物のことがある）ので、
+# 実際に動かして確かめ、最初に動いたものを使う
+PY=
+for c in python3 python py; do
+  "$c" -c 'import json' >/dev/null 2>&1 && { PY=$c; break; }
+done
 FILE_PATH=$(printf '%s' "$INPUT" | "$PY" -c '
 import sys, json
 try:

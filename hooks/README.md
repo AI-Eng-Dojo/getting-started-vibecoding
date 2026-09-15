@@ -17,7 +17,9 @@ Hooksは権限プロンプトを経由せず自動実行されます（前半5�
 | [clear-security-reviewed.sh](clear-security-reviewed.sh) | **Hook A。** ファイルが編集・作成された直後に、`.claude/security-reviewed` を消す。ただし書き込まれたのが `.claude/` の中のファイルなら何もしない |
 | [require-security-review.sh](require-security-review.sh) | **Hook B。** これから実行されるコマンドに `git push` か `wrangler deploy` が含まれていて、かつ `.claude/security-reviewed` が無ければ、そのコマンドを止めて理由を返す |
 
-どちらも30〜40行ほどです。日本語のコメント付きなので、読める人は読んでください。読めなくても、動きは後半10④で自分の目で確認します。
+どちらも40行前後です。日本語のコメント付きなので、読める人は読んでください。読めなくても、動きは後半10④で自分の目で確認します。
+
+どちらも、Claude Codeから渡される内容を読むのにPython（`python3`・`python`・`py` のうち動くもの）を使います。**Pythonが入っていないPCでは、Hook Aは書き込みのたびに完了チェックを消し、Hook Bは何も止めません。**
 
 > **Hook Aが `.claude/` の中を除外している理由。** `security-review` はレビューの最後に印（`.claude/security-reviewed`）を作ります。除外しないと、印を作ったこと自体にHook Aが反応して、作った直後の印を消してしまいます。2026-09-14の後半で実際に起きた不具合です。
 
