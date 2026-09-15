@@ -13,15 +13,18 @@
 
 ---
 
-## 宿題をやり忘れた人向け: `homework/`
+## 宿題を詰めきれなかった人向け: `homework/`
 
-[homework/](homework/) には、この題材を**宿題で詰め終わった状態**（実装だけが無い状態）を置いてあります。
+[homework/](homework/) には、この題材を `tsumete` で**宿題として詰め終わった状態**（実装だけが無い状態）の `myapp` を、丸ごと置いてあります。
 
 | ファイル | 中身 |
 |---|---|
+| [homework/CLAUDE.md](homework/CLAUDE.md) | このプロジェクトの約束。前半6で置くものと同じ4行 |
 | [homework/README.md](homework/README.md) | 仕様。誰が使うか・できること・今回やらないこと・完成判定まで埋まっている |
 | [homework/TASKS.md](homework/TASKS.md) | やること8件。すべて「未」で、今日やる分はまだ決めていない |
+| [homework/CONTEXT.md](homework/CONTEXT.md) | 用語集。`ddd` が詰めながら書き残したもの |
+| [homework/docs/adr/](homework/docs/adr/0001-store-in-browser.md) | 決定記録2本。ブラウザ内保存と、直近7日への限定 |
 
-**後半7で `README.md` と `TASKS.md` がどちらも無かった人**が、この2枚を `myapp` にコピーして8へ進むためのものです。手順は [後半テキストの7](../../docs/02-part2.md) にあります。
+**後半7で仕様に曖昧な言葉が残っていた人と、宿題に着手できなかった人**が、自分の書いたものを `myidea/` に退避したうえで、この5つを `myapp` に丸ごと写して8へ進むためのものです。手順は [後半テキストの7](../../docs/02-part2.md#詰めきれていない人向け) にあります。
 
 > **`rescue/index.html` は答えではありません。** あれは前半①で収拾がつかなくなった人のための完成版です。ここから始める人は、9で自分の手（＝Claude Code）で実装してください。

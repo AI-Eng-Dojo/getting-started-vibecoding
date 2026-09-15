@@ -14,9 +14,9 @@
 | B: 診断チャート | [b-shindan-chart/](b-shindan-chart/) | コンテンツを作るのが好き |
 | C: 習慣トラッカー | [c-habit-tracker/](c-habit-tracker/) | データが残るアプリを作りたい |
 
-## 宿題をやり忘れた人向け（後半7）
+## 宿題を詰めきれなかった人向け（後半7）
 
-[c-habit-tracker/homework/](c-habit-tracker/homework/) に、宿題を詰め終わって実装だけが残っている状態の `README.md` と `TASKS.md` を置いてあります。後半7で「どちらも無い」だった人が、この2枚を `myapp` にコピーして8へ進むためのものです。手順は [後半テキストの7](../docs/02-part2.md) にあります。
+[c-habit-tracker/homework/](c-habit-tracker/homework/) に、題材「習慣トラッカー」を `tsumete` で詰め切って実装だけが残っている状態の `myapp` を丸ごと置いてあります。`CLAUDE.md`（約束）、`README.md`（仕様）、`TASKS.md`（やること）、`CONTEXT.md`（用語集）、`docs/adr/`（決定記録）の5つです。後半7で仕様に曖昧な言葉が残っていた人や着手できなかった人が、自分の書いたものを `myidea/` に退避したうえでこの5つを `myapp` に写し、8へ進むためのものです。手順は [後半テキストの7](../docs/02-part2.md#詰めきれていない人向け) にあります。
 
 ## 救済版（完成状態）
 

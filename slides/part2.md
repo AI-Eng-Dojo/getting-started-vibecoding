@@ -21,9 +21,11 @@ VS Codeで `~/github/myapp` を開き、`/usage` と `/status` を確認しま�
 
 | 手元にあるもの | 次の作業 |
 |---|---|
-| READMEとTASKS | 8のMVP選定へ進む |
-| READMEだけ | 実装順と完了定義を付けてTASKSを作る |
-| どちらもない | 習慣トラッカーの宿題見本を使う |
+| 曖昧な言葉が消えたREADMEと、TASKS | 8のMVP選定へ進む |
+| 詰め終わったREADMEだけ | 実装順と完了定義を付けてTASKSを作る |
+| 曖昧な言葉が残っている、または未着手 | 習慣トラッカーの見本を丸ごと写す |
+
+`CLAUDE.md`（宿題の最初に置いた約束）が無い人は、実装の前に置きます。
 
 残量が半分を切っていたら、推奨設定に戻したうえで、必要に応じてHaikuへの切り替えやプランの変更を検討します。
 
@@ -33,16 +35,15 @@ VS Codeで `~/github/myapp` を開き、`/usage` と `/status` を確認しま�
 
 ## 7. 宿題の見本から始める
 
-宿題に着手できなかった人は、習慣トラッカーの仕様とタスクを使います。
+仕様に曖昧な言葉が残っている人と、着手できなかった人は、習慣トラッカーを詰め切った見本を丸ごと使います。
 
-- 既存のREADMEは `README-myidea.md` に退避し、自分のアイデアを残す
-- 見本の [README.md](../starters/c-habit-tracker/homework/README.md) を `myapp/README.md` に保存する
-- 見本の [TASKS.md](../starters/c-habit-tracker/homework/TASKS.md) を `myapp/TASKS.md` に保存する
-- 取得用URLと保存の指示は、教材のプロンプトを使う
+- 自分で書いたものは `myidea/` フォルダに退避する
+- 見本の [homework/](../starters/c-habit-tracker/homework/README.md) にある5つ（`CLAUDE.md`、`README.md`、`TASKS.md`、`CONTEXT.md`、`docs/adr/`）を `myapp` の直下に写す
+- 写し方は3通り。Claude Codeに頼む（本線）、ZIPを手で展開する、ターミナルで1行実行する
 
 見本でも、MVP選定から公開まで同じ手順を進められます。
 
-[教材で手順を見る](../docs/02-part2.md#宿題に着手できなかった人向け)
+[教材で手順を見る](../docs/02-part2.md#詰めきれていない人向け)
 
 ---
 
@@ -185,7 +186,7 @@ TASKS.md の次のやることを実装してください。
 ```
 
 - Spec：`README.md` の仕様と実装を照合する
-- Standards：コードの作法。読めない人は今日は対象外で可
+- Standards：コードの作法。読めない人は今日は対象外で可。ただし `CLAUDE.md` の約束に反する指摘は読む
 - 今回直す指摘を選ぶ
 - 未修正の指摘は、理由つきでTASKSの「レビューで出た宿題」へ残す
 
@@ -276,7 +277,7 @@ Hookは、登録したツールとコマンドを通る操作だけを確認し�
 最初の5分で、公開範囲を分けます。
 
 - `public/` に移すのは、アプリのHTML、CSS、JavaScript、画像だけ
-- README、TASKS、CONTEXT、`docs/`、`.claude/`、`.git/` は外に残す
+- README、TASKS、CONTEXT、`CLAUDE.md`、`docs/`、`.claude/`、`.git/` は外に残す
 - `public/index.html` をブラウザで開き、移動後も動くか確認する
 - 公開用ファイルをセキュリティレビューにかける
 

@@ -1,0 +1,5 @@
+{
+  "claudeMdExcludes": [
+    "**/starters/c-habit-tracker/homework/CLAUDE.md"
+  ]
+}

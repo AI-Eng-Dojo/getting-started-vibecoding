@@ -115,8 +115,12 @@ nav:
       - お題A ポモドーロタイマー: starters/a-pomodoro-timer/README.md
       - お題B 診断チャート: starters/b-shindan-chart/README.md
       - お題C 習慣トラッカー: starters/c-habit-tracker/README.md
+      - 宿題の見本 CLAUDE.md: starters/c-habit-tracker/homework/CLAUDE.md
       - 宿題の見本 仕様README: starters/c-habit-tracker/homework/README.md
       - 宿題の見本 TASKS.md: starters/c-habit-tracker/homework/TASKS.md
+      - 宿題の見本 CONTEXT.md: starters/c-habit-tracker/homework/CONTEXT.md
+      - 宿題の見本 ADR 0001: starters/c-habit-tracker/homework/docs/adr/0001-store-in-browser.md
+      - 宿題の見本 ADR 0002: starters/c-habit-tracker/homework/docs/adr/0002-last-seven-days.md
   - エージェントスキル完成例:
       - skills/README.md
       - 前半で自分で作る tsumete: skills/tsumete/SKILL.md

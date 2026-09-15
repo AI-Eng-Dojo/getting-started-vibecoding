@@ -25,6 +25,7 @@
 
 ```
 ~/github/myapp/   ← これを開く
+├── CLAUDE.md      宿題の最初に置いた約束（3つの制約）
 ├── README.md      宿題で詰めた仕様
 ├── TASKS.md       宿題で作ったやることリスト
 ├── CONTEXT.md     用語集（あれば）
@@ -39,13 +40,15 @@
 
 **残量が半分を切っている人は、推奨設定に戻したうえで、必要に応じてHaikuへの切り替えやプランのアップグレードを検討してください。**
 
-そのうえで、宿題がどこまでできているか確認してください。
+そのうえで、宿題がどこまでできているかを、前半6の合格ライン4つで確認してください。
 
 | 手元にあるもの | このあとどうするか |
 |---|---|
-| `README.md` と `TASKS.md` の両方が揃っている | このまま8へ |
-| `README.md` はあるが `TASKS.md` が無い | `TASKS.md` を作る（下のプロンプト） |
-| どちらも無い（宿題に着手できなかった） | 下の「宿題に着手できなかった人向け」の見本を使う |
+| `README.md` から曖昧な言葉が消えていて、`TASKS.md` もある | このまま8へ |
+| `README.md` は詰め終わっているが、`TASKS.md` が無い | `TASKS.md` を作る（下のプロンプト） |
+| `README.md` に曖昧な言葉が残っている、または宿題に着手できなかった | 下の「詰めきれていない人向け」の見本を丸ごと使う |
+
+どの場合も、`myapp` に `CLAUDE.md`（宿題の最初に置いた約束）が無ければ、[前半6の手順](01-part1.md#前提を-claudemd-に書いておく)で置いてから9へ進んでください。後半9の実装と後半10のレビューは、この約束が読まれている前提で進みます。
 
 `TASKS.md` がまだ無い人は、以下のようにして作成してください。
 
@@ -55,19 +58,66 @@ README.md を読んで、実装する順に「やること」の一覧を TASKS.
 上から順にやれば、途中で止まっても動くものが残る順番にしてください。
 ```
 
-### 宿題に着手できなかった人向け
+<a id="宿題に着手できなかった人向け"></a>
 
-`README.md` と `TASKS.md` がどちらも無い人は、題材「習慣トラッカー」のサンプルを利用します。
+### 詰めきれていない人向け
 
-```text
-次の2つのURLの中身を、このフォルダの README.md と TASKS.md として保存してください。
-https://raw.githubusercontent.com/AI-Eng-Dojo/getting-started-vibecoding/main/starters/c-habit-tracker/homework/README.md
-https://raw.githubusercontent.com/AI-Eng-Dojo/getting-started-vibecoding/main/starters/c-habit-tracker/homework/TASKS.md
+`README.md` に「使いやすく」のような曖昧な言葉が残っている人と、宿題に着手できなかった人は、題材「習慣トラッカー」を `tsumete` で詰め切った状態の見本を、`myapp` に丸ごと写して進めます。中身は、宿題で持ってくるものと同じ5つです。
 
-いまある README.md は上書きせず、同じ場所に README-myidea.md という名前で退避して残してください。
+```
+starters/c-habit-tracker/homework/   ← 教材リポジトリの中
+├── CLAUDE.md      このプロジェクトの約束（前半6で置いたものと同じ4行）
+├── README.md      詰め終わった仕様
+├── TASKS.md       実装する順のやることと完了定義
+├── CONTEXT.md     用語集（ddd が書き残したもの）
+└── docs/adr/      決定記録（2本）
 ```
 
-前半3で書いた自分のREADMEは `README-myidea.md` として残ります。今日は使わなくても、持ち帰って再開できます。
+自分で書いたものは消さずに、先に `myidea/` フォルダへ退避します。今日は使わなくても、持ち帰って再開できます。写し方は3通りあり、どれでも結果は同じです。
+
+**Claude Codeに頼む（本線）**
+
+```text
+いまこのフォルダにある CLAUDE.md・README.md・TASKS.md・CONTEXT.md・docs/ を、
+消さずに myidea/ フォルダへ移動してください（無いものは飛ばしてください）。
+myidea/ フォルダがすでにあるときは退避済みなので、この移動は飛ばし、
+myidea/ の中は一切上書きしないでください。
+
+そのあと、次のコマンドで教材の見本をこのフォルダの直下に展開してください。
+Windows では curl.exe で main.zip を保存してから tar -xf で展開する形に読み替えてください。
+
+curl -fsSL https://github.com/AI-Eng-Dojo/getting-started-vibecoding/archive/refs/heads/main.tar.gz | tar -xz --strip-components=4 getting-started-vibecoding-main/starters/c-habit-tracker/homework
+
+展開できたら、CLAUDE.md・README.md・TASKS.md・CONTEXT.md・docs/adr/ が
+このフォルダの直下に揃っていることを確認して、一覧を見せてください。
+```
+
+**手で写す**
+
+1. ブラウザで [教材リポジトリ](https://github.com/AI-Eng-Dojo/getting-started-vibecoding) を開き、緑の「Code」ボタンから「Download ZIP」を選ぶ
+2. 解凍してできたフォルダの中の `starters/c-habit-tracker/homework/` を開く
+3. `myapp` にある `CLAUDE.md`・`README.md`・`TASKS.md`・`CONTEXT.md`・`docs/` を、`myapp/myidea/` の中へ移す（無いものは飛ばす。`myidea/` がすでにあるなら退避済みなので、この手順ごと飛ばす）
+4. `homework/` の中身5つを、`myapp` の直下へコピーする
+
+**ターミナルで直接やる〔エンジニア向け〕**
+
+VS Codeのターミナルで、`myapp` の直下にいることを確認してから実行します。
+
+macOS / Linux:
+
+```text
+test ! -e myidea && mkdir myidea && mv CLAUDE.md README.md TASKS.md CONTEXT.md docs myidea/ 2>/dev/null; curl -fsSL https://github.com/AI-Eng-Dojo/getting-started-vibecoding/archive/refs/heads/main.tar.gz | tar -xz --strip-components=4 getting-started-vibecoding-main/starters/c-habit-tracker/homework
+```
+
+Windows（PowerShell）:
+
+```text
+if (-not (Test-Path myidea)) { New-Item -ItemType Directory myidea | Out-Null; Move-Item CLAUDE.md, README.md, TASKS.md, CONTEXT.md, docs myidea -ErrorAction SilentlyContinue }; curl.exe -fsSL -o main.zip https://github.com/AI-Eng-Dojo/getting-started-vibecoding/archive/refs/heads/main.zip; tar -xf main.zip --strip-components=4 getting-started-vibecoding-main/starters/c-habit-tracker/homework; Remove-Item main.zip
+```
+
+どちらも、`myidea/` がすでにあれば退避を飛ばして展開だけをやり直します。2回実行しても、退避したものは上書きされません。
+
+どの方法でも、終わったらVS Code左側のファイル一覧に5つが並び、`myidea/` の中に自分の書いたものが残っていることを確認してください。見本でも、8のMVP選定から14まで同じ手順で進められます。`CONTEXT.md` と `docs/adr/` は、後半10のレビューが用語と決定を照合するときに読まれます。
 
 ## 8. ハンズオン⑤ MVPを決める（15分）
 
@@ -157,7 +207,7 @@ https://raw.githubusercontent.com/AI-Eng-Dojo/getting-started-vibecoding/main/sk
 
 保存できたら `/clear` で会話を切ってください。
 
-> **なぜエージェントスキルにするのか。** この70分で、あなたは同じ4ステップを4〜5周します。毎回同じことを言う代わりに、一度ファイルに書いておく。前半4でやったことと、まったく同じ理由です。今日はそれを、対話の作法ではなく開発工程そのものに対してやっています。
+> **なぜエージェントスキルにするのか。** この70分で、あなたは同じ4ステップを4〜5周します。毎回同じことを言う代わりに、一度ファイルに書いておく。前半4でやったことと、まったく同じ理由です。今日はそれを、対話の作法ではなく開発工程そのものに対してやっています。宿題で置いた `CLAUDE.md` との違いは読まれ方です。`CLAUDE.md` は会話のたびに必ず読まれる約束、`tdd` は実装を頼んだときに呼ばれる手順です。
 
 ### 実装の進めかた
 
@@ -300,6 +350,8 @@ https://raw.githubusercontent.com/AI-Eng-Dojo/getting-started-vibecoding/main/sk
 > **作法（Standards）の指摘についてはコードに慣れてない人は読めなくても、大丈夫です。** 
 >
 > 作法の指摘を全部「対象外」にしても、今日の完成判定には影響しません。
+>
+> ただし、宿題で置いた `CLAUDE.md` の約束は、この作法の軸で最優先に見られます。「約束に反している」という指摘（外部サービスにつないでいる、など）は、コードが読めなくても判断できるので、対象外にせず読んでください。
 
 出てきた指摘を確認して、直すものを選んでください。必ずしも全部直す必要はありません。
 
@@ -419,12 +471,12 @@ settings.json や必要なフォルダが無ければ作成してください。
 
 ### ステップ1: 公開するフォルダを分ける（全員・5分）
 
-いま `myapp` フォルダには、公開したくないものが混ざっています。`README.md`（仕様）、`TASKS.md`（やること）、`CONTEXT.md`、`.claude/`（設定）は、あなたの作業用であって、世界中に見せるものではありません。**フォルダごと投げると、それら全部が一緒に公開されます。**
+いま `myapp` フォルダには、公開したくないものが混ざっています。`README.md`（仕様）、`TASKS.md`（やること）、`CONTEXT.md`、`CLAUDE.md`（約束）、`.claude/`（設定）は、あなたの作業用であって、世界中に見せるものではありません。**フォルダごと投げると、それら全部が一緒に公開されます。**
 
 ```text
 公開用に public/ フォルダを作り、公開してよいファイルだけをそこに移動してください。
 - 移動するもの: アプリのHTML・CSS・JavaScript・画像
-- 移動しないもの: README.md・TASKS.md・CONTEXT.md・docs/・.claude/・.git/
+- 移動しないもの: README.md・TASKS.md・CONTEXT.md・CLAUDE.md・docs/・.claude/・.git/
 移動したあと、ブラウザで public/index.html を開いて今までどおり動くことを確認できる状態にしてください。
 ```
 

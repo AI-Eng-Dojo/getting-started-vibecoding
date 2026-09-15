@@ -24,6 +24,7 @@
 
 - `.site-src/` と `site/` はビルド中間物（gitignore 済み、CI が再生成する）。編集も、元ファイル代わりの参照もしない。ローカルの中身は古い
 - `starters/*/rescue/index.html` のパスは `.github/workflows/link-check.yml` に直書きされ、`raw.githubusercontent.com` の URL で参加者に配られている。改名・移動しない（#13）
+- `starters/c-habit-tracker/homework/` は、参加者が後半7で `myapp` に丸ごと写す見本（`CLAUDE.md`・`README.md`・`TASKS.md`・`CONTEXT.md`・`docs/adr/`）。中の `CLAUDE.md` は参加者向けで、この教材を編集するときには効かせない（`.claude/settings.json` の `claudeMdExcludes` で除外している）。`templates/CLAUDE.md.sample` と同じ4行なので、直すときは両方直す
 - サイトに載る範囲は `.github/scripts/build-site.py` の `INCLUDE` が決める。`instructor/` と各 `rescue/` は意図的に非掲載、`templates/` は意図的に掲載。`slides/*.md` は `build-slides.py` が HTML スライドに変換する（Markdown のまま載るのは `slides/README.md` だけ）
 
 ## 検証
