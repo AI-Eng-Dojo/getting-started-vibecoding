@@ -15,7 +15,7 @@
 ## 0.0 用意するソフトウェア
 
 - VS CodeとClaude Code拡張、ターミナル用のCLIを入れる
-- Node.jsのLTS版を全OSで入れる（`wrangler`・Backlog用）
+- Node.jsのLTS版を全OSで入れる（Playwright・`wrangler`・Backlog用）
 - **Git**で変更を保存し、**GitHub CLI（gh）**でGitHubを操作する
 - 作ったHTMLを確認するブラウザを用意する
 
