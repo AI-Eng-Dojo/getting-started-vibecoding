@@ -5,8 +5,6 @@ Claude Codeを使って、あなたのアイデアをソフトウェアとして
 
 > 📖 **教材はWebサイトでも読めます → <https://ai-eng-dojo.github.io/getting-started-vibecoding/>**
 
-> **画面共有で説明するときは [ハンズオン説明用スライド](slides/README.md) を使えます。** 事前準備、前半、後半の3本を用意しています。
-
 ## 対象者
 
 - IT・システム開発経験のあるエンジニア
@@ -142,8 +140,6 @@ getting-started-vibecoding/       ← 教材リポジトリ（このリポジト
 │   ├── 01-part1.md        前半テキスト
 │   ├── 02-part2.md        後半テキスト
 │   └── columns.md         ★後読みコラム集（当日は読まない。帰りの電車で）
-├── slides/                説明用スライドの原稿（事前準備、前半、後半）
-├── slide-theme/           スライドのHTMLテンプレート、見た目、操作
 ├── starters/              前半2の代替お題テンプレート3種（任意）
 │   ├── a-pomodoro-timer/  お題A: ポモドーロタイマー
 │   ├── b-shindan-chart/   お題B: 診断チャート
@@ -169,18 +165,12 @@ getting-started-vibecoding/       ← 教材リポジトリ（このリポジト
 
 この教材は、`main` に入るたびGitHub Actionsが [MkDocs](https://www.mkdocs.org/) でHTML化し、<https://ai-eng-dojo.github.io/getting-started-vibecoding/> に自動で公開されます。Markdown側のリンクは書き換えていないので、**GitHub上の表示とサイト上の表示のどちらからでも同じようにたどれます。**
 
-説明用スライドも同じビルドでHTML化し、サイトの `/slides/` 以下にまとめて公開します。
-原稿は `slides/prep.md`、`slides/part1.md`、`slides/part2.md` にあり、コードブロックの外に置いた `---` でスライドを区切ります。
-各スライドの末尾の教材リンクは、ビルド時に対応するHTMLページへのリンクに変換されます。
-
 手元で見た目を確認したいときは、次の1コマンドで `http://127.0.0.1:8000` にプレビューが立ちます。
 
 ```bash
 uv run --with-requirements requirements-site.txt python .github/scripts/build-site.py --serve
 ```
 
-スライドはプレビューの `/slides/` から開けます。
-原稿やテーマを編集したら、このコマンドを起動し直してHTMLを再生成してください。
 公開と同じビルドとリンク検査は次のコマンドで確認できます。
 
 ```bash

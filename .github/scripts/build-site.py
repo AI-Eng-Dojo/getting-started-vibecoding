@@ -7,8 +7,7 @@
    hooks/ demos/）を、**ディレクトリ構造をそのまま保って** .site-src/ にコピーする。
    構造を保つのは、教材内の相対リンク（`../starters/README.md` など）を
    1行も書き換えずに、GitHub上でもPages上でも同じように動かすため。
-2. slides/ のMarkdownから解説スライドのHTMLを .site-src/slides/ に作る。
-3. `mkdocs build` を呼び、教材とスライドを同じ site/ に出力する。
+2. `mkdocs build` を呼び、教材を site/ に出力する。
 
 instructor/ は「参加者には配布しない」と書かれているのでサイトには載せない
 （リポジトリ上には残る。載せたくなったら INCLUDE に足すだけ）。
@@ -19,7 +18,6 @@ instructor/ は「参加者には配布しない」と書かれているので�
     python3 .github/scripts/build-site.py --stage-only
 """
 import os
-import importlib.util
 import re
 import shutil
 import subprocess
@@ -27,12 +25,6 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 STAGE = os.path.join(ROOT, ".site-src")
-
-_slides_spec = importlib.util.spec_from_file_location(
-    "build_slides", os.path.join(ROOT, ".github", "scripts", "build-slides.py")
-)
-slides_builder = importlib.util.module_from_spec(_slides_spec)
-_slides_spec.loader.exec_module(slides_builder)
 
 # サイトに載せるもの。ファイルでもディレクトリでもよい
 INCLUDE = [
@@ -43,7 +35,6 @@ INCLUDE = [
     "templates",
     "hooks",
     "demos",
-    "slides/README.md",
 ]
 
 # コピーしないもの（どのディレクトリでも）
@@ -123,8 +114,7 @@ def copy_file(src, dst):
         with open(src, encoding="utf-8") as fh:
             text = fh.read()
         with open(dst, "w", encoding="utf-8") as fh:
-            text = fix_directory_links(surface_front_matter(text), src)
-            fh.write(slides_builder.rewrite_deck_links(text, os.path.relpath(src, ROOT)))
+            fh.write(fix_directory_links(surface_front_matter(text), src))
     else:
         shutil.copy2(src, dst)
 
@@ -162,7 +152,6 @@ def stage():
                 copy_file(full, os.path.join(STAGE, rel))
                 count += 1
     print(f".site-src/ に {count} ファイルを配置しました")
-    slides_builder.build_slides(STAGE)
 
 
 def main():
