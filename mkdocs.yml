@@ -105,7 +105,6 @@ extra:
 
 nav:
   - ホーム: README.md
-  - 説明用スライド: slides/README.md
   - 事前準備（前日まで）: docs/00-prep.md
   - 前半: docs/01-part1.md
   - 後半: docs/02-part2.md
