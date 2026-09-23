@@ -127,11 +127,11 @@ nav:
       - 前半で自分で作る ddd: skills/ddd/SKILL.md
       - ddd の書式 CONTEXT-FORMAT: skills/ddd/CONTEXT-FORMAT.md
       - ddd の書式 ADR-FORMAT: skills/ddd/ADR-FORMAT.md
-      - 後半で使う tdd: skills/tdd/SKILL.md
-      - 後半で使う code-review: skills/code-review/SKILL.md
-      - 後半で使う security-review: skills/security-review/SKILL.md
-      - 後半で使う prototype: skills/prototype/SKILL.md
-  - Hooks: hooks/README.md
+      - 任意課題 tdd: skills/tdd/SKILL.md
+      - 任意課題 prototype: skills/prototype/SKILL.md
+  - Hooks:
+      - hooks/README.md
+      - セキュリティレビューの観点: hooks/security-review-prompt.md
   - テンプレート:
       - 最初の指示: templates/first-instruction.md
       - Grill Me系エージェントスキルの雛形: templates/grill-me-skill-template.md

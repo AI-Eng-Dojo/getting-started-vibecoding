@@ -1,84 +1,65 @@
-# skills/ — この教材で使うエージェントスキルの完成形
+# この教材で使うエージェントスキルの完成例
 
-このワークショップで扱うエージェントスキルの**完成形**です。使い方は2種類あります。
+前半で自作する3件と、任意課題で使う2件の完成例です。
+前半の3件は、まず自分で作り、詰まったときや答え合わせに開いてください。
 
-| | いつ | どう扱うか |
-|---|---|---|
-| **前半で自分で作る** | 前半4（ハンズオン③） | `tsumete`・`tsumetsume`・`ddd` の3枚。**自分で書くのが本線**。ここにあるのは答え合わせ用 |
-| **後半でコピーして使う** | 後半9・10（ハンズオン⑥・⑦） | `tdd`・`code-review`・`security-review` ＋任意の `prototype`。**書かずにコピーして構いません** |
+## 前半で自作する3件
 
-前半で「エージェントスキルとは何か」を自分の手で作って理解し、後半では**完成例を組み合わせて開発工程を回す**という2段構えです。
-
-**前半のぶんは、まずは見ないで作ってみてください。** 詰まったとき、または答え合わせのときに開きます。
-
-## 前半で自分で作る: 「詰めて」3枚構成
-
-```
-tsumete      ← 入口。自分で `/tsumete` と打ったときだけ起動する
-  ├─ tsumetsume  一問ずつ問い詰める進め方
-  └─ ddd         決まったことを CONTEXT.md と ADR に書き残す進め方
+```text
+tsumete          入口。自分で /tsumete と打つ
+  ├─ tsumetsume  一問ずつ問い詰める
+  └─ ddd         確定した用語と決定を書き残す
 ```
 
 | エージェントスキル | 役割 |
 |---|---|
-| [tsumete](tsumete/SKILL.md) | 入口。下の2つを呼び出し、最後に `README.md` と `TASKS.md` を書き出す。`disable-model-invocation: true` 付きで、**Claudeが勝手に起動することはない** |
-| [tsumetsume](tsumetsume/SKILL.md) | 実装前に計画を揺さぶる。質問は一度に一つ |
-| [ddd](ddd/SKILL.md) | 用語集（[CONTEXT-FORMAT.md](ddd/CONTEXT-FORMAT.md)）と決定記録（[ADR-FORMAT.md](ddd/ADR-FORMAT.md)）の書き方 |
+| [tsumete](tsumete/SKILL.md) | 開いているREADMEを読み、質問と記録を組み合わせ、最後にREADMEとTASKSを書き出す |
+| [tsumetsume](tsumetsume/SKILL.md) | 一度に一問ずつ聞く。調べれば分かる事実は調べ、決定はユーザーに委ねる |
+| [ddd](ddd/SKILL.md) | 確定した用語をCONTEXTに、変更しにくい決定をADRに残す |
 
-前半4のハンズオンでは、この3つの**最小版**を自分で作ります。ここに置いてあるのは、その先まで育て込んだ完成形です。
+`tsumete` だけに `disable-model-invocation: true` を付け、開始を人間が決めます。
+`tsumetsume` と `ddd` はClaudeが必要に応じて呼びます。
+用語集と決定記録の書式は [CONTEXT-FORMAT.md](ddd/CONTEXT-FORMAT.md) と [ADR-FORMAT.md](ddd/ADR-FORMAT.md) にあります。
 
-## 後半でコピーして使う: 開発工程の4枚
+## 任意課題でコピーする2件
 
-宿題で書いた仕様を、実際のソフトウェアにするまでの工程を、そのままエージェントスキルに分けたものです。
+| エージェントスキル | 使う場面 |
+|---|---|
+| [tdd](tdd/SKILL.md) | 自動テストから実装する進め方を試す。テストが落ちることを確認し、最小の実装で通してから、自分で画面を確かめる |
+| [prototype](prototype/SKILL.md) | 設計を決められないとき、捨てる前提の試作で判断する |
 
-| エージェントスキル | 使う場面 | 役割 |
-|---|---|---|
-| [tdd](tdd/SKILL.md) | 後半9（実装） | **完了定義をPlaywrightのテストに書き、落ちるのを見てから**、1件ずつ最小実装してテストを通す。完了を決めるのは、画面で確かめた人間 |
-| [code-review](code-review/SKILL.md) | 後半10（レビュー） | **仕様どおりか**と**作法どおりか**を、混ぜずに別々に報告する |
-| [security-review](security-review/SKILL.md) | 後半10（レビュー） | 危ないところを重大度つきで報告する。**勝手には直さない** |
-| [prototype](prototype/SKILL.md) | 任意・詰まったとき | 決められない設計を、**捨てる前提の小さい試作**で判断する |
+どちらも本線の必須条件ではありません。
+前半3の中心操作デモは、`prototype` を導入せず、本文のプロンプトだけで試せます。
 
-### 3枚が噛み合っている点
+## レビューにはClaude Codeに同梱されたものを使う
 
-- `tdd` は**リファクタリングをしません**。読みにくさ・重複は `code-review` の Standards 軸が拾います。**整えるのは、動いたあと**という分担です
-- `code-review` は**セキュリティを扱いません**。そこは `security-review` の担当です。1つのエージェントスキルに全部を入れると、報告が混ざって何も見えなくなります
-- `code-review` の Spec 軸が読むのは、**宿題で自分が書いた `README.md`** です。仕様が人に読まれるだけのものではなく、**レビューの入力として実際に使われる**のがここです
-- `security-review` だけが `.claude/security-reviewed` という「レビュー済みの印」を作ります。後半10で設定するHookは、この印を見て `git push` や `wrangler deploy` を止めます（詳細は [docs/02-part2.md](../docs/02-part2.md)）
+後半9は同梱の `/code-review`、後半10の初回プッシュ前は組み込みの `/security-review` を使います。
+**`code-review` と `security-review` という名前の独自エージェントスキルをコピーしないでください。**
+同名のものがあると、同梱のものと競合します。
+以前の教材で保存した人は、プロジェクトと `~/.claude/skills/` の両方を確認し、該当する独自エージェントスキルだけを読み込み対象の外へ退避してから、Claude Codeを開き直します。
 
-## 使い方（自分のプロジェクトに入れる）
+仕様への適合は、READMEの完成判定に沿って自分で動作確認します。
+コミット前のセキュリティレビューは、[フックの配布物](../hooks/README.md) にある確認観点をサブエージェントに渡します。
+コマンドが使えない場合の指示は [レビューのプロンプト](../templates/verify-prompt.md) にあります。
 
-エージェントスキルは `.claude/skills/` に置くとClaude Codeが自動で読み込みます。この講座では、**7枚ともプロジェクトレベル（`⟨プロジェクト⟩/.claude/skills/`）に置きます。** 前半で自分で作る3枚も、後半でコピーする4枚も、宿題・後半で作業する `myapp` の中にまとめます。リポジトリと一緒にGitHubへ保存されるので、PCを替えても取り戻せます。どのプロジェクトからでも呼べるユーザーレベル（`~/.claude/skills/`）という置き場所もありますが、そこに置いたエージェントスキルは別の仕事のリポジトリでも反応するので、手に馴染んでからコピーしてください。
+[同梱コードレビューの公式説明](https://code.claude.com/docs/en/code-review)と[同名のエージェントスキルの優先順位](https://code.claude.com/docs/en/skills)も参照してください。
 
-```bash
-mkdir -p ⟨プロジェクト⟩/.claude/skills
-cp -r ⟨このリポジトリ⟩/skills/tsumete ⟨プロジェクト⟩/.claude/skills/
-cp -r ⟨このリポジトリ⟩/skills/tsumetsume ⟨プロジェクト⟩/.claude/skills/
-cp -r ⟨このリポジトリ⟩/skills/ddd ⟨プロジェクト⟩/.claude/skills/
-```
+## 自分のプロジェクトに入れる
 
-```bash
-mkdir -p ⟨プロジェクト⟩/.claude/skills
-cp -r ⟨このリポジトリ⟩/skills/tdd ⟨プロジェクト⟩/.claude/skills/
-cp -r ⟨このリポジトリ⟩/skills/code-review ⟨プロジェクト⟩/.claude/skills/
-cp -r ⟨このリポジトリ⟩/skills/security-review ⟨プロジェクト⟩/.claude/skills/
-cp -r ⟨このリポジトリ⟩/skills/prototype ⟨プロジェクト⟩/.claude/skills/
-```
+この教材では `myapp/.claude/skills/⟨名前⟩/SKILL.md` に保存します。
+教材リポジトリのcloneは不要で、必要な完成例のページをClaude Codeに渡してコピーさせます。
+`ddd` は参照する書式ファイルも同じフォルダに置きます。
 
-置いたら、Claude Codeに「セキュリティレビューして」と言うだけです。エージェントスキル名を指定する必要はありません。**フロントマターの `description` を読んで、Claudeが自分で「今これを使う場面だ」と判断します。**
+`.claude/skills/` 自体を初めて作ったときは、Claude Codeを再起動します。
+既存の置き場所への追加や変更は自動で反映されます。
+候補に出なければ `/reload-skills`、それでも出なければ再起動して保存先を確認します。
+一度呼び出した本文を変更した場合は、`/clear` で旧版の指示を会話から除いて試します。
+詳しくは [公式の更新手順](https://code.claude.com/docs/en/skills#edit-a-skill-during-a-session) を参照してください。
 
-> だから `description` は「何をするか」だけでなく「**いつ使うか**」まで書きます。ここがエージェントスキル作りでいちばん効く一行です。
+ユーザーレベルの `~/.claude/skills/` は別のプロジェクトにも作用するので、講座では使いません。
+同名のものがある場合はユーザーレベルが優先されるため、編集した内容が反映されないときは両方の置き場所を確かめます。
 
-**ただし `tsumete` だけは例外で、`/tsumete` と打って呼びます。** `disable-model-invocation: true` が入っていて、Claudeの判断では起動しないようにしてあるためです。問い詰めは何十往復もする長い作業なので、**始めるかどうかは人間が決める**、という設計です。中身を持つ `tsumetsume`・`ddd` のほうは、通常どおりClaudeが自分で判断して呼びます。
+## 参考にした設計
 
-## フォルダの形
-
-```
-skills/⟨スキル名⟩/
-└── SKILL.md        必須。フロントマター（name・description）＋本文
-```
-
-長い書式や参考資料は同じフォルダに別ファイルとして置き、`SKILL.md` からリンクします（`ddd/` がその例）。SKILL.md本体は短く保ち、詳細は必要になったときだけ読ませるのがコツです。
-
-## 元ネタ
-
-ここに置いた7枚のうち6枚は、公開されているエージェントスキル集（[github.com/mattpocock/skills](https://github.com/mattpocock/skills)）の設計を下敷きにしています（`security-review` だけはこの教材オリジナルです）。**どれが原理で、どれが入口なのか**という地図は [docs/columns.md](../docs/columns.md) の★10にまとめました（当日は読まず、帰りに）。
+配布する5件は、[mattpocock/skills](https://github.com/mattpocock/skills) の設計を教材に合わせたものです。
+入口、質問、記録の役割の違いは [後読みコラム](../docs/columns.md) にまとめています。

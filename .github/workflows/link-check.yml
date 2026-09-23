@@ -52,6 +52,9 @@ jobs:
       - name: 教材が参照しているリポジトリ内のファイルが存在するか
         run: python3 .github/scripts/check-links.py
 
+      - name: 配布フックの動作を一時リポジトリで確認する
+        run: node --test hooks/hooks.test.mjs
+
       - name: 教材が案内している外部URLが生きているか
         continue-on-error: true   # 外部サービス都合の一時的な失敗で赤くしない
         run: |

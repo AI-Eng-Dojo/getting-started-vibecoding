@@ -1,0 +1,27 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "if": "Bash(npx wrangler deploy *)",
+            "command": "node",
+            "args": [
+              "${CLAUDE_PROJECT_DIR}/.claude/hooks/pre-deploy-check.mjs"
+            ]
+          },
+          {
+            "type": "command",
+            "if": "PowerShell(npx wrangler deploy *)",
+            "command": "node",
+            "args": [
+              "${CLAUDE_PROJECT_DIR}/.claude/hooks/pre-deploy-check.mjs"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

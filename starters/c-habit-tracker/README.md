@@ -19,7 +19,7 @@
 
 | ファイル | 中身 |
 |---|---|
-| [homework/CLAUDE.md](homework/CLAUDE.md) | このプロジェクトの約束。前半6で置くものと同じ4行 |
+| [homework/CLAUDE.md](homework/CLAUDE.md) | このプロジェクトの約束。前半3で置くものと同じ内容 |
 | [homework/README.md](homework/README.md) | 仕様。誰が使うか・できること・今回やらないこと・完成判定まで埋まっている |
 | [homework/TASKS.md](homework/TASKS.md) | やること8件。すべて「未」で、今日やる分はまだ決めていない |
 | [homework/CONTEXT.md](homework/CONTEXT.md) | 用語集。`ddd` が詰めながら書き残したもの |

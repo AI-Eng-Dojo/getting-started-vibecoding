@@ -24,12 +24,12 @@
 
 - `.site-src/` と `site/` はビルド中間物（gitignore 済み、CI が再生成する）。編集も、元ファイル代わりの参照もしない。ローカルの中身は古い
 - `starters/*/rescue/index.html` のパスは `.github/workflows/link-check.yml` に直書きされ、`raw.githubusercontent.com` の URL で参加者に配られている。改名・移動しない（#13）
-- `starters/c-habit-tracker/homework/` は、参加者が後半7で `myapp` に丸ごと写す見本（`CLAUDE.md`・`README.md`・`TASKS.md`・`CONTEXT.md`・`docs/adr/`）。中の `CLAUDE.md` は参加者向けで、この教材を編集するときには効かせない（`.claude/settings.json` の `claudeMdExcludes` で除外している）。`templates/CLAUDE.md.sample` と同じ4行なので、直すときは両方直す
+- `starters/c-habit-tracker/homework/` は、参加者が後半7で `myapp` に丸ごと写す見本（`CLAUDE.md`・`README.md`・`TASKS.md`・`CONTEXT.md`・`docs/adr/`）。中の `CLAUDE.md` は参加者向けで、この教材を編集するときには効かせない（`.claude/settings.json` の `claudeMdExcludes` で除外している）。`templates/CLAUDE.md.sample` と同じ内容なので、直すときは両方直す
 - サイトに載る範囲は `.github/scripts/build-site.py` の `INCLUDE` が決める。`instructor/` と各 `rescue/` は意図的に非掲載、`templates/` は意図的に掲載
 
 ## 検証
 
-Markdown だけのリポジトリなので、テストの代わりに次の2つを通す。
+教材本文の変更では、次の2つを通す。
 
 ```bash
 python3 .github/scripts/check-links.py
@@ -40,6 +40,8 @@ uv run --with-requirements requirements-site.txt python .github/scripts/build-si
 ```
 
 前者はリポジトリ内リンクと救済版の raw URL の実在を確認する（CI でも走る）。後者は `http://127.0.0.1:8000` で見た目を確認する。見出しアンカー・表・コードブロックを触ったときは後者も見る。
+
+`hooks/` の配布物を変更した場合は、`node --test hooks/hooks.test.mjs` も通す（CIでも実行する）。これは一時リポジトリでのスクリプト検証であり、Claude Code内のエージェントフックやWindows実機での動作確認とは区別する。
 
 ## コミットとブランチ
 

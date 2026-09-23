@@ -1,11 +1,13 @@
 ---
 name: tdd
-description: Implement one TASKS.md item at a time, test-first — turn its on-screen completion check (完了定義) into a Playwright browser test, show it failing (red), write the smallest code that makes every test pass (green), then stop and let the user — not the model — confirm it on screen. Use when working through TASKS.md, when the user says 「実装して」「次のやることを進めて」, or whenever a change needs to be verified before moving on.
+description: Implement one TASKS.md item at a time, test-first — turn its on-screen completion check (完了定義) into a Playwright browser test, show it failing (red), write the smallest code that makes every test pass (green), then stop and let the user — not the model — confirm it on screen. Use only when the user explicitly asks for test-first implementation or 「テストから実装して」. This is an optional workshop exercise.
 ---
 
 # 完了定義をテストにしてから、実装する
 
-`TASKS.md` を上から消化するための進め方です。**1件ごとに、完了定義を自動テストに書き、落ちる（red）のを確かめてから最小限の実装をし、通る（green）のを確かめます。** 完了したかどうかを最後に決めるのはユーザーです。
+自動テストを先に書く任意課題の進め方です。
+ユーザーがテストからの実装を選んだときだけ使い、通常の実装指示だけでは起動しません。
+`TASKS.md` のMVPを上から一件ずつ進めます。**1件ごとに、完了定義を自動テストに書き、落ちる（red）のを確かめてから最小限の実装をし、通る（green）のを確かめます。** 完了したかどうかを最後に決めるのはユーザーです。
 
 順番が逆になった瞬間、この進め方は壊れます。先に実装すると、テストは「いま動いているもの」に合わせて書かれてしまい、何も検証しなくなります。
 
@@ -23,7 +25,7 @@ description: Implement one TASKS.md item at a time, test-first — turn its on-s
 
 `TASKS.md` の**未着手のうち、いちばん上の1件だけ**を扱ってください。2件目以降には手をつけないこと。
 
-**「持ち帰る分」「レビューで出た宿題」「今回やらないこと」の見出しの下は、名指しされない限り対象外です。** 今日やる分が全部終わったら、次には進まず、その旨を報告してください。
+**「持ち帰る分」「レビューで残した指摘」「今回やらないこと」の見出しの下は、名指しされない限り対象外です。** 今日やる分が全部終わったら、次には進まず、その旨を報告してください。
 
 まとめて実装すると、動かなかったときにどれが原因か分かりません。**1件ずつ通すのは丁寧さではなく、切り分けのためです。**
 
@@ -82,7 +84,7 @@ module.exports = pathToFileURL(path.join(__dirname, '../index.html')).href;
 
 ## テストの書き方
 
-- 1件につき1ファイル。`tests/task-⟨TASKS.md の番号を2桁で⟩.spec.js` に置く（例: `tests/task-02.spec.js`）
+- 1件につき1ファイル。`tests/task-⟨MVPの上からの順番を2桁で⟩.spec.js` に置く（例: `tests/task-02.spec.js`）
 - テストの名前は、**完了定義の文言をそのまま**使う
 - アプリは `tests/app-url.js` のURLで開く。サーバーは立てない
 - **ユーザーと同じ手がかりで操作し、確かめる。** 見えている文字やボタンの名前（`getByRole`・`getByText`・`getByLabel`）を使い、関数や変数を直接呼ばない
@@ -146,7 +148,10 @@ test('「30分歩く」と入れて追加を押すと、一覧に「30分歩く�
 
 ユーザーが完了定義を満たしたと確認したら、`TASKS.md` の状態を「済」に更新してください。
 
-ユーザーがコミットとプッシュを頼んでいればそれも行います。頼まれていなければ、**コミットとプッシュを提案**してください。確認できた状態だけが保存されます。
+ユーザーがコミットを頼んでいれば、コミット前のレビューフックを通して保存します。
+フックが止めたら理由と指摘を報告し、次のタスクへ進みません。
+コードレビューの結果を待ってから、直すものをユーザーに選んでもらいます。
+プッシュは後半10で未送信コミット全体をセキュリティレビューしてから行います。
 
 「次へ」と言われたら、次の1件の手順1から始めます。言われていなければ、ここで区切ります。
 

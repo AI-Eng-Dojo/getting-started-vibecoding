@@ -1,0 +1,47 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "if": "Bash(git commit *)",
+            "command": "node",
+            "args": ["${CLAUDE_PROJECT_DIR}/.claude/hooks/pre-commit-code-review.mjs"]
+          },
+          {
+            "type": "command",
+            "if": "PowerShell(git commit *)",
+            "command": "node",
+            "args": ["${CLAUDE_PROJECT_DIR}/.claude/hooks/pre-commit-code-review.mjs"]
+          },
+          {
+            "type": "agent",
+            "if": "Bash(git commit *)",
+            "prompt": "プロジェクトのルートにある .claude/hooks/security-review-prompt.md を読み、その指示に従ってください。$ARGUMENTS",
+            "timeout": 300
+          },
+          {
+            "type": "agent",
+            "if": "PowerShell(git commit *)",
+            "prompt": "プロジェクトのルートにある .claude/hooks/security-review-prompt.md を読み、その指示に従ってください。$ARGUMENTS",
+            "timeout": 300
+          }
+        ]
+      }
+    ],
+    "UserPromptExpansion": [
+      {
+        "matcher": "code-review|review",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node",
+            "args": ["${CLAUDE_PROJECT_DIR}/.claude/hooks/mark-code-reviewed.mjs"]
+          }
+        ]
+      }
+    ]
+  }
+}
