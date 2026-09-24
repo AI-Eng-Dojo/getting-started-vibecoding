@@ -88,7 +88,7 @@ Claude Code／GitHub／VS Code／GitHub CLI（`gh` コマンド）のセット�
 | **1. オープニング** — バイブコーディングとは／今日の予定／Claude Codeの仕組み（モデル・ツール・コンテキスト・権限）／最初に叩く6つのコマンド | — |
 | **2. ハンズオン① Claude Code基礎** — `vibecoding-0908` を作り、バイブコーディング → MCP → エージェントスキル の3本柱を説明する。主線は簡単なものを1個作る→`tsumete` の簡易版を作る→設定を開いて中を見る。Gmail連携と下書き作成は早く終わった人向けの任意課題とする | 動くアプリ1個以上・`tsumete`(プロジェクトレベル)・Gmail下書き1通（任意） |
 | **3. ハンズオン② 自分が作りたいアプリを考える** — `myapp` を作って `CLAUDE.md` にルールを置く。壁打ちで選んだアイデアの中心操作を試作し、触った気づきをREADMEに戻す。`tsumete` もコピーする | `myapp`・`CLAUDE.md`・体験を確かめたREADME・`tsumete` |
-| **4. ハンズオン③ Grill Me系エージェントスキルを自作する** — `tsumete` を育てながら `tsumetsume`・`ddd` に役割を分ける | `SKILL.md` 3ファイル |
+| **4. ハンズオン③ Grill Me系エージェントスキルを自作する** — 問い詰めて実装資料を作る `tsumete` と、用語や決定を記録する `ddd` を育てる | `SKILL.md` 2ファイル |
 | **5. ハンズオン④ エージェントスキルとHooksで開発工程を拡張する** — 保存した作法で工程を拡張する考え方とHooksに触れる | Hook 1件 |
 | **6. 前半まとめ・宿題の説明** | — |
 
@@ -136,7 +136,7 @@ getting-started-vibecoding/       ← 教材リポジトリ（このリポジト
 │   ├── a-pomodoro-timer/  お題A: ポモドーロタイマー
 │   ├── b-shindan-chart/   お題B: 診断チャート
 │   └── c-habit-tracker/   お題C: 習慣トラッカー
-├── skills/                エージェントスキルの完成例（前半3件を自作／任意課題2件）
+├── skills/                エージェントスキルの完成例（前半2件を自作／任意課題2件）
 ├── hooks/                 後半9と11で使うレビューフックとデプロイ前の確認
 ├── templates/             コピペして使うテンプレート（持ち帰り素材）
 ├── demos/                 ライブデモのソース・参考実装置き場
@@ -149,7 +149,7 @@ getting-started-vibecoding/       ← 教材リポジトリ（このリポジト
 
 - 参加者は **README → docs/00-prep.md → 当日は docs/01-part1.md と docs/02-part2.md** の順に読み進めます
 - 前半2でバイブコーディングを行うのは**教材リポジトリではなく、その場で作る `vibecoding-0908` 側**です。`starters/` の3種は、お題に迷ったとき・自由に作ってみて手応えがなかったときの代替お題です
-- `skills/` には完成例が5件あります。前半4の3件（`tsumete`・`tsumetsume`・`ddd`）は自作し、`tdd` と `prototype` は任意課題でコピーします。レビューにはClaude Codeの同梱機能を使います（[配布物の使い方](skills/README.md)）
+- `skills/` には完成例が4件あります。前半4の2件（`tsumete`・`ddd`）は自作し、`tdd` と `prototype` は任意課題でコピーします。レビューにはClaude Codeの同梱機能を使います（[配布物の使い方](skills/README.md)）
 - 詰まったとき用の「救済版」（starters/の各お題の完成状態。`starters/⟨題⟩/rescue/index.html`）の使い方は [starters/README.md](starters/README.md) を参照してください
 - 独自ドメイン・リリース自動化（GitHub Actions）といった発展的な内容は、本線には含めず🚀拡張ミッションおよび [docs/columns.md](docs/columns.md) 側で扱います
 

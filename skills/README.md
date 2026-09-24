@@ -1,24 +1,24 @@
 # この教材で使うエージェントスキルの完成例
 
-前半で自作する3件と、任意課題で使う2件の完成例です。
-前半の3件は、まず自分で作り、詰まったときや答え合わせに開いてください。
+前半で自作する2件と、任意課題で使う2件の完成例です。
+前半の2件は、まず自分で作り、詰まったときや答え合わせに開いてください。
 
-## 前半で自作する3件
+<a id="前半で自作する3件"></a>
+
+## 前半で自作する2件
 
 ```text
-tsumete          入口。自分で /tsumete と打つ
-  ├─ tsumetsume  一問ずつ問い詰める
-  └─ ddd         確定した用語と決定を書き残す
+tsumete    人が /tsumete と呼び、質問から実装資料の作成まで進める
+  └─ ddd   確定した用語と決定を書き残す
 ```
 
 | エージェントスキル | 役割 |
 |---|---|
-| [tsumete](tsumete/SKILL.md) | 開いているREADMEを読み、質問と記録を組み合わせ、最後にREADMEとTASKSを書き出す |
-| [tsumetsume](tsumetsume/SKILL.md) | 一度に一問ずつ聞く。調べれば分かる事実は調べ、決定はユーザーに委ねる |
+| [tsumete](tsumete/SKILL.md) | READMEを読み、一問ずつ問い詰める。用語や決定を `ddd` に記録させ、最後にREADMEとTASKSを書き出す |
 | [ddd](ddd/SKILL.md) | 確定した用語をCONTEXTに、変更しにくい決定をADRに残す |
 
-`tsumete` だけに `disable-model-invocation: true` を付け、開始を人間が決めます。
-`tsumetsume` と `ddd` はClaudeが必要に応じて呼びます。
+`tsumete` には `disable-model-invocation: true` を付け、開始を人間が決めます。
+`ddd` は `tsumete` から使うほか、「用語集を整理して」のように直接頼むこともできます。
 用語集と決定記録の書式は [CONTEXT-FORMAT.md](ddd/CONTEXT-FORMAT.md) と [ADR-FORMAT.md](ddd/ADR-FORMAT.md) にあります。
 
 ## 任意課題でコピーする2件
@@ -61,5 +61,5 @@ tsumete          入口。自分で /tsumete と打つ
 
 ## 参考にした設計
 
-配布する5件は、[mattpocock/skills](https://github.com/mattpocock/skills) の設計を教材に合わせたものです。
-入口、質問、記録の役割の違いは [後読みコラム](../docs/columns.md) にまとめています。
+配布する4件は、[mattpocock/skills](https://github.com/mattpocock/skills) の設計を教材に合わせたものです。
+`tsumete` と `ddd` の役割の違いは [後読みコラム](../docs/columns.md) にまとめています。

@@ -123,7 +123,6 @@ nav:
   - エージェントスキル完成例:
       - skills/README.md
       - 前半で自分で作る tsumete: skills/tsumete/SKILL.md
-      - 前半で自分で作る tsumetsume: skills/tsumetsume/SKILL.md
       - 前半で自分で作る ddd: skills/ddd/SKILL.md
       - ddd の書式 CONTEXT-FORMAT: skills/ddd/CONTEXT-FORMAT.md
       - ddd の書式 ADR-FORMAT: skills/ddd/ADR-FORMAT.md
