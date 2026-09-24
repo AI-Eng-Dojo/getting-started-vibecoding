@@ -106,8 +106,8 @@ extra:
 nav:
   - ホーム: README.md
   - 事前準備（前日まで）: docs/00-prep.md
-  - 前半: docs/01-part1.md
-  - 後半: docs/02-part2.md
+  - '【前半】バイブコーディングをはじめよう': docs/01-part1.md
+  - '【後半】自分で考えたアプリを、ちゃんと動く状態で公開する': docs/02-part2.md
   - 後読みコラム集: docs/columns.md
   - 代替お題 starters:
       - starters/README.md
