@@ -39,12 +39,13 @@ theme:
     - navigation.tracking
     - navigation.top
     - navigation.indexes
+    - navigation.sections    # 参照サイトと同じく、サイドバーを見出し付きの平たい一覧にする
     - toc.follow
     - content.code.copy      # 79個ある ```text はコピペして使うプロンプト
     - search.suggest
     - search.highlight
   # 配色は site-theme/anthropic.css で定義した独自スキーム。
-  # academy.claude.com の Claude Design System のトークン実値に合わせてある。
+  # platform.claude.com/docs（Claude Design System）の実測値に合わせてある。
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: anthropic

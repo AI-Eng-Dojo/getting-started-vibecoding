@@ -124,7 +124,7 @@ def stage():
         shutil.rmtree(STAGE)
     os.makedirs(STAGE)
 
-    # サイト自身の見た目（Anthropicトンマナ）。教材のMarkdownとは別物なので
+    # サイト自身の見た目（Claude Platform Docs のトンマナ）。教材のMarkdownとは別物なので
     # docs/ には置かず、site-theme/ から assets/ として配る
     theme_src = os.path.join(ROOT, "site-theme")
     if os.path.isdir(theme_src):

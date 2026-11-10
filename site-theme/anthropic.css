@@ -1,19 +1,24 @@
 /* =========================================================================
-   Anthropic トンマナ for MkDocs Material
+   Claude Platform Docs のトンマナ for MkDocs Material
    -------------------------------------------------------------------------
-   academy.claude.com が使っている Claude Design System (CDS) の実際の
-   デザイントークンを読み取り、Material の変数に対応づけたもの。
+   platform.claude.com/docs（Claude Design System）の表示を実測し、
+   Material の変数とコンポーネントに対応づけたもの。
 
-   出典（academy.claude.com の配信CSSから抽出した実値）:
-     --cds-clay:            #d97757   ブランドのクレイ（アクセント）
-     --cds-clay-emphasized: #c6613f
-     --cds-radius:          6px
-     グレーは中性グレーではなく「わずかに緑みを帯びた温かいグレー」:
-       gray-0  #ffffff   gray-10 #fcfcfb   gray-20 #f9f9f7   gray-40 #f3f3f0
-       gray-50 #f0efec   gray-100 #e1e0d9  gray-200 #c3c2b7  gray-400 #898781
-       gray-600 #52514e  gray-800 #20201f  gray-830 #1a1a19  gray-900 #0b0b0b
-     ライト:  page-bg = gray-20 / text = neutral-900 / border = 黒10%
-     ダーク:  page-bg = gray-800台 / text = gray-50 / border = 白12%
+   実測値（ライト / ダーク）:
+     ページ地色        #fcfcfb / #151515
+     面（コード・表）  #ffffff / #1a1a19
+     文字 primary      #0b0b0b / #f0efec   見出し・強調・ナビの現在地
+     文字 secondary    #52514e / #c3c2b7   本文
+     文字 muted        #898781 / #898781   目次・補助（ライトはAAのため #6d6b67）
+     罫線              黒10%   / 白10%
+     リンク            #184f95 / #6da7ec   下線は同色の40%
+     インラインコード  #8e2626 / #ec7e7e   地は5%の面＋ヘアライン
+     本文 15px/22px、リード 16.875px、h1 26.25px、h2 20.625px、h3 16.875px
+     見出しはセリフ（weight 520）。和文グリフはゴシックに落ちる
+     角丸: 行・入力 8px、表 7px、カード（コード・注意書き）11px
+
+   ブランドのクレイ（#c6613f）は参照サイトでもロゴにしか使われていないので、
+   リンク・ナビ・注意書きには使わない。
 
    フォントは Anthropic の専用フォント（AnthropicSans/Serif/Mono）が
    配布されていないため、Google Fonts の近縁で代替している。
@@ -24,69 +29,60 @@
    ========================================================================= */
 
 /* -------------------------------------------------------------------------
-   1. パレット
+   1. 基準サイズ
+   Material は画面幅が広いと html の font-size を 137.5% / 150% に上げる。
+   参照サイトは幅によらず同じ大きさなので、125%（1rem = 20px）に固定する。
+   以降の rem はすべて 20px 基準（0.75rem = 15px、0.7rem = 14px）。
    ------------------------------------------------------------------------- */
 
+html {
+  font-size: 125%;
+}
+
+@media screen and (min-width: 100em) {
+  html {
+    font-size: 125%;
+  }
+}
+
+@media screen and (min-width: 125em) {
+  html {
+    font-size: 125%;
+  }
+}
+
 :root {
-  /* CDS のグレーランプ（そのままの実値） */
-  --ant-gray-0: #ffffff;
-  --ant-gray-10: #fcfcfb;
-  --ant-gray-20: #f9f9f7;
-  --ant-gray-30: #f6f6f4;
-  --ant-gray-40: #f3f3f0;
-  --ant-gray-50: #f0efec;
-  --ant-gray-60: #edece8;
-  --ant-gray-70: #eae9e4;
-  --ant-gray-100: #e1e0d9;
-  --ant-gray-150: #d2d1c7;
-  --ant-gray-200: #c3c2b7;
-  --ant-gray-300: #a5a49a;
-  --ant-gray-400: #898781;
-  --ant-gray-500: #6d6b67;
-  --ant-gray-600: #52514e;
-  --ant-gray-700: #383835;
-  --ant-gray-750: #2c2c2a;
-  --ant-gray-800: #20201f;
-  --ant-gray-830: #1a1a19;
-  --ant-gray-850: #151515;
-  --ant-gray-900: #0b0b0b;
-
-  /* アクセント */
-  --ant-clay: #d97757;          /* --cds-clay */
-  --ant-clay-strong: #c6613f;   /* --cds-clay-emphasized */
-  --ant-clay-deep: #b1512f;     /* 本文リンク用。#c6613f は明るい地色でAA(4.5:1)に届かない */
-  --ant-cactus: #bcd1ca;        /* --cds-cactus */
-  --ant-mineral: #629987;
-  --ant-heather: #cbcadb;
-
-  --ant-radius: 6px;            /* --cds-radius */
-  --ant-radius-lg: 10px;
+  --ant-radius: 8px;        /* 行・入力・ボタン */
+  --ant-radius-table: 7px;  /* 表 */
+  --ant-radius-card: 11px;  /* コードブロック・注意書き */
 }
 
 /* -------------------------------------------------------------------------
    2. タイポグラフィのスタック
-   欧文と和文を1つのスタックに並べ、グリフ単位で使い分けさせる。
    ------------------------------------------------------------------------- */
 
 /* Material は --md-text-font-family / --md-code-font-family を :root ではなく
    body 側で宣言している。同じ body に対して後から上書きする必要がある
-   （:root に書くと body の宣言に負けて効かない）。 */
+   （:root に書くと body の宣言に負けて効かない）。
+   和文は参照サイトと同じくOSのゴシック（Hiragino Sans）を先に置き、
+   それが無い環境（Windows / Linux）だけ Noto Sans JP を読み込ませる。 */
 body {
   --md-text-font-family:
-    "Inter", "Noto Sans JP",
-    -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans",
-    "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
+    "Inter", system-ui, -apple-system, "Segoe UI", "Hiragino Sans",
+    "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", Meiryo,
+    sans-serif;
 
   --md-code-font-family:
     "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
-    "Noto Sans JP", "Hiragino Sans", "Yu Gothic", monospace;
+    "Hiragino Sans", "Noto Sans JP", "Yu Gothic", monospace;
 }
 
-/* Anthropic が "voice" と呼ぶ役割。見出しに使う */
+/* 参照サイトが "voice" と呼ぶ役割。見出しに使う。
+   欧文だけがセリフになり、和文はゴシックに落ちる（参照サイトと同じ挙動）。 */
 :root {
   --ant-font-voice:
-    "Source Serif 4", "Noto Serif JP",
-    "Hiragino Mincho ProN", "Yu Mincho", Georgia, "Times New Roman", serif;
+    "Source Serif 4", Georgia, "Hiragino Sans", "Hiragino Kaku Gothic ProN",
+    "Noto Sans JP", "Yu Gothic", Meiryo, serif;
 }
 
 /* -------------------------------------------------------------------------
@@ -94,59 +90,67 @@ body {
    ------------------------------------------------------------------------- */
 
 [data-md-color-scheme="anthropic"] {
-  --ant-bg: var(--ant-gray-20);
-  --ant-surface: var(--ant-gray-10);
-  --ant-surface-sunken: var(--ant-gray-40);
-  --ant-ink: var(--ant-gray-900);
-  --ant-ink-body: var(--ant-gray-800);
-  --ant-ink-secondary: var(--ant-gray-600);
-  --ant-ink-muted: var(--ant-gray-400);
-  --ant-line: rgba(11, 11, 11, 0.10);        /* --cds-alpha-2 */
-  --ant-line-strong: rgba(11, 11, 11, 0.20); /* --cds-alpha-3 */
-  --ant-link: var(--ant-clay-deep);
-  --ant-link-hover: var(--ant-clay-strong);
+  --ant-bg: #fcfcfb;
+  --ant-surface: #ffffff;
+  --ant-ink: #0b0b0b;
+  --ant-ink-body: #52514e;
+  /* 参照サイトの muted は #898781 だが、明るい地色では 3.5:1 でAA(4.5:1)に届かない。
+     文字に使う muted だけ CDS の一段濃いグレー（5.2:1）にしている */
+  --ant-ink-muted: #6d6b67;
+  --ant-line: rgba(11, 11, 11, 0.10);
+  --ant-line-strong: rgba(11, 11, 11, 0.20);
+  --ant-fill: rgba(11, 11, 11, 0.05);         /* 入力欄・表の見出し・インラインコード */
+  --ant-fill-strong: rgba(11, 11, 11, 0.10);  /* ナビの現在地 */
+  --ant-link: #184f95;
+  --ant-link-line: rgba(24, 79, 149, 0.40);
+  --ant-code-inline: #8e2626;
+  --ant-warning-bg: #f9dca4;
+  --ant-warning-ink: #734500;
 
-  --md-default-fg-color: var(--ant-ink-body);
-  --md-default-fg-color--light: var(--ant-ink-secondary);
+  --md-default-fg-color: var(--ant-ink);
+  --md-default-fg-color--light: var(--ant-ink-body);
   --md-default-fg-color--lighter: var(--ant-ink-muted);
   --md-default-fg-color--lightest: var(--ant-line);
   --md-default-bg-color: var(--ant-bg);
-  --md-default-bg-color--light: rgba(249, 249, 247, 0.7);
-  --md-default-bg-color--lighter: rgba(249, 249, 247, 0.45);
-  --md-default-bg-color--lightest: rgba(249, 249, 247, 0.12);
+  --md-default-bg-color--light: rgba(252, 252, 251, 0.7);
+  --md-default-bg-color--lighter: rgba(252, 252, 251, 0.3);
+  --md-default-bg-color--lightest: rgba(252, 252, 251, 0.12);
 
-  /* ヘッダーは色帯にしない。地色＋ヘアラインというAnthropicの構え */
+  /* ヘッダーは色帯にしない。地色＋ヘアライン */
   --md-primary-fg-color: var(--ant-bg);
-  --md-primary-fg-color--light: var(--ant-gray-30);
-  --md-primary-fg-color--dark: var(--ant-gray-60);
+  --md-primary-fg-color--light: var(--ant-bg);
+  --md-primary-fg-color--dark: var(--ant-bg);
   --md-primary-bg-color: var(--ant-ink);
-  --md-primary-bg-color--light: var(--ant-ink-secondary);
+  --md-primary-bg-color--light: var(--ant-ink-muted);
 
-  --md-accent-fg-color: var(--ant-clay-strong);
-  --md-accent-fg-color--transparent: rgba(217, 119, 87, 0.10);
-  --md-accent-bg-color: var(--ant-gray-0);
-  --md-accent-bg-color--light: var(--ant-gray-20);
+  --md-accent-fg-color: var(--ant-ink);
+  --md-accent-fg-color--transparent: var(--ant-fill);
+  --md-accent-bg-color: var(--ant-bg);
+  --md-accent-bg-color--light: var(--ant-bg);
 
   --md-typeset-color: var(--ant-ink-body);
   --md-typeset-a-color: var(--ant-link);
-  --md-typeset-mark-color: rgba(217, 119, 87, 0.22);
-  --md-typeset-table-color: var(--ant-line-strong);
-  --md-typeset-del-color: rgba(198, 97, 63, 0.15);
-  --md-typeset-ins-color: rgba(98, 153, 135, 0.18);
+  --md-typeset-mark-color: rgba(237, 161, 0, 0.30);
+  --md-typeset-table-color: var(--ant-line);
+  --md-typeset-del-color: rgba(142, 38, 38, 0.12);
+  --md-typeset-ins-color: rgba(0, 99, 0, 0.12);
+  --md-typeset-kbd-color: var(--ant-surface);
+  --md-typeset-kbd-accent-color: var(--ant-surface);
+  --md-typeset-kbd-border-color: var(--ant-line-strong);
 
-  --md-code-fg-color: var(--ant-gray-800);
-  --md-code-bg-color: var(--ant-surface-sunken);
+  --md-code-fg-color: #1f2328;
+  --md-code-bg-color: var(--ant-surface);
 
-  --md-footer-fg-color: var(--ant-ink-body);
-  --md-footer-fg-color--light: var(--ant-ink-secondary);
+  --md-footer-fg-color: var(--ant-ink);
+  --md-footer-fg-color--light: var(--ant-ink-body);
   --md-footer-fg-color--lighter: var(--ant-ink-muted);
   --md-footer-bg-color: var(--ant-bg);
   --md-footer-bg-color--dark: var(--ant-bg);
 
-  /* 影はほぼ使わない。境界はヘアラインで表す */
-  --md-shadow-z1: 0 1px 2px rgba(11, 11, 11, 0.04);
-  --md-shadow-z2: 0 2px 8px rgba(11, 11, 11, 0.06);
-  --md-shadow-z3: 0 8px 24px rgba(11, 11, 11, 0.10);
+  /* 影は使わない。浮くもの（検索結果など）だけ薄く */
+  --md-shadow-z1: 0 0 0 1px var(--ant-line);
+  --md-shadow-z2: 0 0 0 1px var(--ant-line), 0 4px 12px rgba(0, 0, 0, 0.08);
+  --md-shadow-z3: 0 0 0 1px var(--ant-line), 0 8px 24px rgba(0, 0, 0, 0.12);
 
   color-scheme: light;
 }
@@ -156,96 +160,103 @@ body {
    ------------------------------------------------------------------------- */
 
 [data-md-color-scheme="anthropic-dark"] {
-  --ant-bg: var(--ant-gray-830);
-  --ant-surface: var(--ant-gray-800);
-  --ant-surface-sunken: var(--ant-gray-850);
-  --ant-ink: var(--ant-gray-50);
-  --ant-ink-body: #e6e5e0;
-  --ant-ink-secondary: var(--ant-gray-200);
-  --ant-ink-muted: var(--ant-gray-400);
-  --ant-line: rgba(240, 239, 236, 0.12);
-  --ant-line-strong: rgba(240, 239, 236, 0.22);
-  --ant-link: var(--ant-clay);
-  --ant-link-hover: #e79274;
+  --ant-bg: #151515;
+  --ant-surface: #1a1a19;
+  --ant-ink: #f0efec;
+  --ant-ink-body: #c3c2b7;
+  --ant-ink-muted: #898781;
+  --ant-line: rgba(255, 255, 255, 0.10);
+  --ant-line-strong: rgba(255, 255, 255, 0.20);
+  --ant-fill: rgba(255, 255, 255, 0.05);
+  --ant-fill-strong: rgba(255, 255, 255, 0.15);
+  --ant-link: #6da7ec;
+  --ant-link-line: rgba(109, 167, 236, 0.40);
+  --ant-code-inline: #ec7e7e;
+  --ant-warning-bg: #311a00;
+  --ant-warning-ink: #db9300;
 
-  --md-default-fg-color: var(--ant-ink-body);
-  --md-default-fg-color--light: var(--ant-ink-secondary);
+  --md-default-fg-color: var(--ant-ink);
+  --md-default-fg-color--light: var(--ant-ink-body);
   --md-default-fg-color--lighter: var(--ant-ink-muted);
   --md-default-fg-color--lightest: var(--ant-line);
   --md-default-bg-color: var(--ant-bg);
-  --md-default-bg-color--light: rgba(26, 26, 25, 0.7);
-  --md-default-bg-color--lighter: rgba(26, 26, 25, 0.45);
-  --md-default-bg-color--lightest: rgba(26, 26, 25, 0.12);
+  --md-default-bg-color--light: rgba(21, 21, 21, 0.7);
+  --md-default-bg-color--lighter: rgba(21, 21, 21, 0.3);
+  --md-default-bg-color--lightest: rgba(21, 21, 21, 0.12);
 
   --md-primary-fg-color: var(--ant-bg);
-  --md-primary-fg-color--light: var(--ant-gray-800);
-  --md-primary-fg-color--dark: var(--ant-gray-850);
+  --md-primary-fg-color--light: var(--ant-bg);
+  --md-primary-fg-color--dark: var(--ant-bg);
   --md-primary-bg-color: var(--ant-ink);
-  --md-primary-bg-color--light: var(--ant-ink-secondary);
+  --md-primary-bg-color--light: var(--ant-ink-muted);
 
-  --md-accent-fg-color: var(--ant-clay);
-  --md-accent-fg-color--transparent: rgba(217, 119, 87, 0.16);
-  --md-accent-bg-color: var(--ant-gray-900);
-  --md-accent-bg-color--light: var(--ant-gray-830);
+  --md-accent-fg-color: var(--ant-ink);
+  --md-accent-fg-color--transparent: var(--ant-fill);
+  --md-accent-bg-color: var(--ant-bg);
+  --md-accent-bg-color--light: var(--ant-bg);
 
   --md-typeset-color: var(--ant-ink-body);
   --md-typeset-a-color: var(--ant-link);
-  --md-typeset-mark-color: rgba(217, 119, 87, 0.28);
-  --md-typeset-table-color: var(--ant-line-strong);
-  --md-typeset-del-color: rgba(217, 119, 87, 0.20);
-  --md-typeset-ins-color: rgba(188, 209, 202, 0.18);
+  --md-typeset-mark-color: rgba(219, 147, 0, 0.30);
+  --md-typeset-table-color: var(--ant-line);
+  --md-typeset-del-color: rgba(236, 126, 126, 0.16);
+  --md-typeset-ins-color: rgba(12, 163, 12, 0.16);
+  --md-typeset-kbd-color: var(--ant-surface);
+  --md-typeset-kbd-accent-color: var(--ant-surface);
+  --md-typeset-kbd-border-color: var(--ant-line-strong);
 
-  --md-code-fg-color: var(--ant-ink-body);
-  --md-code-bg-color: var(--ant-gray-850);
+  --md-code-fg-color: #f3f7f6;
+  --md-code-bg-color: var(--ant-surface);
 
-  --md-footer-fg-color: var(--ant-ink-body);
-  --md-footer-fg-color--light: var(--ant-ink-secondary);
+  --md-footer-fg-color: var(--ant-ink);
+  --md-footer-fg-color--light: var(--ant-ink-body);
   --md-footer-fg-color--lighter: var(--ant-ink-muted);
   --md-footer-bg-color: var(--ant-bg);
   --md-footer-bg-color--dark: var(--ant-bg);
 
-  --md-shadow-z1: 0 1px 2px rgba(0, 0, 0, 0.30);
-  --md-shadow-z2: 0 2px 8px rgba(0, 0, 0, 0.36);
-  --md-shadow-z3: 0 8px 24px rgba(0, 0, 0, 0.44);
+  --md-shadow-z1: 0 0 0 1px var(--ant-line);
+  --md-shadow-z2: 0 0 0 1px var(--ant-line), 0 4px 12px rgba(0, 0, 0, 0.40);
+  --md-shadow-z3: 0 0 0 1px var(--ant-line), 0 8px 24px rgba(0, 0, 0, 0.50);
 
   color-scheme: dark;
 }
 
 /* -------------------------------------------------------------------------
    5. シンタックスハイライト
-   彩度を落とし、クレイとミネラル（緑）を軸にした落ち着いた配色にする。
+   参照サイトのコードブロックの実測色（ライトは GitHub Light 系、
+   ダークは VS Code Dark+ 系）。
    ------------------------------------------------------------------------- */
 
 [data-md-color-scheme="anthropic"] {
-  --md-code-hl-color: rgba(217, 119, 87, 0.20);
-  --md-code-hl-number-color: #a35a3a;
-  --md-code-hl-special-color: #b1512f;
-  --md-code-hl-function-color: #6b5aa6;
-  --md-code-hl-constant-color: #7a5fa8;
-  --md-code-hl-keyword-color: #4c7f6d;
-  --md-code-hl-string-color: #3f7a63;
-  --md-code-hl-name-color: var(--ant-gray-800);
-  --md-code-hl-operator-color: var(--ant-gray-500);
-  --md-code-hl-punctuation-color: var(--ant-gray-500);
-  --md-code-hl-comment-color: var(--ant-gray-400);
-  --md-code-hl-generic-color: var(--ant-gray-500);
-  --md-code-hl-variable-color: var(--ant-gray-700);
+  --md-code-hl-color: rgba(237, 161, 0, 0.25);
+  --md-code-hl-number-color: #0550ae;
+  --md-code-hl-special-color: #0550ae;
+  --md-code-hl-function-color: #953800;
+  --md-code-hl-constant-color: #0550ae;
+  --md-code-hl-keyword-color: #cf222e;
+  --md-code-hl-string-color: #0a3069;
+  --md-code-hl-name-color: #1f2328;
+  --md-code-hl-operator-color: #cf222e;
+  --md-code-hl-punctuation-color: #1f2328;
+  --md-code-hl-comment-color: #6e7781;
+  --md-code-hl-generic-color: #6e7781;
+  --md-code-hl-variable-color: #1f2328;
 }
 
 [data-md-color-scheme="anthropic-dark"] {
-  --md-code-hl-color: rgba(217, 119, 87, 0.24);
-  --md-code-hl-number-color: #e0946f;
-  --md-code-hl-special-color: #e08a68;
-  --md-code-hl-function-color: #b0a6e0;
-  --md-code-hl-constant-color: #bda9e8;
-  --md-code-hl-keyword-color: #8fc4ad;
-  --md-code-hl-string-color: #9ccbb4;
-  --md-code-hl-name-color: var(--ant-ink-body);
-  --md-code-hl-operator-color: var(--ant-gray-300);
-  --md-code-hl-punctuation-color: var(--ant-gray-300);
-  --md-code-hl-comment-color: var(--ant-gray-400);
-  --md-code-hl-generic-color: var(--ant-gray-300);
-  --md-code-hl-variable-color: var(--ant-gray-200);
+  --md-code-hl-color: rgba(219, 147, 0, 0.25);
+  --md-code-hl-number-color: #b5cea8;
+  --md-code-hl-special-color: #9cdcfe;
+  --md-code-hl-function-color: #dcdcaa;
+  --md-code-hl-constant-color: #9cdcfe;
+  --md-code-hl-keyword-color: #c586c0;
+  --md-code-hl-string-color: #ce9178;
+  --md-code-hl-name-color: #f3f7f6;
+  --md-code-hl-operator-color: #f3f7f6;
+  --md-code-hl-punctuation-color: #f3f7f6;
+  --md-code-hl-comment-color: #6a9955;
+  --md-code-hl-generic-color: #898781;
+  --md-code-hl-variable-color: #9cdcfe;
 }
 
 /* -------------------------------------------------------------------------
@@ -257,93 +268,147 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* 本文 15px。参照サイトの行送りは 22px（1.47）だが、この教材は和文の長文が
+   続くので 24px（1.6）まで開けている。字の大きさと色は参照サイトと同じ。 */
 .md-typeset {
-  font-size: 0.82rem;
-  line-height: 1.9;               /* 和文の長文は行間を広めに取る */
-  letter-spacing: 0.005em;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  letter-spacing: 0;
+  color: var(--ant-ink-body);
 }
 
-/* 見出しは "voice"（セリフ）。h1・h2 だけに使い、h3以下はサンセリフに戻す。
-   全部セリフにすると教材の細かい手順が読みにくくなる */
+/* 見出しはすべて "voice"（weight 520）。罫線は引かない */
 .md-typeset h1,
-.md-typeset h2 {
-  font-family: var(--ant-font-voice);
-  font-weight: 600;
-  color: var(--ant-ink);
-  letter-spacing: -0.005em;
-  line-height: 1.45;
-}
-
-.md-typeset h1 {
-  font-size: 1.85rem;
-  margin: 0 0 1.2rem;
-  padding-bottom: 0.6rem;
-  border-bottom: 1px solid var(--ant-line);
-}
-
-.md-typeset h2 {
-  font-size: 1.32rem;
-  margin: 2.4rem 0 0.9rem;
-}
-
+.md-typeset h2,
 .md-typeset h3,
 .md-typeset h4,
 .md-typeset h5,
 .md-typeset h6 {
-  font-family: var(--md-text-font-family);
-  font-weight: 600;
+  font-family: var(--ant-font-voice);
+  font-weight: 520;
   color: var(--ant-ink);
   letter-spacing: 0;
+  line-height: 1.3;
+  text-transform: none;
 }
 
-.md-typeset h3 { font-size: 1.05rem; margin: 1.9rem 0 0.7rem; }
-.md-typeset h4 { font-size: 0.92rem; margin: 1.5rem 0 0.6rem; }
+.md-typeset h1 {
+  font-size: 1.3125rem;   /* 26.25px */
+  line-height: 1.25;
+  margin: 0 0 0.6rem;
+}
+
+.md-typeset h2 {
+  font-size: 1.03125rem;  /* 20.625px */
+  line-height: 1.25;
+  margin: 1.875rem 0 0;
+}
+
+.md-typeset h3 {
+  font-size: 0.84375rem;  /* 16.875px */
+  margin: 1.5rem 0 0;
+}
+
+.md-typeset h4 {
+  font-size: 0.75rem;     /* 15px */
+  margin: 1.25rem 0 0;
+}
+
+.md-typeset h5,
+.md-typeset h6 {
+  font-size: 0.7rem;
+  margin: 1.25rem 0 0;
+}
+
+/* 見出しの直後は詰める（参照サイトは見出し側に下余白を持たせない） */
+.md-typeset h2 + *,
+.md-typeset h3 + *,
+.md-typeset h4 + * {
+  margin-top: 0.75rem;
+}
+
+/* h1 直下の段落はリード文（16.875px） */
+.md-typeset h1 + p {
+  font-size: 0.84375rem;
+  line-height: 1.6;
+  margin-top: 0;
+}
 
 .md-typeset p,
 .md-typeset li {
   color: var(--ant-ink-body);
 }
 
-/* 教材は太字での強調が非常に多い。強すぎず、しかし確実に目に入る重さにする */
+.md-typeset p,
+.md-typeset ul,
+.md-typeset ol,
+.md-typeset dl {
+  margin-top: 0.75rem;
+  margin-bottom: 0;
+}
+
+.md-typeset ul li,
+.md-typeset ol li {
+  margin-bottom: 0.25em;
+}
+
+.md-typeset li > ul,
+.md-typeset li > ol {
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
+}
+
+.md-typeset li > p:first-child {
+  margin-top: 0;
+}
+
 .md-typeset strong {
-  font-weight: 700;
+  font-weight: 600;
   color: var(--ant-ink);
 }
 
 /* -------------------------------------------------------------------------
    7. リンク
-   クレイ単色だと明るい地色でコントラストが足りないので、
-   本文リンクは濃いクレイ＋下線。色だけに意味を持たせない。
+   青＋同色40%の下線。色だけに意味を持たせない。
    ------------------------------------------------------------------------- */
 
 .md-typeset a {
   color: var(--ant-link);
   text-decoration: underline;
-  text-decoration-color: rgba(217, 119, 87, 0.45);
+  text-decoration-color: var(--ant-link-line);
   text-decoration-thickness: 1px;
-  text-underline-offset: 0.18em;
-  transition: color 120ms, text-decoration-color 120ms;
+  text-underline-offset: 3px;
+  border-radius: 2px;
+  transition: text-decoration-color 120ms;
 }
 
 .md-typeset a:hover,
 .md-typeset a:focus {
-  color: var(--ant-link-hover);
+  color: var(--ant-link);
   text-decoration-color: currentColor;
 }
 
+.md-typeset a strong {
+  color: inherit;
+}
+
 /* 見出しの permalink（¶）は普段は消しておく */
-.md-typeset .headerlink {
-  color: var(--ant-line-strong);
+.md-typeset .headerlink,
+.md-typeset a.headerlink:hover,
+.md-typeset a.headerlink:focus {
+  color: var(--ant-ink-muted);
   text-decoration: none;
 }
 
-.md-typeset a.headerlink:hover {
-  color: var(--ant-clay);
-}
-
 /* -------------------------------------------------------------------------
-   8. ヘッダー・サイドバー・フッター
+   8. 全体の枠・ヘッダー
    ------------------------------------------------------------------------- */
+
+/* 参照サイトは「サイドバー 264 ＋ 本文 最大896 ＋ 目次 240」。Material 既定の
+   61rem（1220px）では本文が狭いので広げる */
+.md-grid {
+  max-width: 70rem;
+}
 
 .md-header {
   background-color: var(--ant-bg);
@@ -356,34 +421,86 @@ body {
   box-shadow: none;
 }
 
+/* 高さ 56px */
+.md-header__inner {
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+}
+
+/* サイト名は参照サイトのワードマークと同じくセリフで置く */
 .md-header__title {
-  font-weight: 600;
-  letter-spacing: -0.005em;
+  font-family: var(--ant-font-voice);
+  font-size: 0.9rem;
+  letter-spacing: 0;
 }
 
-.md-search__form {
-  background-color: var(--ant-surface);
-  border: 1px solid var(--ant-line);
+.md-header__title .md-header__topic,
+.md-header__title .md-header__topic:first-child {
+  font-weight: 520;
+}
+
+.md-header__button {
+  color: var(--ant-ink-body);
   border-radius: var(--ant-radius);
-  box-shadow: none;
 }
 
-.md-search__form:hover {
-  background-color: var(--ant-surface);
-  border-color: var(--ant-line-strong);
+.md-header__button:hover {
+  color: var(--ant-ink);
+  opacity: 1;
 }
 
-[data-md-toggle="search"]:checked ~ .md-header .md-search__form {
-  background-color: var(--ant-surface);
-  border-color: var(--ant-line-strong);
+.md-source {
+  font-size: 0.65rem;
+  color: var(--ant-ink-body);
+  border-radius: var(--ant-radius);
 }
 
-.md-search__input::placeholder {
+.md-source:hover {
+  color: var(--ant-ink);
+  opacity: 1;
+}
+
+/* 検索欄: 5%の面、枠なし、角丸8px */
+@media screen and (min-width: 60em) {
+  .md-search__form {
+    background-color: var(--ant-fill);
+    border-radius: var(--ant-radius);
+    box-shadow: none;
+    height: 1.6rem;
+  }
+
+  .md-search__form:hover {
+    background-color: var(--ant-fill);
+    box-shadow: 0 0 0 1px var(--ant-line-strong);
+  }
+
+  [data-md-toggle="search"]:checked ~ .md-header .md-search__form {
+    background-color: var(--ant-surface);
+    box-shadow: 0 0 0 1px var(--ant-line-strong);
+    border-radius: var(--ant-radius) var(--ant-radius) 0 0;
+  }
+
+  .md-search__input {
+    font-size: 0.7rem;
+  }
+
+  .md-search__icon[for="__search"] {
+    top: 0.2rem;
+  }
+
+  .md-search__output {
+    top: 1.6rem;
+    border-radius: 0 0 var(--ant-radius) var(--ant-radius);
+  }
+}
+
+.md-search__input {
+  color: var(--ant-ink);
+}
+
+.md-search__input::placeholder,
+.md-search__input + .md-search__icon {
   color: var(--ant-ink-muted);
-}
-
-.md-search__output {
-  border-radius: var(--ant-radius);
 }
 
 .md-search-result__meta {
@@ -392,50 +509,155 @@ body {
   border-bottom: 1px solid var(--ant-line);
 }
 
-/* サイドバー: 現在地はクレイで示す */
+.md-search-result__link:hover,
+.md-search-result__link:focus {
+  background-color: var(--ant-fill);
+}
+
+.md-search-result mark {
+  color: var(--ant-ink);
+  background-color: var(--md-typeset-mark-color);
+}
+
+/* -------------------------------------------------------------------------
+   9. サイドバー（左）と目次（右）
+   文字 14px。行は高さ28pxの角丸8px、現在地は面（黒10% / 白15%）で示す。
+   ------------------------------------------------------------------------- */
+
 .md-nav {
   font-size: 0.7rem;
+  line-height: 1.43;
 }
 
 .md-nav__title {
-  color: var(--ant-ink-muted);
-  font-weight: 600;
-  font-size: 0.62rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  color: var(--ant-ink);
+  font-weight: 500;
   box-shadow: none;
 }
 
 .md-nav__link {
-  color: var(--ant-ink-secondary);
-  transition: color 120ms;
+  color: var(--ant-ink-body);
 }
 
-/* ナビは 0.7rem と小さい。ライトでは #c6613f だと 3.84:1 でAAに届かないので、
-   より濃い #b1512f（4.87:1）を使う。ダークは #d97757 で 5.2:1 なので足りている */
 .md-nav__link:hover,
-.md-nav__link:focus {
-  color: var(--ant-clay-deep);
-}
-
+.md-nav__link:focus,
 .md-nav__link--active,
-.md-nav__link--active:focus,
-.md-nav__link--active:hover,
 .md-nav__item .md-nav__link--active {
-  color: var(--ant-clay-deep);
-  font-weight: 600;
+  color: var(--ant-ink);
 }
 
-[data-md-color-scheme="anthropic-dark"] .md-nav__link:hover,
-[data-md-color-scheme="anthropic-dark"] .md-nav__link--active {
-  color: var(--ant-clay);
+@media screen and (min-width: 76.25em) {
+  /* サイドバー自身のタイトル（サイト名の繰り返し）は出さない */
+  .md-nav--primary > .md-nav__title {
+    display: none;
+  }
+
+  .md-sidebar--primary .md-sidebar__inner {
+    padding-right: 0.6rem;
+  }
+
+  .md-nav--primary .md-nav__item {
+    padding: 0;
+  }
+
+  .md-nav--primary .md-nav__list {
+    padding-bottom: 0;
+  }
+
+  [dir] .md-nav--primary .md-nav__item > .md-nav__link {
+    margin: 1px 0;
+    padding: 4px 8px;
+    border-radius: var(--ant-radius);
+    transition: background-color 120ms, color 120ms;
+  }
+
+  .md-nav--primary a.md-nav__link:hover,
+  .md-nav--primary .md-nav__link[for]:hover {
+    background-color: var(--ant-fill);
+  }
+
+  .md-nav--primary a.md-nav__link--active,
+  .md-nav--primary a.md-nav__link--active:hover {
+    background-color: var(--ant-fill-strong);
+    color: var(--ant-ink);
+    font-weight: 400;
+  }
+
+  /* セクション見出し（navigation.sections）: 本文と同じ14px・weight 500 */
+  .md-nav--primary .md-nav__item--section {
+    margin: 1rem 0 0;
+  }
+
+  .md-nav--primary .md-nav__item--section > .md-nav__link,
+  .md-nav--primary .md-nav__item--section > .md-nav__link .md-nav__link {
+    color: var(--ant-ink);
+    font-weight: 500;
+  }
+
+  .md-nav--primary .md-nav__item--section > .md-nav__link {
+    padding: 4px 8px;
+    margin: 0;
+    background-color: transparent;
+  }
+
+  /* 見出しがセクションの index ページを兼ねる場合（navigation.indexes） */
+  .md-nav--primary .md-nav__item--section > .md-nav__link > a.md-nav__link {
+    padding: 0;
+    margin: 0;
+    background-color: transparent;
+  }
+
+  /* Material はセクションの中身を左に 0.6rem はみ出させる。見出しと揃える */
+  .md-nav--primary .md-nav__item--section > .md-nav {
+    margin-left: 0;
+  }
+
+  .md-nav--primary .md-nav__item--section > .md-nav > .md-nav__list {
+    padding-left: 0;
+  }
 }
 
-/* 目次（右） */
+/* 目次: muted。現在地だけ primary・weight 500 と左の縦線 */
+/* タイトルは sticky。地色と同色の影で、下を流れる項目を隠す（Material と同じ仕組み） */
 .md-nav--secondary .md-nav__title {
-  background-color: transparent;
-  box-shadow: none;
+  background-color: var(--ant-bg);
+  box-shadow: 0 0 0.4rem 0.4rem var(--ant-bg);
+  color: var(--ant-ink-muted);
+  font-size: 0.65rem;
+  font-weight: 400;
 }
+
+@media screen and (min-width: 60em) {
+  .md-nav--secondary .md-nav__link {
+    color: var(--ant-ink-muted);
+    margin: 0;
+    padding: 4px 0 4px 12px;
+    border-left: 2px solid transparent;
+  }
+
+  .md-nav--secondary .md-nav__link:hover {
+    color: var(--ant-ink);
+  }
+
+  .md-nav--secondary .md-nav__link--active,
+  .md-nav--secondary .md-nav__item .md-nav__link--active {
+    color: var(--ant-ink);
+    font-weight: 500;
+    border-left-color: var(--ant-ink);
+  }
+
+  .md-nav--secondary .md-nav__item {
+    padding: 0;
+  }
+
+  .md-nav--secondary .md-nav .md-nav__link {
+    padding-left: 24px;
+  }
+}
+
+/* -------------------------------------------------------------------------
+   10. フッター
+   ------------------------------------------------------------------------- */
 
 .md-footer {
   border-top: 1px solid var(--ant-line);
@@ -451,7 +673,13 @@ body {
 }
 
 .md-footer__title {
-  font-weight: 600;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.md-footer__direction {
+  color: var(--ant-ink-muted);
+  opacity: 1;
 }
 
 .md-copyright,
@@ -460,165 +688,278 @@ body {
 }
 
 /* -------------------------------------------------------------------------
-   9. コード
-   79個ある ```text はコピペして使うプロンプト。読み間違いが事故になるので、
-   面ではなく「沈んだ紙」として一段落とし、ヘアラインで輪郭を与える。
+   11. コード
+   ブロックは「白い面（ダークは #1a1a19）＋ヘアライン＋角丸11px」のカード。
+   インラインは赤茶の文字に5%の面とヘアライン。
    ------------------------------------------------------------------------- */
 
 .md-typeset code {
-  background-color: var(--md-code-bg-color);
-  border-radius: 4px;
-  padding: 0.1em 0.36em;
-  font-size: 0.86em;
+  color: var(--ant-code-inline);
+  background-color: var(--ant-fill);
+  box-shadow: 0 0 0 0.5px var(--ant-line);
+  border-radius: 6px;
+  padding: 0.06em 0.25em;
+  font-size: 0.9em;
   letter-spacing: 0;
 }
 
+.md-typeset a code {
+  color: currentColor;
+}
+
+.md-typeset h1 code,
+.md-typeset h2 code,
+.md-typeset h3 code,
+.md-typeset h4 code {
+  color: inherit;
+}
+
 .md-typeset pre > code {
-  padding: 0.9rem 1rem;
-  border-radius: var(--ant-radius);
+  color: var(--md-code-fg-color);
+  background-color: var(--ant-surface);
+  box-shadow: none;
+  border: 1px solid var(--ant-line);
+  border-radius: var(--ant-radius-card);
+  padding: 16px;
+  font-size: 13px;
+  line-height: 19px;
 }
 
 .md-typeset .highlight,
-.md-typeset .highlighttable {
-  border: 1px solid var(--ant-line);
-  border-radius: var(--ant-radius);
-  overflow: hidden;
-  background-color: var(--md-code-bg-color);
-}
-
-.md-typeset .highlight code,
-.md-typeset .highlighttable code {
-  border-radius: 0;
-  line-height: 1.75;
-}
-
-.md-typeset .highlight > pre,
 .md-typeset pre {
-  margin: 1.1em 0;
+  margin: 0.75rem 0 0;
 }
 
-.md-typeset .highlight .filename {
-  background-color: transparent;
-  border-bottom: 1px solid var(--ant-line);
+.md-typeset .highlight > pre {
+  margin: 0;
+}
+
+.md-typeset .highlight .filename,
+.md-typeset .highlight span.filename {
+  background-color: var(--ant-surface);
+  border: 1px solid var(--ant-line);
+  border-bottom: 0;
+  border-radius: var(--ant-radius-card) var(--ant-radius-card) 0 0;
   color: var(--ant-ink-muted);
-  font-weight: 500;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.md-typeset .highlight .filename + pre > code {
+  border-radius: 0 0 var(--ant-radius-card) var(--ant-radius-card);
 }
 
 /* コピーボタン */
-.md-clipboard {
+.md-clipboard,
+.md-code__button {
   color: var(--ant-ink-muted);
 }
 
-.md-clipboard:hover {
-  color: var(--ant-clay-strong);
+.md-clipboard:hover,
+.md-code__button:hover,
+:hover > .md-clipboard:hover {
+  color: var(--ant-ink);
 }
 
 .md-typeset kbd {
-  background-color: var(--ant-surface);
-  border: 1px solid var(--ant-line-strong);
-  border-radius: 4px;
-  box-shadow: none;
-  color: var(--ant-ink-body);
+  border-radius: 5px;
+  box-shadow: 0 0 0 1px var(--ant-line-strong);
+  color: var(--ant-ink);
+  font-size: 0.85em;
 }
 
 /* -------------------------------------------------------------------------
-   10. 表
-   教材はタイムテーブル・要件表など表が多い。罫線は最小限に。
+   12. 表
+   ヘアラインの枠＋角丸7px。見出し行は5%の面・weight 500。
    ------------------------------------------------------------------------- */
 
+.md-typeset__scrollwrap {
+  margin: 0.75rem 0 0;
+}
+
+.md-typeset__table {
+  margin-bottom: 0;
+  padding: 0;
+}
+
 .md-typeset table:not([class]) {
+  background-color: transparent;
   border: 1px solid var(--ant-line);
-  border-radius: var(--ant-radius);
+  border-radius: var(--ant-radius-table);
   box-shadow: none;
-  font-size: 0.72rem;
-  line-height: 1.75;
+  font-size: 0.7rem;
+  line-height: 1.55;
 }
 
 .md-typeset table:not([class]) th {
-  background-color: var(--ant-surface-sunken);
+  background-color: var(--ant-fill);
   color: var(--ant-ink);
-  font-weight: 600;
-  border-bottom: 1px solid var(--ant-line-strong);
-  white-space: nowrap;
+  font-weight: 500;
+  padding: 7px 11px;
+  border-bottom: 1px solid var(--ant-line);
+}
+
+@media screen {
+  .md-typeset table:not([class]) th {
+    white-space: nowrap;
+  }
 }
 
 .md-typeset table:not([class]) td {
+  color: var(--ant-ink-body);
+  padding: 7px 11px;
   border-top: 1px solid var(--ant-line);
   vertical-align: top;
 }
 
-.md-typeset table:not([class]) tr:hover {
-  background-color: rgba(217, 119, 87, 0.04);
+.md-typeset table:not([class]) tbody tr:first-child td {
+  border-top: 0;
+}
+
+.md-typeset table:not([class]) tbody tr:hover {
+  background-color: transparent;
+  box-shadow: none;
 }
 
 /* -------------------------------------------------------------------------
-   11. 引用・注意書き
-   教材は「> **重要:**」形式の注意書きを多用する。
-   クレイの縦罫で、本文と地続きのまま少しだけ持ち上げる。
+   13. 注意書き（引用）
+   教材は「> **なぜOFFにするのか。** …」形式の補足を多用する。
+   参照サイトの Note と同じ、ヘアライン＋角丸11pxのカードとして置く。
+   文字は14px・primary。左のアイコンは「補足」を表す丸に i。
    ------------------------------------------------------------------------- */
 
-.md-typeset blockquote {
-  border-left: 2px solid rgba(217, 119, 87, 0.55);
-  color: var(--ant-ink-secondary);
-  margin-left: 0;
-  padding-left: 1rem;
+/* Material は [dir=ltr] .md-typeset blockquote で左罫と左余白を指定している。
+   同じ詳細度になるよう [dir] を付ける */
+[dir] .md-typeset blockquote {
+  position: relative;
+  margin: 0.75rem 0 0;
+  padding: 10px 14px 10px 38px;
+  border: 1px solid var(--ant-line);
+  border-radius: var(--ant-radius-card);
+  background-color: var(--ant-bg);
+  color: var(--ant-ink);
+  font-size: 0.7rem;
+  line-height: 1.6;
+}
+
+.md-typeset blockquote::before {
+  content: "";
+  position: absolute;
+  left: 14px;
+  top: 13px;
+  width: 16px;
+  height: 16px;
+  background-color: var(--ant-ink);
+  -webkit-mask: var(--ant-icon-note) center / contain no-repeat;
+  mask: var(--ant-icon-note) center / contain no-repeat;
+}
+
+:root {
+  --ant-icon-note: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.3' stroke-linecap='round'%3E%3Ccircle cx='8' cy='8' r='6.2'/%3E%3Cpath d='M8 7.2v3.8'/%3E%3Ccircle cx='8' cy='4.9' r='.5' fill='black'/%3E%3C/svg%3E");
+}
+
+.md-typeset blockquote p,
+.md-typeset blockquote li {
+  color: var(--ant-ink);
+}
+
+[dir] .md-typeset li > blockquote {
+  margin: 0.75rem 0 0;
+}
+
+.md-typeset blockquote > :first-child {
+  margin-top: 0;
 }
 
 .md-typeset blockquote > :last-child {
   margin-bottom: 0;
 }
 
-/* -------------------------------------------------------------------------
-   12. アドモニション
-   SKILL.md のフロントマター表示に使っている。Material既定の彩色は強すぎるので、
-   面をヘアライン＋淡いクレイに落とす。
-   ------------------------------------------------------------------------- */
+.md-typeset blockquote p,
+.md-typeset blockquote ul,
+.md-typeset blockquote ol {
+  margin-top: 0.4rem;
+}
 
-/* Material は種類ごとに #448aff などの色を .md-typeset .admonition.note
-   （詳細度 0,3,0）で焼き込んでいる。素の .md-typeset .admonition（0,2,0）では
-   勝てないので、[class] を足して詳細度を揃えてから上書きする。
-   Anthropicは基本的に「モノクロ＋クレイ1色」なので、種類で色を散らさず
-   クレイに寄せる。止めたい種類（warning/danger）だけ深いラストにする。 */
+/* 入れ子の引用はカードを重ねない */
+[dir] .md-typeset blockquote blockquote {
+  border: 0;
+  border-left: 2px solid var(--ant-line-strong);
+  border-radius: 0;
+  padding: 0 0 0 12px;
+  background-color: transparent;
+}
+
+.md-typeset blockquote blockquote::before {
+  content: none;
+}
+
+/* -------------------------------------------------------------------------
+   14. アドモニション
+   SKILL.md のフロントマター表示に使っている。引用と同じカードに揃える。
+   Material は種類ごとの色を .md-typeset .admonition.note（詳細度 0,3,0）で
+   焼き込んでいるので、[class] を足して詳細度を揃えてから上書きする。
+   ------------------------------------------------------------------------- */
 
 .md-typeset .admonition[class],
 .md-typeset details[class] {
-  background-color: var(--ant-surface);
+  margin: 0.75rem 0 0;
+  padding: 0 14px 10px;
+  background-color: var(--ant-bg);
   border: 1px solid var(--ant-line);
-  border-left: 2px solid var(--ant-clay);
-  border-radius: var(--ant-radius);
+  border-radius: var(--ant-radius-card);
   box-shadow: none;
-  font-size: 0.76rem;
+  color: var(--ant-ink);
+  font-size: 0.7rem;
+}
+
+html .md-typeset .admonition[class] > :last-child,
+html .md-typeset details[class] > :last-child {
+  margin-bottom: 0;
+}
+
+.md-typeset details[class] > summary {
+  padding-right: 36px;
 }
 
 .md-typeset .admonition[class]:focus-within,
 .md-typeset details[class]:focus-within {
-  box-shadow: 0 0 0 3px rgba(217, 119, 87, 0.15);
+  box-shadow: none;
 }
 
 .md-typeset .admonition[class] > .admonition-title,
-.md-typeset .admonition[class] > summary,
-.md-typeset details[class] > .admonition-title,
 .md-typeset details[class] > summary {
-  background-color: rgba(217, 119, 87, 0.07);
+  margin: 0 -14px;
+  padding-top: 10px;
+  padding-bottom: 0;
+  padding-left: 38px;
+  background-color: transparent;
   color: var(--ant-ink);
   font-weight: 600;
 }
 
 .md-typeset .admonition[class] > .admonition-title::before,
-.md-typeset .admonition[class] > summary::before,
-.md-typeset details[class] > .admonition-title::before,
 .md-typeset details[class] > summary::before {
-  background-color: var(--ant-clay-strong);
+  left: 14px;
+  top: 13px;
+  width: 16px;
+  height: 16px;
+  background-color: var(--ant-ink);
+  -webkit-mask-image: var(--ant-icon-note);
+  mask-image: var(--ant-icon-note);
 }
 
-.md-typeset .admonition[class] > .admonition-title::after,
-.md-typeset .admonition[class] > summary::after,
-.md-typeset details[class] > .admonition-title::after,
 .md-typeset details[class] > summary::after {
-  color: var(--ant-clay-strong);
+  top: 12px;
+  color: var(--ant-ink-muted);
 }
 
-/* 「止まってほしい」種類だけ、同じ色相の深いラストで一段強くする */
+.md-typeset .admonition[class] p,
+.md-typeset details[class] p {
+  color: var(--ant-ink);
+}
+
+/* 「止まってほしい」種類は、参照サイトの Warning と同じ琥珀の面にする */
 .md-typeset .admonition[class].warning,
 .md-typeset .admonition[class].caution,
 .md-typeset .admonition[class].attention,
@@ -627,7 +968,22 @@ body {
 .md-typeset details[class].warning,
 .md-typeset details[class].danger,
 .md-typeset details[class].failure {
-  border-left-color: #a33b2a;
+  background-color: var(--ant-warning-bg);
+  border-color: transparent;
+  color: var(--ant-warning-ink);
+}
+
+.md-typeset .admonition[class].warning > .admonition-title,
+.md-typeset .admonition[class].caution > .admonition-title,
+.md-typeset .admonition[class].attention > .admonition-title,
+.md-typeset .admonition[class].danger > .admonition-title,
+.md-typeset .admonition[class].failure > .admonition-title,
+.md-typeset .admonition[class].warning p,
+.md-typeset .admonition[class].caution p,
+.md-typeset .admonition[class].attention p,
+.md-typeset .admonition[class].danger p,
+.md-typeset .admonition[class].failure p {
+  color: var(--ant-warning-ink);
 }
 
 .md-typeset .admonition[class].warning > .admonition-title::before,
@@ -635,7 +991,7 @@ body {
 .md-typeset .admonition[class].attention > .admonition-title::before,
 .md-typeset .admonition[class].danger > .admonition-title::before,
 .md-typeset .admonition[class].failure > .admonition-title::before {
-  background-color: #a33b2a;
+  background-color: var(--ant-warning-ink);
 }
 
 /* フロントマターの description は1行が長い。ここだけは横スクロールより
@@ -647,92 +1003,65 @@ body {
 }
 
 /* -------------------------------------------------------------------------
-   13. その他の細部
+   15. その他の細部
    ------------------------------------------------------------------------- */
 
 .md-typeset hr {
   border-bottom: 1px solid var(--ant-line);
-  margin: 2.2rem 0;
+  margin: 1.875rem 0 0;
 }
 
 .md-typeset .md-button {
   border-radius: var(--ant-radius);
   border: 1px solid var(--ant-line-strong);
   color: var(--ant-ink);
-  font-weight: 600;
+  font-weight: 500;
+  text-decoration: none;
 }
 
-.md-typeset .md-button--primary {
-  background-color: var(--ant-clay);
-  border-color: var(--ant-clay);
-  color: #ffffff;
-}
-
+.md-typeset .md-button--primary,
 .md-typeset .md-button--primary:hover {
-  background-color: var(--ant-clay-strong);
-  border-color: var(--ant-clay-strong);
-  color: #ffffff;
+  background-color: var(--ant-ink);
+  border-color: var(--ant-ink);
+  color: var(--ant-bg);
 }
 
-/* リストの行間も和文向けに少し開ける */
-.md-typeset ul li,
-.md-typeset ol li {
-  margin-bottom: 0.35em;
-}
-
-.md-typeset li > ul,
-.md-typeset li > ol {
-  margin-top: 0.35em;
-}
-
-/* 画像は紙に貼った感じに */
 .md-typeset img {
-  border-radius: var(--ant-radius);
+  border-radius: var(--ant-radius-card);
   border: 1px solid var(--ant-line);
 }
 
-/* テーマ切り替えボタン・GitHubアイコンをヘッダー地色になじませる */
-.md-header__button {
-  color: var(--ant-ink-secondary);
+.md-typeset .twemoji img,
+.md-typeset img.emoji {
+  border: 0;
+  border-radius: 0;
 }
 
-.md-header__button:hover {
-  color: var(--ant-clay-deep);
-  opacity: 1;
-}
-
-/* 選択範囲もブランド色で */
 ::selection {
-  background-color: rgba(217, 119, 87, 0.25);
+  background-color: rgba(42, 120, 214, 0.25);
 }
 
-/* スクロールバー（WebKit） */
 * {
-  scrollbar-color: var(--ant-line-strong) transparent;
-}
-
-/* 目次の現在地 */
-.md-nav--secondary .md-nav__link--active {
-  color: var(--ant-clay-deep);
+  scrollbar-color: var(--ant-line-strong, rgba(128, 128, 128, 0.4)) transparent;
 }
 
 /* 「トップへ戻る」ボタン */
 .md-top {
   background-color: var(--ant-surface);
-  border: 1px solid var(--ant-line);
+  border: 0;
   border-radius: var(--ant-radius);
   box-shadow: var(--md-shadow-z2);
-  color: var(--ant-ink-body);
+  color: var(--ant-ink);
+  font-size: 0.7rem;
 }
 
 .md-top:hover {
-  background-color: var(--ant-clay);
-  border-color: var(--ant-clay);
-  color: #ffffff;
+  background-color: var(--ant-surface);
+  color: var(--ant-ink);
 }
 
 /* -------------------------------------------------------------------------
-   14. ロゴ
+   16. ロゴ
    AI-Eng-Dojo のOrgアイコン。Material既定の 1.2rem では絵柄がつぶれるので
    少し大きくし、角丸を当ててマークとして置く。
    ------------------------------------------------------------------------- */
@@ -744,8 +1073,8 @@ body {
 
 .md-header__button.md-logo img,
 .md-header__button.md-logo svg {
-  height: 1.6rem;
-  width: 1.6rem;
+  height: 1.4rem;
+  width: 1.4rem;
   border-radius: 5px;
 }
 
