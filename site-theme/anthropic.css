@@ -1,24 +1,31 @@
 /* =========================================================================
-   Claude Platform Docs のトンマナ for MkDocs Material
+   Claude Academy / Claude Platform Docs のトンマナ for MkDocs Material
    -------------------------------------------------------------------------
-   platform.claude.com/docs（Claude Design System）の表示を実測し、
-   Material の変数とコンポーネントに対応づけたもの。
+   academy.claude.com（トップとコースページ）と platform.claude.com/docs の
+   表示を実測し、Material の変数とコンポーネントに対応づけたもの。
+   どちらも Claude Design System。読み物としての組版は Academy に、
+   サイドバー・表・コードブロックなどドキュメントの部品は Platform Docs に寄せている。
 
    実測値（ライト / ダーク）:
-     ページ地色        #fcfcfb / #151515
-     面（コード・表）  #ffffff / #1a1a19
-     文字 primary      #0b0b0b / #f0efec   見出し・強調・ナビの現在地
-     文字 secondary    #52514e / #c3c2b7   本文
-     文字 muted        #898781 / #898781   目次・補助（ライトはAAのため #6d6b67）
+     ページ地色        #f9f9f7 / #151515
+     面（カード）      #fcfcfb / #20201f   1pxの罫（10%）＋角丸12px
+     ページ冒頭の帯    #ebc9b7 / #513127   コースページのクレイの淡色
+     文字 primary      #0b0b0b / #f0efec   見出し・強調・リンク
+     文字 secondary    #52514e / #c3c2b7   本文・リード
+     文字 muted        #898781 / #898781   目次の見出し・補助（ライトはAAのため #6d6b67）
      罫線              黒10%   / 白10%
-     リンク            #184f95 / #6da7ec   下線は同色の40%
-     インラインコード  #8e2626 / #ec7e7e   地は5%の面＋ヘアライン
-     本文 15px/22px、リード 16.875px、h1 26.25px、h2 20.625px、h3 16.875px
-     見出しはセリフ（weight 520）。和文グリフはゴシックに落ちる
-     角丸: 行・入力 8px、表 7px、カード（コード・注意書き）11px
+     リンク            primary の文字色＋同色の下線（Academy は40%）
+     インラインコード  primary に近い文字色、5% / 7.5% の面、角丸4px、枠なし
+     本文 16px/26px、リード 18px/28px
+     h1 36px・weight 400、h2 22px・weight 500（どちらも字間 -0.025em）
+     角丸: 行・入力 8px、ボタン 10px、カード 12px
 
-   ブランドのクレイ（#c6613f）は参照サイトでもロゴにしか使われていないので、
-   リンク・ナビ・注意書きには使わない。
+   Academy からあえて外している点（レッドチームレビューの指摘）:
+     - リンクの下線は40%だと本文中で埋もれるので60%にしている
+     - インラインコードは「そのまま打つ文字列」なので、面を 8% / 10% に上げている
+     - h2 の上余白は48pxではなく40px（見出しが多い長文なので）
+     - ページ冒頭の帯は全幅ではなく本文カラムの中の角丸カード
+       （左右のサイドバーと重ならないようにするため）
 
    フォントは Anthropic の専用フォント（AnthropicSans/Serif/Mono）が
    配布されていないため、Google Fonts の近縁で代替している。
@@ -52,9 +59,10 @@ html {
 }
 
 :root {
-  --ant-radius: 8px;        /* 行・入力・ボタン */
-  --ant-radius-table: 7px;  /* 表 */
-  --ant-radius-card: 11px;  /* コードブロック・注意書き */
+  --ant-radius: 8px;        /* 行・入力 */
+  --ant-radius-button: 10px;
+  --ant-radius-table: 8px;  /* 表 */
+  --ant-radius-card: 12px;  /* コードブロック・注意書き・ページ冒頭の帯 */
 }
 
 /* -------------------------------------------------------------------------
@@ -90,8 +98,9 @@ body {
    ------------------------------------------------------------------------- */
 
 [data-md-color-scheme="anthropic"] {
-  --ant-bg: #fcfcfb;
-  --ant-surface: #ffffff;
+  --ant-bg: #f9f9f7;
+  --ant-surface: #fcfcfb;
+  --ant-hero: #ebc9b7;
   --ant-ink: #0b0b0b;
   --ant-ink-body: #52514e;
   /* 参照サイトの muted は #898781 だが、明るい地色では 3.5:1 でAA(4.5:1)に届かない。
@@ -99,11 +108,12 @@ body {
   --ant-ink-muted: #6d6b67;
   --ant-line: rgba(11, 11, 11, 0.10);
   --ant-line-strong: rgba(11, 11, 11, 0.20);
-  --ant-fill: rgba(11, 11, 11, 0.05);         /* 入力欄・表の見出し・インラインコード */
+  --ant-fill: rgba(11, 11, 11, 0.05);         /* 入力欄・表の見出し */
+  --ant-fill-code: rgba(11, 11, 11, 0.08);    /* インラインコード */
   --ant-fill-strong: rgba(11, 11, 11, 0.10);  /* ナビの現在地 */
-  --ant-link: #184f95;
-  --ant-link-line: rgba(24, 79, 149, 0.40);
-  --ant-code-inline: #8e2626;
+  --ant-link: #0b0b0b;
+  --ant-link-line: rgba(11, 11, 11, 0.60);
+  --ant-code-inline: #2c2c2a;
   --ant-warning-bg: #f9dca4;
   --ant-warning-ink: #734500;
 
@@ -112,9 +122,9 @@ body {
   --md-default-fg-color--lighter: var(--ant-ink-muted);
   --md-default-fg-color--lightest: var(--ant-line);
   --md-default-bg-color: var(--ant-bg);
-  --md-default-bg-color--light: rgba(252, 252, 251, 0.7);
-  --md-default-bg-color--lighter: rgba(252, 252, 251, 0.3);
-  --md-default-bg-color--lightest: rgba(252, 252, 251, 0.12);
+  --md-default-bg-color--light: rgba(249, 249, 247, 0.7);
+  --md-default-bg-color--lighter: rgba(249, 249, 247, 0.3);
+  --md-default-bg-color--lightest: rgba(249, 249, 247, 0.12);
 
   /* ヘッダーは色帯にしない。地色＋ヘアライン */
   --md-primary-fg-color: var(--ant-bg);
@@ -161,17 +171,19 @@ body {
 
 [data-md-color-scheme="anthropic-dark"] {
   --ant-bg: #151515;
-  --ant-surface: #1a1a19;
+  --ant-surface: #20201f;
+  --ant-hero: #513127;
   --ant-ink: #f0efec;
   --ant-ink-body: #c3c2b7;
   --ant-ink-muted: #898781;
   --ant-line: rgba(255, 255, 255, 0.10);
   --ant-line-strong: rgba(255, 255, 255, 0.20);
-  --ant-fill: rgba(255, 255, 255, 0.05);
+  --ant-fill: rgba(255, 255, 255, 0.075);
+  --ant-fill-code: rgba(255, 255, 255, 0.10);
   --ant-fill-strong: rgba(255, 255, 255, 0.15);
-  --ant-link: #6da7ec;
-  --ant-link-line: rgba(109, 167, 236, 0.40);
-  --ant-code-inline: #ec7e7e;
+  --ant-link: #f0efec;
+  --ant-link-line: rgba(240, 239, 236, 0.60);
+  --ant-code-inline: #dddcd6;
   --ant-warning-bg: #311a00;
   --ant-warning-ink: #db9300;
 
@@ -268,16 +280,15 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* 本文 15px。参照サイトの行送りは 22px（1.47）だが、この教材は和文の長文が
-   続くので 24px（1.6）まで開けている。字の大きさと色は参照サイトと同じ。 */
+/* 本文 16px/26px（Academy の読み物の組版） */
 .md-typeset {
-  font-size: 0.75rem;
-  line-height: 1.6;
+  font-size: 0.8rem;
+  line-height: 1.625;
   letter-spacing: 0;
   color: var(--ant-ink-body);
 }
 
-/* 見出しはすべて "voice"（weight 520）。罫線は引かない */
+/* 見出しはすべて "voice"。h1 は weight 400、h2 以下は 500。罫線は引かない */
 .md-typeset h1,
 .md-typeset h2,
 .md-typeset h3,
@@ -285,39 +296,42 @@ body {
 .md-typeset h5,
 .md-typeset h6 {
   font-family: var(--ant-font-voice);
-  font-weight: 520;
+  font-weight: 500;
   color: var(--ant-ink);
   letter-spacing: 0;
-  line-height: 1.3;
+  line-height: 1.4;
   text-transform: none;
 }
 
+/* h1 はページ冒頭の帯（下の 6b）に入る */
 .md-typeset h1 {
-  font-size: 1.3125rem;   /* 26.25px */
-  line-height: 1.25;
-  margin: 0 0 0.6rem;
+  font-size: 1.8rem;      /* 36px */
+  font-weight: 400;
+  line-height: 1.35;
+  letter-spacing: -0.025em;
+  margin: 0;
 }
 
 .md-typeset h2 {
-  font-size: 1.03125rem;  /* 20.625px */
-  line-height: 1.25;
-  margin: 1.875rem 0 0;
+  font-size: 1.1rem;      /* 22px */
+  letter-spacing: -0.025em;
+  margin: 2rem 0 0;
 }
 
 .md-typeset h3 {
-  font-size: 0.84375rem;  /* 16.875px */
-  margin: 1.5rem 0 0;
+  font-size: 0.9rem;      /* 18px */
+  margin: 1.6rem 0 0;
 }
 
 .md-typeset h4 {
-  font-size: 0.75rem;     /* 15px */
-  margin: 1.25rem 0 0;
+  font-size: 0.8rem;      /* 16px */
+  margin: 1.3rem 0 0;
 }
 
 .md-typeset h5,
 .md-typeset h6 {
-  font-size: 0.7rem;
-  margin: 1.25rem 0 0;
+  font-size: 0.75rem;
+  margin: 1.3rem 0 0;
 }
 
 /* 見出しの直後は詰める（参照サイトは見出し側に下余白を持たせない） */
@@ -327,11 +341,64 @@ body {
   margin-top: 0.75rem;
 }
 
-/* h1 直下の段落はリード文（16.875px） */
+/* -------------------------------------------------------------------------
+   6b. ページ冒頭の帯
+   Academy のコースページは、パンくず・h1・リード文をクレイの淡色の帯に載せる。
+   Material では h1 と最初の段落が本文と同じ並びにあるので、h1 と「h1 直後の段落」に
+   同じ地色を敷き、角丸をつないで1枚のカードに見せる。
+   リード文は muted ではなく本文色（帯の上でも 5:1 以上）。
+   ------------------------------------------------------------------------- */
+
+.md-typeset h1 {
+  background-color: var(--ant-hero);
+  border-radius: var(--ant-radius-card);
+  padding: 1.5rem 1.6rem;
+}
+
+.md-typeset h1:has(+ p) {
+  border-radius: var(--ant-radius-card) var(--ant-radius-card) 0 0;
+  padding-bottom: 0.5rem;
+}
+
 .md-typeset h1 + p {
-  font-size: 0.84375rem;
-  line-height: 1.6;
-  margin-top: 0;
+  background-color: var(--ant-hero);
+  border-radius: 0 0 var(--ant-radius-card) var(--ant-radius-card);
+  color: var(--ant-ink-body);
+  font-size: 0.9rem;      /* 18px/28px */
+  line-height: 1.56;
+  /* 1px 重ねて、h1 との間に端数ピクセルの継ぎ目が出ないようにする */
+  margin: -1px 0 0;
+  padding: 1px 1.6rem 1.5rem;
+}
+
+.md-typeset h1 + p + *,
+.md-typeset h1:not(:has(+ p)) + * {
+  margin-top: 1.6rem;
+}
+
+@media screen and (max-width: 44.984375em) {
+  .md-typeset h1 {
+    font-size: 1.4rem;
+    padding: 1.1rem 1rem;
+  }
+
+  .md-typeset h1:has(+ p) {
+    padding-bottom: 0.4rem;
+  }
+
+  .md-typeset h1 + p {
+    font-size: 0.8rem;
+    padding: 1px 1rem 1.1rem;
+  }
+}
+
+@media print {
+  .md-typeset h1,
+  .md-typeset h1 + p {
+    background-color: transparent;
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
 .md-typeset p,
@@ -369,7 +436,8 @@ body {
 
 /* -------------------------------------------------------------------------
    7. リンク
-   青＋同色40%の下線。色だけに意味を持たせない。
+   Academy と同じく文字色は primary のまま、下線で示す。
+   下線は40%だと和文の長文に埋もれるので60%。
    ------------------------------------------------------------------------- */
 
 .md-typeset a {
@@ -436,7 +504,7 @@ body {
 
 .md-header__title .md-header__topic,
 .md-header__title .md-header__topic:first-child {
-  font-weight: 520;
+  font-weight: 500;
 }
 
 .md-header__button {
@@ -521,7 +589,7 @@ body {
 
 /* -------------------------------------------------------------------------
    9. サイドバー（左）と目次（右）
-   文字 14px。行は高さ28pxの角丸8px、現在地は面（黒10% / 白15%）で示す。
+   文字 14px。行は高さ28pxの角丸8px、現在地は面で示す。
    ------------------------------------------------------------------------- */
 
 .md-nav {
@@ -583,15 +651,20 @@ body {
     font-weight: 400;
   }
 
-  /* セクション見出し（navigation.sections）: 本文と同じ14px・weight 500 */
+  /* セクション見出し（navigation.sections）: Academy の目次と同じ 12px・weight 500・muted */
   .md-nav--primary .md-nav__item--section {
     margin: 1rem 0 0;
   }
 
   .md-nav--primary .md-nav__item--section > .md-nav__link,
   .md-nav--primary .md-nav__item--section > .md-nav__link .md-nav__link {
-    color: var(--ant-ink);
+    color: var(--ant-ink-muted);
+    font-size: 12px;
     font-weight: 500;
+  }
+
+  .md-nav--primary .md-nav__item--section > .md-nav__link a.md-nav__link:hover {
+    color: var(--ant-ink);
   }
 
   .md-nav--primary .md-nav__item--section > .md-nav__link {
@@ -617,41 +690,61 @@ body {
   }
 }
 
-/* 目次: muted。現在地だけ primary・weight 500 と左の縦線 */
-/* タイトルは sticky。地色と同色の影で、下を流れる項目を隠す（Material と同じ仕組み） */
+/* 目次: Academy のページ内目次と同じ。見出しは 12px・weight 500・muted、
+   行は 14px の角丸8px。現在地は左の縦線ではなく、文字色と面で示す。
+   タイトルは sticky。地色と同色の影で、下を流れる項目を隠す（Material と同じ仕組み） */
 .md-nav--secondary .md-nav__title {
   background-color: var(--ant-bg);
   box-shadow: 0 0 0.4rem 0.4rem var(--ant-bg);
   color: var(--ant-ink-muted);
-  font-size: 0.65rem;
-  font-weight: 400;
+  font-size: 12px;
+  font-weight: 500;
 }
 
 @media screen and (min-width: 60em) {
-  .md-nav--secondary .md-nav__link {
-    color: var(--ant-ink-muted);
-    margin: 0;
-    padding: 4px 0 4px 12px;
-    border-left: 2px solid transparent;
-  }
-
-  .md-nav--secondary .md-nav__link:hover {
-    color: var(--ant-ink);
-  }
-
-  .md-nav--secondary .md-nav__link--active,
-  .md-nav--secondary .md-nav__item .md-nav__link--active {
-    color: var(--ant-ink);
-    font-weight: 500;
-    border-left-color: var(--ant-ink);
+  .md-nav--secondary .md-nav__title {
+    padding-left: 8px;
   }
 
   .md-nav--secondary .md-nav__item {
     padding: 0;
   }
 
-  .md-nav--secondary .md-nav .md-nav__link {
-    padding-left: 24px;
+  [dir] .md-nav--secondary .md-nav__link {
+    color: var(--ant-ink-body);
+    margin: 1px 0;
+    padding: 4px 8px;
+    border-radius: var(--ant-radius);
+    transition: background-color 120ms, color 120ms;
+  }
+
+  .md-nav--secondary .md-nav__link:hover {
+    color: var(--ant-ink);
+    background-color: var(--ant-fill);
+  }
+
+  .md-nav--secondary .md-nav__link--active,
+  .md-nav--secondary .md-nav__item .md-nav__link--active {
+    color: var(--ant-ink);
+    font-weight: 500;
+    background-color: var(--ant-fill);
+  }
+
+  /* 入れ子は 12px ずつ下げる（Material 既定の左余白は使わない） */
+  [dir] .md-nav--secondary .md-nav .md-nav__list {
+    padding-left: 0;
+  }
+
+  [dir] .md-nav--secondary .md-nav .md-nav__link {
+    padding-left: 20px;
+  }
+
+  [dir] .md-nav--secondary .md-nav .md-nav .md-nav__link {
+    padding-left: 32px;
+  }
+
+  [dir] .md-nav--secondary .md-nav .md-nav .md-nav .md-nav__link {
+    padding-left: 44px;
   }
 }
 
@@ -689,16 +782,16 @@ body {
 
 /* -------------------------------------------------------------------------
    11. コード
-   ブロックは「白い面（ダークは #1a1a19）＋ヘアライン＋角丸11px」のカード。
-   インラインは赤茶の文字に5%の面とヘアライン。
+   ブロックは「カードの面（#fcfcfb / #20201f）＋ヘアライン＋角丸12px」。
+   インラインは primary に近い文字色に 8% / 10% の面、角丸4px、枠なし。
    ------------------------------------------------------------------------- */
 
 .md-typeset code {
   color: var(--ant-code-inline);
-  background-color: var(--ant-fill);
-  box-shadow: 0 0 0 0.5px var(--ant-line);
-  border-radius: 6px;
-  padding: 0.06em 0.25em;
+  background-color: var(--ant-fill-code);
+  box-shadow: none;
+  border-radius: 4px;
+  padding: 1px 4px;
   font-size: 0.9em;
   letter-spacing: 0;
 }
@@ -770,7 +863,7 @@ body {
 
 /* -------------------------------------------------------------------------
    12. 表
-   ヘアラインの枠＋角丸7px。見出し行は5%の面・weight 500。
+   カードの面＋ヘアラインの枠＋角丸8px。見出し行は5%の面・weight 500。
    ------------------------------------------------------------------------- */
 
 .md-typeset__scrollwrap {
@@ -783,7 +876,7 @@ body {
 }
 
 .md-typeset table:not([class]) {
-  background-color: transparent;
+  background-color: var(--ant-surface);
   border: 1px solid var(--ant-line);
   border-radius: var(--ant-radius-table);
   box-shadow: none;
@@ -824,7 +917,7 @@ body {
 /* -------------------------------------------------------------------------
    13. 注意書き（引用）
    教材は「> **なぜOFFにするのか。** …」形式の補足を多用する。
-   参照サイトの Note と同じ、ヘアライン＋角丸11pxのカードとして置く。
+   Academy のカードと同じ、面（#fcfcfb / #20201f）＋ヘアライン＋角丸12px で置く。
    文字は14px・primary。左のアイコンは「補足」を表す丸に i。
    ------------------------------------------------------------------------- */
 
@@ -833,10 +926,10 @@ body {
 [dir] .md-typeset blockquote {
   position: relative;
   margin: 0.75rem 0 0;
-  padding: 10px 14px 10px 38px;
+  padding: 12px 16px 12px 42px;
   border: 1px solid var(--ant-line);
   border-radius: var(--ant-radius-card);
-  background-color: var(--ant-bg);
+  background-color: var(--ant-surface);
   color: var(--ant-ink);
   font-size: 0.7rem;
   line-height: 1.6;
@@ -845,8 +938,8 @@ body {
 .md-typeset blockquote::before {
   content: "";
   position: absolute;
-  left: 14px;
-  top: 13px;
+  left: 16px;
+  top: 15px;
   width: 16px;
   height: 16px;
   background-color: var(--ant-ink);
@@ -904,8 +997,8 @@ body {
 .md-typeset .admonition[class],
 .md-typeset details[class] {
   margin: 0.75rem 0 0;
-  padding: 0 14px 10px;
-  background-color: var(--ant-bg);
+  padding: 0 16px 12px;
+  background-color: var(--ant-surface);
   border: 1px solid var(--ant-line);
   border-radius: var(--ant-radius-card);
   box-shadow: none;
@@ -929,10 +1022,10 @@ html .md-typeset details[class] > :last-child {
 
 .md-typeset .admonition[class] > .admonition-title,
 .md-typeset details[class] > summary {
-  margin: 0 -14px;
-  padding-top: 10px;
+  margin: 0 -16px;
+  padding-top: 12px;
   padding-bottom: 0;
-  padding-left: 38px;
+  padding-left: 42px;
   background-color: transparent;
   color: var(--ant-ink);
   font-weight: 600;
@@ -940,8 +1033,8 @@ html .md-typeset details[class] > :last-child {
 
 .md-typeset .admonition[class] > .admonition-title::before,
 .md-typeset details[class] > summary::before {
-  left: 14px;
-  top: 13px;
+  left: 16px;
+  top: 15px;
   width: 16px;
   height: 16px;
   background-color: var(--ant-ink);
@@ -1012,7 +1105,7 @@ html .md-typeset details[class] > :last-child {
 }
 
 .md-typeset .md-button {
-  border-radius: var(--ant-radius);
+  border-radius: var(--ant-radius-button);
   border: 1px solid var(--ant-line-strong);
   color: var(--ant-ink);
   font-weight: 500;
